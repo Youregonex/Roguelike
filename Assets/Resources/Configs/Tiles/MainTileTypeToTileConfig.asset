@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b1b9d3a8636347dc9dbfdc535e6e242, type: 3}
+  m_Name: MainTileTypeToTileConfig
+  m_EditorClassIdentifier: 
+  <TypeToTileList>k__BackingField:
+  - <TileType>k__BackingField: 0
+    <Tile>k__BackingField: {fileID: 11400000, guid: 8091fe85706ea487ba168d6a1de112b8, type: 2}
+  - <TileType>k__BackingField: 1
+    <Tile>k__BackingField: {fileID: 11400000, guid: 6cb9c6660b1af4194ac150b72d3ec889, type: 2}
+  - <TileType>k__BackingField: 2
+    <Tile>k__BackingField: {fileID: 11400000, guid: 803473df6a35449ddb465d2d319c27a6, type: 2}
+  - <TileType>k__BackingField: 3
+    <Tile>k__BackingField: {fileID: 11400000, guid: 58e52689dee5e4e73939cc888a865247, type: 2}
+  - <TileType>k__BackingField: 4
+    <Tile>k__BackingField: {fileID: 11400000, guid: 6c1d1cdd302774e6394da19d341b59a1, type: 2}
+  - <TileType>k__BackingField: 5
+    <Tile>k__BackingField: {fileID: 11400000, guid: def9aad5232634782a4d0310947636e1, type: 2}
+  - <TileType>k__BackingField: 6
+    <Tile>k__BackingField: {fileID: 11400000, guid: a81f45d2edefc4f06ae236d786acbd54, type: 2}
+  - <TileType>k__BackingField: 7
+    <Tile>k__BackingField: {fileID: 11400000, guid: 6293dd5f5c0144fc3b37935b6eb63fc0, type: 2}
