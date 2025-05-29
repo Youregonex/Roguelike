@@ -26,12 +26,19 @@ namespace Y.Configs
             {
                 NoiseToTileTypeList[i].Validate();
 
-                for (int j = i + 1; j < NoiseToTileTypeList.Count; j++)
+                if(i == 0)
                 {
-                    if (NoiseToTileTypeList[j].ThresholdMin < NoiseToTileTypeList[i].ThresholdMax)
-                    {
-                        Debug.LogWarning("Overlapping noise thresholds!");
-                    }
+                    NoiseToTileTypeList[i].ThresholdMin = 0;
+                }
+
+                if(i == NoiseToTileTypeList.Count - 1)
+                {
+                    NoiseToTileTypeList[i].ThresholdMax = 1;
+                }
+
+                if(i + 1 < NoiseToTileTypeList.Count)
+                {
+                    NoiseToTileTypeList[i + 1].ThresholdMin = NoiseToTileTypeList[i].ThresholdMax;
                 }
             }
         }
@@ -40,15 +47,14 @@ namespace Y.Configs
     [System.Serializable]
     public class NoiseToTileType
     {
-        [field: SerializeField, Range(0f, 1f)] public float ThresholdMin { get; private set; }
-        [field: SerializeField, Range(0f, 1f)] public float ThresholdMax { get; private set; }
-        [field: SerializeField] public ETileType TileType { get; private set; }
+        [field: SerializeField, Range(0f, 1f)] public float ThresholdMin { get; internal set; }
+        [field: SerializeField, Range(0f, 1f)] public float ThresholdMax { get; internal set; }
+        [field: SerializeField] public ETileType TileType { get; internal set; }
 
         public void Validate()
         {
             if (ThresholdMin >= ThresholdMax)
-            {
-                Debug.LogWarning($"Invalid thresholds in {nameof(NoiseToTileType)}: Min ({ThresholdMin}) >= Max ({ThresholdMax}). Adjusting automatically.");
+            {                
                 ThresholdMax = ThresholdMin + 0.01f;
             }
         }

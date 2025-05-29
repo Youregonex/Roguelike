@@ -350,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3649ab8da3d754cee869f31c6af78e1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useRandomSeed: 1
+  _useRandomSeed: 0
   _seedString: Vladik
   _noiseScale: 5
 --- !u!1 &358120004

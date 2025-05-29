@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <NoiseToTileTypeList>k__BackingField:
   - <ThresholdMin>k__BackingField: 0
-    <ThresholdMax>k__BackingField: 0.5
+    <ThresholdMax>k__BackingField: 0.549
     <TileType>k__BackingField: 1
-  - <ThresholdMin>k__BackingField: 0.5
-    <ThresholdMax>k__BackingField: 0.9
+  - <ThresholdMin>k__BackingField: 0.549
+    <ThresholdMax>k__BackingField: 0.883
     <TileType>k__BackingField: 2
-  - <ThresholdMin>k__BackingField: 0.9
+  - <ThresholdMin>k__BackingField: 0.883
     <ThresholdMax>k__BackingField: 1
     <TileType>k__BackingField: 3
