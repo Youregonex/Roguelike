@@ -7,7 +7,6 @@ public class MapGenerator
     [SerializeField] private int _width;
     [SerializeField] private int _height;
 
-
     public List<Vector2Int> GenerateMap(int width, int height)
     {
         List<Vector2Int> mapTilePositionList = new(width * height);
