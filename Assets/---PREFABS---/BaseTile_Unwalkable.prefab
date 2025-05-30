@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 1758907577115272533}
   - component: {fileID: 8756945686437890617}
   m_Layer: 0
-  m_Name: BaseTile
+  m_Name: BaseTile_Unwalkable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tileHoverHighlight: {fileID: 6406161463432849403}
-  <Walkable>k__BackingField: 1
+  <Walkable>k__BackingField: 0
 --- !u!61 &8756945686437890617
 BoxCollider2D:
   m_ObjectHideFlags: 0

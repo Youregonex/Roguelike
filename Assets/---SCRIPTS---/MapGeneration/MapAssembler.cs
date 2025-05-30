@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Y.Configs;
 using Zenject;
@@ -23,10 +24,11 @@ namespace Y.MapGeneration
         private Tileplacer _tilePlacer;
         private MapGenerator _mapGenerator;
         private TileGameObjectPlacer _tileGameObjectPlacer;
-
+        private List<BaseTile> _path = new();
         private int _seed;
 
-        public Dictionary<Vector2Int, ETileType> MapDictionary { get; private set; }
+        public Dictionary<Vector2Int, ETileType> MapDictionary { get; private set; } = new();
+        public List<BaseTile> MapBaseTileList { get; private set; } = new();
 
         [Inject]
         private void Construct(Tileplacer tilePlacer, TileGameObjectPlacer tileGameObjectPlacer)
@@ -55,7 +57,33 @@ namespace Y.MapGeneration
             _tilePlacer.PlaceGroundTiles(MapDictionary);
 
             _tileGameObjectPlacer.Initialize();
-            _tileGameObjectPlacer.PlaceTilesGameObjects(MapDictionary);
+            MapBaseTileList = _tileGameObjectPlacer.PlaceTilesGameObjects(MapDictionary);
+
+            foreach (var baseTile in MapBaseTileList)
+                baseTile.CacheNeighbours(this);
+
+            foreach (var tile in MapBaseTileList)
+            {
+                tile.OnMouseHover += BaseTile_OnMouseHover;
+            }
+        }
+
+        private void BaseTile_OnMouseHover(BaseTile hovredTile)
+        {
+            if (_path != null)
+                foreach (var tile in _path)
+                    tile.Unhighlight();
+
+            _path = Pathfinder.FindPath(GetTileAtPosition(new(0, 0)), hovredTile);
+
+            if(_path != null)
+                foreach (var tile in _path)
+                    tile.Highlight();
+        }
+
+        public BaseTile GetTileAtPosition(Vector2Int position)
+        {
+            return MapBaseTileList.Where(entry => entry.Origin == position).FirstOrDefault();
         }
 
         public void AssembleMap()
