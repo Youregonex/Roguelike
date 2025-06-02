@@ -1,59 +1,64 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Y.MapGeneration;
+using Yg.MapGeneration;
 
-public class Pathfinder
+namespace Yg.YgPathFinder
 {
-    public static List<BaseTile> FindPath(BaseTile startNode, BaseTile targetNode)
+    public class Pathfinder
     {
-        var toSearch = new List<BaseTile>() { startNode };
-        var processed = new List<BaseTile>();
-
-        while (toSearch.Any())
+        public static List<BaseTile> FindPath(BaseTile startTile, BaseTile targetTile)
         {
-            var current = toSearch[0];
-            foreach (var t in toSearch)
-                if (t.F < current.F || t.F == current.F && t.H < current.H)
-                    current = t;
+            var toSearch = new List<BaseTile>() { startTile };
+            var processed = new List<BaseTile>();
 
-            processed.Add(current);
-            toSearch.Remove(current);
-
-            if (current == targetNode)
+            while (toSearch.Any())
             {
-                var currentPathTile = targetNode;
-                var path = new List<BaseTile>();
-                var count = 100;
-                while (currentPathTile != startNode)
+                var current = toSearch[0];
+                foreach (var t in toSearch)
+                    if (t.F < current.F || t.F == current.F && t.H < current.H)
+                        current = t;
+
+                processed.Add(current);
+                toSearch.Remove(current);
+
+                if (current == targetTile)
                 {
-                    path.Add(currentPathTile);
-                    currentPathTile = currentPathTile.PreviousTile;
-                    count--;
-                    if (count < 0) throw new Exception();
+                    var currentPathTile = targetTile;
+                    var path = new List<BaseTile>();
+                    var count = 100;
+                    while (currentPathTile != startTile)
+                    {
+                        path.Add(currentPathTile);
+                        currentPathTile = currentPathTile.PreviousTile;
+                        count--;
+                        if (count < 0) throw new Exception();
+                    }
+
+                    path.Reverse();
+                    return path;
                 }
 
-                return path;
-            }
-
-            foreach (var neighbor in current.Neighbours.Where(t => t.Walkable && !processed.Contains(t)))
-            {
-                var inSearch = toSearch.Contains(neighbor);
-                var costToNeighbor = current.G + current.GetDistanceToTile(neighbor);
-
-                if (!inSearch || costToNeighbor < neighbor.G)
+                foreach (var neighbor in current.Neighbours.Where(t => t.Walkable && !processed.Contains(t)))
                 {
-                    neighbor.SetG(costToNeighbor);
-                    neighbor.SetPreviousTile(current);
+                    var inSearch = toSearch.Contains(neighbor);
+                    var costToNeighbor = current.G + current.GetDistanceToTile(neighbor);
 
-                    if (!inSearch)
+                    if (!inSearch || costToNeighbor < neighbor.G)
                     {
-                        neighbor.SetH(neighbor.GetDistanceToTile(targetNode));
-                        toSearch.Add(neighbor);
+                        neighbor.SetG(costToNeighbor);
+                        neighbor.SetPreviousTile(current);
+
+                        if (!inSearch)
+                        {
+                            neighbor.SetH(neighbor.GetDistanceToTile(targetTile));
+                            toSearch.Add(neighbor);
+                        }
                     }
                 }
             }
+
+            return null;
         }
-        return null;
     }
 }

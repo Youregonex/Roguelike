@@ -1,34 +1,66 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using Y.Factories;
+using Yg.Factories;
+using System;
 
-namespace Y.MapGeneration
+namespace Yg.MapGeneration
 {
     public class TileGameObjectPlacer : MonoBehaviour
     {
+        public event Action<BaseTile> OnTileHighlight;
+
         [CustomHeader("Settings")]
         [SerializeField] private Transform _tileParentTransform;
         [SerializeField] private BaseTile _baseTilePrefab;
-        [SerializeField] private BaseTile _baseTileUnwalkablePrefab;
 
         private TileFactory _tileFactory;
 
+        public List<BaseTile> MapBaseTileList { get; private set; } = new();
+
         public void Initialize()
         {
-            _tileFactory = new(_tileParentTransform, _baseTilePrefab, _baseTileUnwalkablePrefab);
+            _tileFactory = new(_tileParentTransform, _baseTilePrefab);
         }
 
-        public List<BaseTile> PlaceTilesGameObjects(Dictionary<Vector2Int, ETileType> mapDictionary)
+        public void PlaceTilesGameObjects(Dictionary<Vector2Int, ETileType> mapDictionary)
         {
-            List<BaseTile> tileList = new();
-
             foreach (var mapEntry in mapDictionary)
             {
                 BaseTile baseTile = _tileFactory.CreateTile(mapEntry.Key, mapEntry.Value);
-                tileList.Add(baseTile);
+                baseTile.OnMouseHover += BaseTile_OnMouseHover;
+                MapBaseTileList.Add(baseTile);
             }
 
-            return tileList;
+            foreach (var baseTile in MapBaseTileList)
+                baseTile.CacheNeighbours(this);
+        }
+
+        public void HighlightTiles(List<BaseTile> tiles)
+        {
+            foreach (var tile in tiles)
+                tile.Highlight();
+        }
+
+        public void UnhighlightTiles(List<BaseTile> tiles)
+        {
+            foreach (var tile in tiles)
+                tile.Unhighlight();
+        }
+
+        private void BaseTile_OnMouseHover(BaseTile hoveredTile)
+        {
+            OnTileHighlight?.Invoke(hoveredTile);
+        }
+
+        public void AssignPointOfInterestToTileAtPosition(Vector2Int position, IPointOfInterest pointOfInterest)
+        {
+            GetTileAtPosition(position).AssignPointOfInterest(pointOfInterest);
+        }
+
+        public BaseTile GetTileAtPosition(Vector2Int position)
+        {
+            return MapBaseTileList.Where(entry => entry.Origin == position).FirstOrDefault();
         }
     }
 }

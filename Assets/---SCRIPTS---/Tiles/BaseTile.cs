@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace Y.MapGeneration
+namespace Yg.MapGeneration
 {
     public class BaseTile : MonoBehaviour
     {
@@ -10,7 +10,7 @@ namespace Y.MapGeneration
 
         [CustomHeader("Settings")]
         [SerializeField] private GameObject _tileHoverHighlight;
-        [field: SerializeField] public bool Walkable { get; private set; }
+        [field: SerializeField] public bool Walkable { get; private set; } = true;
 
         private readonly List<Vector2Int> _neighbourDirections = new() {
             new Vector2Int(0, 1),
@@ -23,6 +23,8 @@ namespace Y.MapGeneration
             new Vector2Int(-1, 1)
         };
 
+        private IPointOfInterest _pointOfInterest;
+
         public Vector2Int Origin { get; private set; }
         public ETileType TileType { get; private set; }
 
@@ -34,10 +36,11 @@ namespace Y.MapGeneration
 
         public BaseTile PreviousTile { get; private set; }
 
-        public void Initialize(Vector2Int origin, ETileType tileType)
+        public void Initialize(Vector2Int origin, ETileType tileType, bool isWalkable)
         {
             Origin = origin;
             TileType = tileType;
+            Walkable = isWalkable;
 
             _tileHoverHighlight.gameObject.SetActive(false);
         }
@@ -51,7 +54,9 @@ namespace Y.MapGeneration
 
             var horizontalMovesRequired = highest - lowest;
 
-            return lowest * 14 + horizontalMovesRequired * 10;
+            var defaultTileMoveCost = 10;
+            var diagonalTileMoveCost = 14;
+            return lowest * diagonalTileMoveCost + horizontalMovesRequired * defaultTileMoveCost;
         }
 
         public void SetG(float g) => G = g;
@@ -61,16 +66,27 @@ namespace Y.MapGeneration
         public void Highlight() => _tileHoverHighlight.SetActive(true);
         public void Unhighlight() => _tileHoverHighlight.SetActive(false);
 
-        public void CacheNeighbours(MapAssembler mapAssembler)
+        public void AssignPointOfInterest(IPointOfInterest pointOfInterest)
+        {
+            _pointOfInterest = pointOfInterest;
+            Walkable = false;
+        }
+
+        public void CacheNeighbours(TileGameObjectPlacer tileGameObjectPlacer)
         {
             Neighbours = new();
             foreach (var direction in _neighbourDirections)
             {
-                BaseTile neighbour = mapAssembler.GetTileAtPosition(Origin + direction);
+                BaseTile neighbour = tileGameObjectPlacer.GetTileAtPosition(Origin + direction);
 
                 if(neighbour != null)
                     Neighbours.Add(neighbour);
             }
+        }
+
+        private void OnMouseDown()
+        {
+            _pointOfInterest?.Interact();
         }
 
         private void OnMouseEnter()

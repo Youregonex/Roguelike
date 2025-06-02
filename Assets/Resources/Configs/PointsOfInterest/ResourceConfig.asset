@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81efc01f836b54603901a114d1c39785, type: 3}
+  m_Name: ResourceConfig
+  m_EditorClassIdentifier: 
+  <PointsAmountMin>k__BackingField: 7
+  <PointsAmountMax>k__BackingField: 14
+  <PointType>k__BackingField: 2
+  <PointTile>k__BackingField: {fileID: 11400000, guid: 6c1d1cdd302774e6394da19d341b59a1, type: 2}
+  <ResourceAmount>k__BackingField: 5

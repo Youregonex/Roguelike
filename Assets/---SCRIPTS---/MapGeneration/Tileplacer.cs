@@ -1,26 +1,27 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
-using Y.Configs;
+using Yg.GameConfigs;
 
-namespace Y.MapGeneration
+namespace Yg.MapGeneration
 {
     public class Tileplacer : MonoBehaviour
     {
         [CustomHeader("Settings")]
         [SerializeField] private Tilemap _groundTilemap;
+        [SerializeField] private Tilemap _pointOfInterestTilemap;
         [SerializeField] private Tile _defaultTile;
 
-        private TileTypeToTileConfigSO _tileTypeToTileConfigSO;
+        private TileTypeToTileConfigSO _tileTypeToTileConfig;
 
-        public void Initialize(TileTypeToTileConfigSO tileTypeToTileConfigSO)
+        public void Initialize()
         {
-            _tileTypeToTileConfigSO = tileTypeToTileConfigSO;
+            _tileTypeToTileConfig = ConfigLoader.TileTypeToTileConfig;
         }
 
         public void PlaceGroundTiles(Dictionary<Vector2Int, ETileType> mapDictionary)
         {
-            if(_tileTypeToTileConfigSO == null)
+            if(_tileTypeToTileConfig == null)
             {
                 Debug.Log("TileTypeToTileConfig is null!");
                 return;
@@ -28,9 +29,15 @@ namespace Y.MapGeneration
             
             foreach (var mapEntry in mapDictionary)
             {
-                Tile tileToPlace = _tileTypeToTileConfigSO.GetTileFromType(mapEntry.Value);
+                Tile tileToPlace = _tileTypeToTileConfig.GetTileFromType(mapEntry.Value);
                 _groundTilemap.SetTile((Vector3Int)mapEntry.Key, tileToPlace);
             }
+        }
+
+        public void PlacePointOfInterestTile(Vector2Int position, Tile tile)
+        {
+            _groundTilemap.SetTile((Vector3Int)position, null);
+            _pointOfInterestTilemap.SetTile((Vector3Int)position, tile);
         }
     }
 }

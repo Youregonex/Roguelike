@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Y.Configs
+namespace Yg.GameConfigs
 {
     [CreateAssetMenu(fileName = "DefaultMapGenerationConfig", menuName = "Configs/Generation/DefaultMapGenerationConfigSO")]
     public class DefaultMapGenerationConfigSO : ScriptableObject

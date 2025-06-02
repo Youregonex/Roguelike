@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Y.CameraControl
+namespace Yg.CameraControl
 {
     public class CameraZoom : MonoBehaviour
     {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Y.Configs;
+using Yg.GameConfigs;
 
-namespace Y.MapGeneration
+namespace Yg.MapGeneration
 {
     public class MapGenerator
     {
