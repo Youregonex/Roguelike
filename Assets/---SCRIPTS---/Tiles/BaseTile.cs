@@ -12,17 +12,6 @@ namespace Yg.MapGeneration
         [SerializeField] private GameObject _tileHoverHighlight;
         [field: SerializeField] public bool Walkable { get; private set; } = true;
 
-        private readonly List<Vector2Int> _neighbourDirections = new() {
-            new Vector2Int(0, 1),
-            new Vector2Int(-1, 0),
-            new Vector2Int(0, -1),
-            new Vector2Int(1, 0),
-            new Vector2Int(1, 1),
-            new Vector2Int(1, -1),
-            new Vector2Int(-1, -1),
-            new Vector2Int(-1, 1)
-        };
-
         private IPointOfInterest _pointOfInterest;
 
         public Vector2Int Origin { get; private set; }
@@ -74,8 +63,21 @@ namespace Yg.MapGeneration
 
         public void CacheNeighbours(TileGameObjectPlacer tileGameObjectPlacer)
         {
+            List<Vector2Int> neighbourDirections = new()
+            {
+                new Vector2Int(0, 1),
+                new Vector2Int(-1, 0),
+                new Vector2Int(0, -1),
+                new Vector2Int(1, 0),
+                new Vector2Int(1, 1),
+                new Vector2Int(1, -1),
+                new Vector2Int(-1, -1),
+                new Vector2Int(-1, 1)
+            };
+
             Neighbours = new();
-            foreach (var direction in _neighbourDirections)
+
+            foreach (var direction in neighbourDirections)
             {
                 BaseTile neighbour = tileGameObjectPlacer.GetTileAtPosition(Origin + direction);
 
