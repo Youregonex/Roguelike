@@ -20,11 +20,14 @@ namespace Yg.MapGeneration
         // A*
         public List<BaseTile> Neighbours { get; private set; } = new();
  
+        public BaseTile PreviousTile { get; private set; }
         public float G { get; private set; }
         public float H { get; private set; }
         public float F => G + H;
 
-        public BaseTile PreviousTile { get; private set; }
+        // FOW
+        public bool IsRevealed { get; private set; } = false;
+        public bool PlayerWalkable => Walkable && IsRevealed;
 
         public void Initialize(Vector2Int origin, ETileType tileType, bool isWalkable = true)
         {
@@ -86,6 +89,8 @@ namespace Yg.MapGeneration
                     Neighbours.Add(neighbour);
             }
         }
+
+        public void RevealTile() => IsRevealed = true;
 
         private void OnMouseDown()
         {

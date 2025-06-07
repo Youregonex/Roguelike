@@ -42,6 +42,15 @@ namespace Yg.MapGeneration
                 baseTile.CacheNeighbours(this);
         }
 
+        public void RevealTileAt(Vector2Int position)
+        {
+            //if (MapBaseTileList == null || MapBaseTileList.Count == 0) return;
+
+            BaseTile tile = MapBaseTileList.Where(entry => entry.Origin == position).FirstOrDefault();
+            if (tile == null || tile.IsRevealed) return;
+            tile.RevealTile();
+        }
+
         public void HighlightTiles(List<BaseTile> tiles)
         {
             foreach (var tile in tiles)

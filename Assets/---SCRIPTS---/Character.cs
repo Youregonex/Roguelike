@@ -19,7 +19,6 @@ namespace Yg.PlayerCharacter
 
         private List<BaseTile> _currentPath = new();
         private Vector2Int _pressedTilePosition;
-
         private bool _isInitialized = false;
         private bool _isMoving = false;
         private Vector2 _currentMovementPoint;
@@ -40,7 +39,7 @@ namespace Yg.PlayerCharacter
         {
             if (_isMoving) return;
 
-            if(!hoveredTile.Walkable)
+            if(!hoveredTile.PlayerWalkable)
             {
                 UnhighlightCurrentPath();
                 return;
@@ -66,12 +65,11 @@ namespace Yg.PlayerCharacter
             _pressedTilePosition = GetMouseSnapedPosition();
             BaseTile pressedTile = _tileGameObjectPlacer.GetTileAtPosition(_pressedTilePosition);
             
-            if (pressedTile == null || !pressedTile.Walkable) return;
+            if (pressedTile == null || !pressedTile.PlayerWalkable) return;
 
             _currentPath = Pathfinder.FindPath(GetCurrentTile(), pressedTile);
 
             if (_currentPath.Count <= 0) return;
-
             if (_currentMoveCoroutine != null)
                 StopAllCoroutines();
 
@@ -129,7 +127,6 @@ namespace Yg.PlayerCharacter
             if (_currentPath.Count > 0)
                 _tileGameObjectPlacer.HighlightTiles(_currentPath);
         }
-
 
         private void OnDrawGizmos()
         {
