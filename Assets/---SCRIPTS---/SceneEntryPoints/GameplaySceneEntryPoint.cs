@@ -16,13 +16,17 @@ namespace Yg.EntryPoint
         private TileGameObjectPlacer _tileGameObjectPlacer;
         private PointOfInterestPlacer _pointOfInterestPlacer;
 
+        private DiContainer _diContainer;
+
         [Inject]
         private void Construct(
+            DiContainer diContainer,
             MapAssembler mapAssembler,
             Tileplacer tileplacer,
             TileGameObjectPlacer tileGameObjectPlacer,
             PointOfInterestPlacer pointOfInterestPlacer)
         {
+            _diContainer = diContainer;
             _mapAssembler = mapAssembler;
             _tileplacer = tileplacer;
             _tileGameObjectPlacer = tileGameObjectPlacer;
@@ -70,7 +74,7 @@ namespace Yg.EntryPoint
 
         private void SpawnPlayer()
         {
-            Character character = Instantiate(_characterPrefab, Vector2.zero, Quaternion.identity);
+            Character character = _diContainer.InstantiatePrefab(_characterPrefab, new Vector2(0, 0), Quaternion.identity, null).GetComponent<Character>();
             character.Initialize(_tileGameObjectPlacer);
         }
     }

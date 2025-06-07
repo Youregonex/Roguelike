@@ -23,6 +23,12 @@ namespace Yg.MapGeneration
             _tileFactory = new(_tileParentTransform, _baseTilePrefab);
         }
 
+        private void OnDestroy()
+        {
+            foreach (var tile in MapBaseTileList)
+                tile.OnMouseHover -= BaseTile_OnMouseHover;   
+        }
+
         public void PlaceTilesGameObjects(Dictionary<Vector2Int, ETileType> mapDictionary)
         {
             foreach (var mapEntry in mapDictionary)

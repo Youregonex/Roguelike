@@ -17,6 +17,7 @@ namespace Yg.MapGeneration
         public Vector2Int Origin { get; private set; }
         public ETileType TileType { get; private set; }
 
+        // A*
         public List<BaseTile> Neighbours { get; private set; } = new();
  
         public float G { get; private set; }
@@ -25,7 +26,7 @@ namespace Yg.MapGeneration
 
         public BaseTile PreviousTile { get; private set; }
 
-        public void Initialize(Vector2Int origin, ETileType tileType, bool isWalkable)
+        public void Initialize(Vector2Int origin, ETileType tileType, bool isWalkable = true)
         {
             Origin = origin;
             TileType = tileType;

@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yg.MapGeneration;
 using Yg.YgPathFinder;
+using System;
+using Yg.FOW;
 
 namespace Yg.PlayerCharacter
 {
     public class Character : MonoBehaviour
     {
+        public event Action OnTilePositionSnap;
+
         [CustomHeader("Settings")]
         [SerializeField] private float _moveSpeed;
 
@@ -19,6 +23,7 @@ namespace Yg.PlayerCharacter
         private bool _isInitialized = false;
         private bool _isMoving = false;
         private Vector2 _currentMovementPoint;
+
         private Coroutine _currentMoveCoroutine;
 
         public void Initialize(TileGameObjectPlacer tileGameObjectPlacer)
@@ -26,6 +31,9 @@ namespace Yg.PlayerCharacter
             _tileGameObjectPlacer = tileGameObjectPlacer;
             _tileGameObjectPlacer.OnTileHighlight += TileGameObjectPlacer_OnTileHighlight;
             _isInitialized = true;
+
+            PlayerFogOfWar playerFogOfWar = GetComponentInChildren<PlayerFogOfWar>();
+            playerFogOfWar.Initialize(this);
         }
 
         private void TileGameObjectPlacer_OnTileHighlight(BaseTile hoveredTile)
@@ -93,6 +101,7 @@ namespace Yg.PlayerCharacter
                 }
 
                 transform.position = new(_currentPath[i].Origin.x, _currentPath[i].Origin.y);
+                OnTilePositionSnap?.Invoke();
             }
 
             _currentPath.Clear();
