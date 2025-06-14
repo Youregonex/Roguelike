@@ -7,7 +7,6 @@ namespace Yg.GameConfigs
     {
         [field: SerializeField] public int PointsAmountMin { get; private set; }
         [field: SerializeField] public int PointsAmountMax { get; private set; }
-        [field: SerializeField] public EPointOfInterestType PointType { get; protected set; }
         [field: SerializeField] public Tile PointTile { get; protected set; }
 
         private void OnValidate()

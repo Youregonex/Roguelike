@@ -1,36 +1,36 @@
 using UnityEngine;
 using Yg.MapGeneration;
-using Yg.PlayerCharacter;
+using Yg.Player;
 using Zenject;
 using System.Collections.Generic;
+using Yg.GameData;
 
 namespace Yg.EntryPoint
 {
     public class GameplaySceneEntryPoint : MonoBehaviour
     {
-        [CustomHeader("TEST")]
-        [SerializeField] private Character _characterPrefab;
-
+        private PersistentData _persistentData;
         private MapAssembler _mapAssembler;
         private Tileplacer _tileplacer;
         private TileGameObjectPlacer _tileGameObjectPlacer;
         private PointOfInterestPlacer _pointOfInterestPlacer;
-
-        private DiContainer _diContainer;
+        private PlayerSpawner _playerSpawner;
 
         [Inject]
         private void Construct(
-            DiContainer diContainer,
+            PersistentData persistentData,
             MapAssembler mapAssembler,
             Tileplacer tileplacer,
             TileGameObjectPlacer tileGameObjectPlacer,
-            PointOfInterestPlacer pointOfInterestPlacer)
+            PointOfInterestPlacer pointOfInterestPlacer,
+            PlayerSpawner playerSpawner)
         {
-            _diContainer = diContainer;
             _mapAssembler = mapAssembler;
             _tileplacer = tileplacer;
             _tileGameObjectPlacer = tileGameObjectPlacer;
             _pointOfInterestPlacer = pointOfInterestPlacer;
+            _persistentData = persistentData;
+            _playerSpawner = playerSpawner;
         }
 
         private void Awake()
@@ -38,19 +38,35 @@ namespace Yg.EntryPoint
             InitializeScene();
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+                _persistentData.SaveData();
+
+            if (Input.GetKeyDown(KeyCode.G))
+                _persistentData.LoadData();
+        }
+
         private void InitializeScene()
         {
-            Dictionary<Vector2Int, ETileType> mapDictionary = InitializeMapAssembler();
+            bool fromSaveData = false;
+
+            if (!_persistentData.DataIsEmpty())
+            {
+                _persistentData.RestoreState();
+                fromSaveData = true;
+            }
+
+            Dictionary<Vector2Int, ETileType> mapDictionary = InitializeMapAssembler(fromSaveData);
             InitializeTilePlacer(mapDictionary);
             InitializeTileGameObjectPlacer(mapDictionary);
             InitializePointOfInterestPlacer();
-
-            SpawnPlayer();
+            InitializePlayerSpawner();
         }
 
-        private Dictionary<Vector2Int, ETileType> InitializeMapAssembler()
+        private Dictionary<Vector2Int, ETileType> InitializeMapAssembler(bool fromSaveData)
         {
-            _mapAssembler.Initialize();
+            _mapAssembler.Initialize(fromSaveData);
             return _mapAssembler.AssembleMap();
         }
 
@@ -72,10 +88,10 @@ namespace Yg.EntryPoint
             _pointOfInterestPlacer.PlacePointsOfInterest();
         }
 
-        private void SpawnPlayer()
+        private void InitializePlayerSpawner()
         {
-            Character character = _diContainer.InstantiatePrefab(_characterPrefab, new Vector2(0, 0), Quaternion.identity, null).GetComponent<Character>();
-            character.Initialize(_tileGameObjectPlacer);
+            _playerSpawner.Initialize();
+            _playerSpawner.SpawnPlayer();
         }
     }
 }

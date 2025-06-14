@@ -8,10 +8,12 @@ namespace Yg.MapGeneration
     {
         public event Action<BaseTile> OnMouseHover;
 
-        [CustomHeader("Settings")]
-        [SerializeField] private GameObject _tileHoverHighlight;
+        private const int  DEFAULT_MOVE_COST = 10;
+        private const int  DIAGONAL_MOVE_COST = 14;
+
         [field: SerializeField] public bool Walkable { get; private set; } = true;
 
+        private GameObject _tileHoverHighlight;
         private IPointOfInterest _pointOfInterest;
 
         public Vector2Int Origin { get; private set; }
@@ -35,7 +37,8 @@ namespace Yg.MapGeneration
             TileType = tileType;
             Walkable = isWalkable;
 
-            _tileHoverHighlight.gameObject.SetActive(false);
+            _tileHoverHighlight = transform.GetChild(0).gameObject;
+            _tileHoverHighlight.SetActive(false);
         }
 
         public float GetDistanceToTile(BaseTile baseTile)
@@ -47,9 +50,7 @@ namespace Yg.MapGeneration
 
             var horizontalMovesRequired = highest - lowest;
 
-            var defaultTileMoveCost = 10;
-            var diagonalTileMoveCost = 14;
-            return lowest * diagonalTileMoveCost + horizontalMovesRequired * defaultTileMoveCost;
+            return lowest * DIAGONAL_MOVE_COST + horizontalMovesRequired * DEFAULT_MOVE_COST;
         }
 
         public void SetG(float g) => G = g;

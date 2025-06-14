@@ -12,8 +12,6 @@ namespace Yg.GameConfigs
         {
             Validate();
 
-            PointType = EPointOfInterestType.Castle;
-
             if (CastleAreaWidth % 2 == 0) CastleAreaWidth++;
             if (CastleAreaWidth < 0) CastleAreaWidth *= -1;
 

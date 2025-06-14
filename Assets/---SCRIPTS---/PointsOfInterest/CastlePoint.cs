@@ -1,26 +1,34 @@
+using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Yg.GameConfigs;
 
 namespace Yg.MapGeneration
 {
     public class CastlePoint : BasePointOfInterest
     {
-        public int CastleAreaWidth { get; private set; }
-        public int CastleAreaHeight { get; private set; }
+        [JsonProperty] public Vector2Int CastleOrigin { get; private set; }
 
-        public Vector2Int CastleOrigin { get; private set; }
+        public CastlePoint() { }
 
-        public CastlePoint(CastlePointOfInterestConfigSO castlePointOfInterestConfigSO, Vector2Int origin) : base(castlePointOfInterestConfigSO)
+        public CastlePoint(
+            CastlePointOfInterestConfigSO castlePointOfInterestConfigSO,
+            Vector2Int origin,
+            Vector2Int position)
+            : base(position)
         {
-            CastleAreaWidth = castlePointOfInterestConfigSO.CastleAreaWidth;
-            CastleAreaHeight = castlePointOfInterestConfigSO.CastleAreaHeight;
-
+            PointType = EPointOfInterestType.Castle;
             CastleOrigin = origin;
         }
 
         public override void Interact()
         {
-            Debug.Log("Castle");
+            Debug.Log($"Castle origin: {CastleOrigin}");
+        }
+
+        public override Tile GetPointTile()
+        {
+            return ResourceLoader.CONFIG_CastlePointOfInterest.PointTile;
         }
     }
 }

@@ -8,7 +8,6 @@ namespace Yg.GameConfigs
         private void OnValidate()
         {
             Validate();
-            PointType = EPointOfInterestType.Town;
         }
     }
 }

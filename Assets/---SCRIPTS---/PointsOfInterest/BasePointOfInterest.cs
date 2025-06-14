@@ -1,19 +1,23 @@
 using UnityEngine.Tilemaps;
-using Yg.GameConfigs;
+using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Yg.MapGeneration
 {
+    [JsonConverter(typeof(PointOfInterestConverter))]
     public abstract class BasePointOfInterest : IPointOfInterest
     {
-        public EPointOfInterestType PointType { get; private set; }
-        public Tile PointTile { get; private set; }
+        [JsonProperty] public Vector2Int PointPosition { get; protected set; }
+        [JsonProperty] public EPointOfInterestType PointType { get; protected set; }
 
-        public BasePointOfInterest(BasePointOfInterestConfigSO basePointOfInterestConfigSO)
+        public BasePointOfInterest() { }
+
+        public BasePointOfInterest(Vector2Int position)
         {
-            PointType = basePointOfInterestConfigSO.PointType;
-            PointTile = basePointOfInterestConfigSO.PointTile;
+            PointPosition = position;
         }
 
         public abstract void Interact();
+        public abstract Tile GetPointTile();
     }
 }

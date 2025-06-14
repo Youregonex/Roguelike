@@ -21,7 +21,7 @@ namespace Yg.MapGeneration
 
         public void Initialize()
         {
-            _tileTypeToTileConfig = ConfigLoader.TileTypeToTileConfig;
+            _tileTypeToTileConfig = ResourceLoader.CONFIG_TileTypeToTile;
         }
 
         public void PlaceGroundTiles(Dictionary<Vector2Int, ETileType> mapDictionary)
@@ -41,21 +41,10 @@ namespace Yg.MapGeneration
             PlaceInitialFOW(mapDictionary);
         }
 
-        private void PlaceInitialFOW(Dictionary<Vector2Int, ETileType> mapDictionary)
-        {
-            foreach (var mapEntry in mapDictionary)
-                PlaceUnvisiterFOW(mapEntry.Key);
-        }
-
         public void PlacePointOfInterestTile(Vector2Int position, Tile tile)
         {
             _groundTilemap.SetTile((Vector3Int)position, null);
             _pointOfInterestTilemap.SetTile((Vector3Int)position, tile);
-        }
-
-        public void PlaceUnvisiterFOW(Vector2Int position)
-        {
-            _fowTilemap.SetTile((Vector3Int)position, _fowUnvisitedTile);
         }
 
         public void PlaceVisitedFOW(Vector2Int position)
@@ -66,6 +55,17 @@ namespace Yg.MapGeneration
         public void RemoveFOW(Vector2Int position)
         {
             _fowTilemap.SetTile((Vector3Int)position, null);
+        }
+
+        private void PlaceInitialFOW(Dictionary<Vector2Int, ETileType> mapDictionary)
+        {
+            foreach (var mapEntry in mapDictionary)
+                PlaceUnvisiterFOW(mapEntry.Key);
+        }
+
+        private void PlaceUnvisiterFOW(Vector2Int position)
+        {
+            _fowTilemap.SetTile((Vector3Int)position, _fowUnvisitedTile);
         }
     }
 }

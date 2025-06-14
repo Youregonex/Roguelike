@@ -10,7 +10,6 @@ namespace Yg.GameConfigs
         private void OnValidate()
         {
             Validate();
-            PointType = EPointOfInterestType.Resource;
 
             if (ResourceAmount < 0) ResourceAmount *= -1;
         }
