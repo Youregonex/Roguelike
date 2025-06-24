@@ -76,9 +76,22 @@ namespace Yg.Player.FOW
 
         private void ComputeVisionOffsets()
         {
-            for (int x = -_visionRange / 2; x <= _visionRange / 2; x++)
-                for (int y = -_visionRange / 2; y <= _visionRange / 2; y++)
-                    _visionOffsetSet.Add(new Vector2Int(x, y));
+            //for (int x = -_visionRange / 2; x <= _visionRange / 2; x++)
+            //    for (int y = -_visionRange / 2; y <= _visionRange / 2; y++)
+            //        _visionOffsetSet.Add(new Vector2Int(x, y));
+
+            for (int x = -_visionRange; x <= _visionRange; x++)
+            {
+                for (int y = -_visionRange; y <= _visionRange; y++)
+                {
+                    if (Mathf.Abs(x) == _visionRange || Mathf.Abs(y) == _visionRange) continue;
+
+                    if (x * x + y * y <= _visionRange * _visionRange)
+                    {
+                        _visionOffsetSet.Add(new Vector2Int(x, y));
+                    }
+                }
+            }
         }
 
         private void PlayerCharacter_OnTilePositionSnap()
@@ -89,7 +102,7 @@ namespace Yg.Player.FOW
         private void UpdateFOW()
         {
             Vector2Int currentPosition;
-            Vector2Int characterPosition = new((int)transform.position.x, (int)transform.position.y);
+            Vector2Int characterPosition = Vector2Int.RoundToInt(transform.position);
             _currentVisionSet.Clear();
 
             foreach (var visionOffset in _visionOffsetSet)
@@ -130,11 +143,6 @@ namespace Yg.Player.FOW
                 _tileGameObjectPlacer.RevealTileAt(position);
                 _tileplacer?.PlaceVisitedFOW(position);
             }
-        }
-
-        private void OnValidate()
-        {
-            if (_visionRange % 2 == 0) _visionRange++;
         }
     }
 }

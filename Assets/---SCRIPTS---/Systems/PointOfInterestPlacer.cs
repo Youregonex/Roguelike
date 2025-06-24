@@ -34,7 +34,7 @@ namespace Yg.MapGeneration
 
         public void PlacePointsOfInterest()
         {
-            if(_pointOfInterestList != null && _pointOfInterestList.Count > 0)
+            if(_pointOfInterestList is not null && _pointOfInterestList.Count > 0)
             {
                 LoadPointsOfInterest();
                 return;
@@ -56,7 +56,7 @@ namespace Yg.MapGeneration
             var pointOfInterestSaveDataList = data as List<BasePointOfInterest>
                 ?? JsonConvert.DeserializeObject<List<BasePointOfInterest>>(JsonConvert.SerializeObject(data));
 
-            if (pointOfInterestSaveDataList == null)
+            if (pointOfInterestSaveDataList is null)
             {
                 Debug.LogError("Data is null!");
                 return;

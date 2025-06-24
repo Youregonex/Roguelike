@@ -9,6 +9,7 @@ namespace Yg.MapGeneration
     {
         [CustomHeader("Tilemaps")]
         [SerializeField] private Tilemap _groundTilemap;
+        [SerializeField] private Tilemap _environmentTilemap;
         [SerializeField] private Tilemap _pointOfInterestTilemap;
         [SerializeField] private Tilemap _fowTilemap;
 
@@ -31,11 +32,15 @@ namespace Yg.MapGeneration
                 Debug.Log("TileTypeToTileConfig is null!");
                 return;
             }
-            
+
+            PlaceInitialGroundTiles(mapDictionary);
+
             foreach (var mapEntry in mapDictionary)
             {
+                if (mapEntry.Value == ETileType.Meadow) continue;
+
                 Tile tileToPlace = _tileTypeToTileConfig.GetTileFromType(mapEntry.Value);
-                _groundTilemap.SetTile((Vector3Int)mapEntry.Key, tileToPlace);
+                _environmentTilemap.SetTile((Vector3Int)mapEntry.Key, tileToPlace);
             }
 
             PlaceInitialFOW(mapDictionary);
@@ -43,7 +48,7 @@ namespace Yg.MapGeneration
 
         public void PlacePointOfInterestTile(Vector2Int position, Tile tile)
         {
-            _groundTilemap.SetTile((Vector3Int)position, null);
+            _environmentTilemap.SetTile((Vector3Int)position, null);
             _pointOfInterestTilemap.SetTile((Vector3Int)position, tile);
         }
 
@@ -66,6 +71,15 @@ namespace Yg.MapGeneration
         private void PlaceUnvisiterFOW(Vector2Int position)
         {
             _fowTilemap.SetTile((Vector3Int)position, _fowUnvisitedTile);
+        }
+
+        private void PlaceInitialGroundTiles(Dictionary<Vector2Int, ETileType> mapDictionary)
+        {
+            foreach (var mapEntry in mapDictionary)
+            {
+                Tile tileToPlace = _tileTypeToTileConfig.GetTileFromType(ETileType.Meadow);
+                _groundTilemap.SetTile((Vector3Int)mapEntry.Key, tileToPlace);
+            }
         }
     }
 }

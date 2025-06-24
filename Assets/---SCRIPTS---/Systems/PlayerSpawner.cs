@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 using Yg.SaveLoad;
@@ -13,6 +12,8 @@ namespace Yg.Player
 
         private PlayerSaveData _playerSaveData = null;
         private DiContainer _container;
+
+        public PlayerCharacter Character => _character;
 
         [Inject]
         private void Construct(DiContainer container)

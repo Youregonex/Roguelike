@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <PointsAmountMin>k__BackingField: 7
   <PointsAmountMax>k__BackingField: 14
-  <PointType>k__BackingField: 4
-  <PointTile>k__BackingField: {fileID: 11400000, guid: a81f45d2edefc4f06ae236d786acbd54, type: 2}
+  <PointTile>k__BackingField: {fileID: 11400000, guid: f0712a6ab34e64cf7a592ac91a7134f3, type: 2}

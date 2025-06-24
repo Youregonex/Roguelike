@@ -62,6 +62,7 @@ namespace Yg.EntryPoint
             InitializeTileGameObjectPlacer(mapDictionary);
             InitializePointOfInterestPlacer();
             InitializePlayerSpawner();
+            MoveCameraInPosition();
         }
 
         private Dictionary<Vector2Int, ETileType> InitializeMapAssembler(bool fromSaveData)
@@ -92,6 +93,14 @@ namespace Yg.EntryPoint
         {
             _playerSpawner.Initialize();
             _playerSpawner.SpawnPlayer();
+        }
+
+        private void MoveCameraInPosition()
+        {
+            Camera mainCamera = Camera.main;
+            Vector3 cameraPosition = _playerSpawner.Character.transform.position;
+            cameraPosition.z = -10;
+            mainCamera.transform.position = cameraPosition;
         }
     }
 }

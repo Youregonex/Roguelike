@@ -12,9 +12,19 @@ namespace Yg.GameConfigs
 
         public Tile GetTileFromType(ETileType tileType)
         {
-            Tile tile = TypeToTileList.Where(entry => entry.TileType == tileType).First().Tile;
+            TypeToTile typeToTile = TypeToTileList.Where(entry => entry.TileType == tileType).First();
 
-            if (tile == null)
+            if(typeToTile is null)
+            {
+                Debug.LogError($"Couldn't find tile for type: {tileType}");
+                return null;
+            }
+
+            int randomTileIndex = UnityEngine.Random.Range(0, typeToTile.TileList.Count);
+            Tile tile = typeToTile.TileList[randomTileIndex];
+
+
+            if (tile is null)
             {
                 Debug.Log($"Couldn't find proper tile for {tileType} TileType!");
                 return null;
@@ -28,6 +38,6 @@ namespace Yg.GameConfigs
     public class TypeToTile
     {
         [field: SerializeField] public ETileType TileType { get; private set; }
-        [field: SerializeField] public Tile Tile { get; private set; }
+        [field: SerializeField] public List<Tile> TileList { get; private set; }
     }
 }

@@ -52,13 +52,13 @@ namespace Yg.MapGeneration
         public void HighlightTiles(List<BaseTile> tiles)
         {
             foreach (var tile in tiles)
-                tile.Highlight();
+                tile.PathHighlight();
         }
 
         public void UnhighlightTiles(List<BaseTile> tiles)
         {
             foreach (var tile in tiles)
-                tile.Unhighlight();
+                tile.PathUnhighlight();
         }
 
         private void BaseTile_OnMouseHover(BaseTile hoveredTile)

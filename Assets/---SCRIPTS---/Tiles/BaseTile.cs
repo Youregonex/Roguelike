@@ -8,12 +8,16 @@ namespace Yg.MapGeneration
     {
         public event Action<BaseTile> OnMouseHover;
 
+        [CustomHeader("Settings")]
+        [SerializeField] private GameObject _mouseHighlight;
+        [SerializeField] private GameObject _pathHighlight;
+
         private const int  DEFAULT_MOVE_COST = 10;
         private const int  DIAGONAL_MOVE_COST = 14;
 
-        [field: SerializeField] public bool Walkable { get; private set; } = true;
+        public bool Walkable { get; private set; } = true;
+        public bool PlayerWalkable => Walkable && IsRevealed;
 
-        private GameObject _tileHoverHighlight;
         private IPointOfInterest _pointOfInterest;
 
         public Vector2Int Origin { get; private set; }
@@ -29,7 +33,6 @@ namespace Yg.MapGeneration
 
         // FOW
         public bool IsRevealed { get; private set; } = false;
-        public bool PlayerWalkable => Walkable && IsRevealed;
 
         public void Initialize(Vector2Int origin, ETileType tileType, bool isWalkable = true)
         {
@@ -37,8 +40,8 @@ namespace Yg.MapGeneration
             TileType = tileType;
             Walkable = isWalkable;
 
-            _tileHoverHighlight = transform.GetChild(0).gameObject;
-            _tileHoverHighlight.SetActive(false);
+            _pathHighlight.SetActive(false);
+            _mouseHighlight.SetActive(false);
         }
 
         public float GetDistanceToTile(BaseTile baseTile)
@@ -57,8 +60,11 @@ namespace Yg.MapGeneration
         public void SetH(float h) => H = h;
         public void SetPreviousTile(BaseTile previousTile) => PreviousTile = previousTile;
 
-        public void Highlight() => _tileHoverHighlight.SetActive(true);
-        public void Unhighlight() => _tileHoverHighlight.SetActive(false);
+        public void PathHighlight() => _pathHighlight.SetActive(true);
+        public void PathUnhighlight() => _pathHighlight.SetActive(false);
+
+        public void MouseHighlight() => _mouseHighlight.SetActive(true);
+        public void MouseUnhighlight() => _mouseHighlight.SetActive(false);
 
         public void AssignPointOfInterest(IPointOfInterest pointOfInterest)
         {
@@ -100,13 +106,14 @@ namespace Yg.MapGeneration
 
         private void OnMouseEnter()
         {
-            _tileHoverHighlight.gameObject.SetActive(true);
+            MouseHighlight();
             OnMouseHover?.Invoke(this);
         }
 
         private void OnMouseExit()
         {
-            _tileHoverHighlight.gameObject.SetActive(false);
+            MouseUnhighlight();
+            _mouseHighlight.gameObject.SetActive(false);
         }
     }
 }
