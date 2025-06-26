@@ -6,14 +6,13 @@ namespace Yg.MapGeneration
 {
     public class BaseTile : MonoBehaviour
     {
+        private const int  DEFAULT_MOVE_COST = 10;
+        private const int  DIAGONAL_MOVE_COST = 14;
+
         public event Action<BaseTile> OnMouseHover;
 
         [CustomHeader("Settings")]
-        [SerializeField] private GameObject _mouseHighlight;
         [SerializeField] private GameObject _pathHighlight;
-
-        private const int  DEFAULT_MOVE_COST = 10;
-        private const int  DIAGONAL_MOVE_COST = 14;
 
         public bool Walkable { get; private set; } = true;
         public bool PlayerWalkable => Walkable && IsRevealed;
@@ -25,7 +24,6 @@ namespace Yg.MapGeneration
 
         // A*
         public List<BaseTile> Neighbours { get; private set; } = new();
- 
         public BaseTile PreviousTile { get; private set; }
         public float G { get; private set; }
         public float H { get; private set; }
@@ -41,7 +39,6 @@ namespace Yg.MapGeneration
             Walkable = isWalkable;
 
             _pathHighlight.SetActive(false);
-            _mouseHighlight.SetActive(false);
         }
 
         public float GetDistanceToTile(BaseTile baseTile)
@@ -62,9 +59,7 @@ namespace Yg.MapGeneration
 
         public void PathHighlight() => _pathHighlight.SetActive(true);
         public void PathUnhighlight() => _pathHighlight.SetActive(false);
-
-        public void MouseHighlight() => _mouseHighlight.SetActive(true);
-        public void MouseUnhighlight() => _mouseHighlight.SetActive(false);
+        public void RevealTile() => IsRevealed = true;
 
         public void AssignPointOfInterest(IPointOfInterest pointOfInterest)
         {
@@ -97,8 +92,6 @@ namespace Yg.MapGeneration
             }
         }
 
-        public void RevealTile() => IsRevealed = true;
-
         private void OnMouseDown()
         {
             _pointOfInterest?.Interact();
@@ -106,14 +99,7 @@ namespace Yg.MapGeneration
 
         private void OnMouseEnter()
         {
-            MouseHighlight();
             OnMouseHover?.Invoke(this);
-        }
-
-        private void OnMouseExit()
-        {
-            MouseUnhighlight();
-            _mouseHighlight.gameObject.SetActive(false);
         }
     }
 }

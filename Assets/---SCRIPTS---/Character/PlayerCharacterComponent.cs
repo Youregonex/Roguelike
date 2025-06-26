@@ -1,9 +1,18 @@
 using UnityEngine;
-using Yg.Player;
 
-public abstract class PlayerCharacterComponent : MonoBehaviour
+namespace Yg.Player
 {
-    public abstract void InitializeComponent(PlayerCharacter playerCharacter);
-    public abstract void SaveComponent(PlayerSaveData playerSaveData);
-    public abstract void LoadComponent(PlayerSaveData playerSaveData);    
+    public abstract class PlayerCharacterComponent : MonoBehaviour
+    {
+        protected PlayerCore _playerCore;
+        protected bool _componentLoaded = false;
+
+        public virtual void InitializeComponent(PlayerCore playerCore)
+        {
+            _playerCore = playerCore;
+        }
+
+        public abstract void SaveComponent(PlayerSaveData playerSaveData);
+        public abstract void LoadComponent(PlayerSaveData playerSaveData);
+    }
 }

@@ -782,7 +782,7 @@ TextureImporter:
         width: 7
         height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -790,6 +790,90 @@ TextureImporter:
       bones: []
       spriteID: 2fc54e01006c545948dd18e36d3b9d2e
       internalID: -657469096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow_Green_Right
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 195
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8272ce40a5cb4ee4a3dc9e86bd7293d
+      internalID: 2124650564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Water
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 597
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb2ce8521049b4175937794a16c6f445
+      internalID: -2091128522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unit_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 560
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca9ff7d3a3a214d43b6de1cb49f618d8
+      internalID: 324477005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unit_2
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 544
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 918ac48dd088c4b0b893881a23e64c37
+      internalID: 1545182197
       vertices: []
       indices: 
       edges: []
@@ -805,6 +889,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Arrow_Green_Right: 2124650564
       Building_1: -1920284365
       Building_2: 48788953
       Building_3: 2048881998
@@ -836,8 +921,11 @@ TextureImporter:
       Resource_2: -2037707567
       Resource_3: -1716700117
       Resource_4: -582364873
+      Unit_1: 1342531098
+      Unit_2: 1545182197
       Village_1: -165242511
       Village_2: 929077552
+      Water: -2091128522
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

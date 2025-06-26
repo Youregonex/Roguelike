@@ -12,16 +12,15 @@ namespace Yg.Player.FOW
         [SerializeField] private int _visionRange;
 
         private Tileplacer _tileplacer;
-        private PlayerCharacter _playerCharacter;
         private MapAssembler _mapAssembler;
         private TileGameObjectPlacer _tileGameObjectPlacer;
+        private PlayerMovementComponent _playerMovementComponent;
 
         private HashSet<Vector2Int> _revealedTilePositionSet = new();
 
         private readonly HashSet<Vector2Int> _visionOffsetSet = new();
         private readonly HashSet<Vector2Int> _cachedVisionSet = new();
         private readonly HashSet<Vector2Int> _currentVisionSet = new();
-
 
         [Inject]
         private void Construct(Tileplacer tileplacer, MapAssembler mapAssembler, TileGameObjectPlacer tileGameObjectPlacer)
@@ -31,10 +30,10 @@ namespace Yg.Player.FOW
             _tileGameObjectPlacer = tileGameObjectPlacer;
         }
 
-        public override void InitializeComponent(PlayerCharacter playerCharacter)
+        public override void InitializeComponent(PlayerCore playerCharacter)
         {
-            _playerCharacter = playerCharacter;
-            _playerCharacter.OnTilePositionSnap += PlayerCharacter_OnTilePositionSnap;
+            _playerMovementComponent = transform.root.GetComponent<PlayerCore>().GetPlayerComponent<PlayerMovementComponent>();
+            _playerMovementComponent.OnTilePositionSnap += PlayerCharacter_OnTilePositionSnap;
 
             ComputeVisionOffsets();
 
@@ -46,7 +45,7 @@ namespace Yg.Player.FOW
 
         private void OnDestroy()
         {
-            _playerCharacter.OnTilePositionSnap -= PlayerCharacter_OnTilePositionSnap;
+            _playerMovementComponent.OnTilePositionSnap -= PlayerCharacter_OnTilePositionSnap;
         }
 
         public override void SaveComponent(PlayerSaveData playerSaveData)
@@ -59,27 +58,23 @@ namespace Yg.Player.FOW
             _revealedTilePositionSet = playerSaveData.RevealedFOWSet;
         }
 
-        public object CaptureState()
-        {
-            return _revealedTilePositionSet;
-        }
+        //public object CaptureState()
+        //{
+        //    return _revealedTilePositionSet;
+        //}
 
-        public void RestoreState(object data)
-        {
-            var saveData = data as HashSet<Vector2Int>
-                ?? JsonConvert.DeserializeObject<HashSet<Vector2Int>>(JsonConvert.SerializeObject(data));
+        //public void RestoreState(object data)
+        //{
+        //    var saveData = data as HashSet<Vector2Int>
+        //        ?? JsonConvert.DeserializeObject<HashSet<Vector2Int>>(JsonConvert.SerializeObject(data));
 
-            if (saveData == null) Debug.LogError("Data is null");
+        //    if (saveData == null) Debug.LogError("Data is null");
 
-            _revealedTilePositionSet = saveData;
-        }
+        //    _revealedTilePositionSet = saveData;
+        //}
 
         private void ComputeVisionOffsets()
         {
-            //for (int x = -_visionRange / 2; x <= _visionRange / 2; x++)
-            //    for (int y = -_visionRange / 2; y <= _visionRange / 2; y++)
-            //        _visionOffsetSet.Add(new Vector2Int(x, y));
-
             for (int x = -_visionRange; x <= _visionRange; x++)
             {
                 for (int y = -_visionRange; y <= _visionRange; y++)

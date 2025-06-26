@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Yg.MapGeneration;
@@ -7,55 +6,38 @@ namespace Yg.YgPathFinder
 {
     public class Pathfinder
     {
-        public static List<BaseTile> FindPath(BaseTile startTile, BaseTile targetTile, bool playerPath = false)
+        public static List<BaseTile> FindPath(BaseTile startTile, BaseTile targetTile, bool playerPath = false, int maxSteps = -1)
         {
-            var toSearch = new List<BaseTile>() { startTile };
-            var processed = new List<BaseTile>();
+            var toSearch = new HashSet<BaseTile>() { startTile };
+            var processed = new HashSet<BaseTile>();
 
             while (toSearch.Any())
             {
-                var current = toSearch[0];
-                foreach (var t in toSearch)
-                    if (t.F < current.F || t.F == current.F && t.H < current.H)
-                        current = t;
+                var current = toSearch.OrderBy(t => t.F).ThenBy(t => t.H).First();
 
                 processed.Add(current);
                 toSearch.Remove(current);
 
                 if (current == targetTile)
                 {
-                    var currentPathTile = targetTile;
-                    var path = new List<BaseTile>();
-                    var count = 100;
-                    while (currentPathTile != startTile)
-                    {
-                        path.Add(currentPathTile);
-                        currentPathTile = currentPathTile.PreviousTile;
-                        count--;
-                        if (count < 0) throw new Exception();
-                    }
-
-                    path.Reverse();
-                    return path;
+                    return ConstructPath(startTile, targetTile, maxSteps);
                 }
 
-                bool isTileWalkable;
                 foreach (var neighbor in current.Neighbours.Where(t => !processed.Contains(t)))
                 {
-                    isTileWalkable = playerPath ? neighbor.PlayerWalkable : neighbor.Walkable;
+                    bool isTileWalkable = playerPath ? neighbor.PlayerWalkable : neighbor.Walkable;
                     if (!isTileWalkable) continue;
 
-                    var inSearch = toSearch.Contains(neighbor);
                     var costToNeighbor = current.G + current.GetDistanceToTile(neighbor);
 
-                    if (!inSearch || costToNeighbor < neighbor.G)
+                    if (!toSearch.Contains(neighbor) || costToNeighbor < neighbor.G)
                     {
                         neighbor.SetG(costToNeighbor);
+                        neighbor.SetH(neighbor.GetDistanceToTile(targetTile));
                         neighbor.SetPreviousTile(current);
 
-                        if (!inSearch)
+                        if (!toSearch.Contains(neighbor))
                         {
-                            neighbor.SetH(neighbor.GetDistanceToTile(targetTile));
                             toSearch.Add(neighbor);
                         }
                     }
@@ -63,6 +45,26 @@ namespace Yg.YgPathFinder
             }
 
             return null;
+        }
+
+        private static List<BaseTile> ConstructPath(BaseTile startTile, BaseTile targetTile, int maxSteps)
+        {
+            var path = new List<BaseTile>();
+            var current = targetTile;
+
+            // Backtrack from target to start
+            while (current != null && current != startTile)
+            {
+                path.Add(current);
+                current = current.PreviousTile;
+            }
+
+            path.Reverse();
+
+            if (maxSteps > 0 && path.Count > maxSteps)
+                path = path.Take(maxSteps).ToList();
+
+            return path;
         }
     }
 }

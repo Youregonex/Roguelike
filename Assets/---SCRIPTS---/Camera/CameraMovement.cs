@@ -7,8 +7,8 @@ namespace Yg.CameraControl
         private const float DEFAULT_CAMERA_Z = -10f;
 
         [CustomHeader("Settings")]
-        [SerializeField] private float _movementSpeedModifier;
-        [SerializeField] private float _smoothTime;
+        [SerializeField] private float _movementSpeedModifier = 20f;
+        [SerializeField] private float _smoothTime = 1f;
 
         private float _horizontalAxisInput;
         private float _verticalAxisInput;

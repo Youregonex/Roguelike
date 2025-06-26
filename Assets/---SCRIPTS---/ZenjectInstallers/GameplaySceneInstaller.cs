@@ -1,6 +1,7 @@
 using UnityEngine;
 using Yg.MapGeneration;
 using Yg.Player;
+using Yg.UI;
 using Zenject;
 
 namespace Yg.ZenjectInstallers
@@ -14,6 +15,9 @@ namespace Yg.ZenjectInstallers
         [SerializeField] private PointOfInterestPlacer _pointOfInterestPlacer;
         [SerializeField] private PlayerSpawner _playerSpawner;
 
+        [CustomHeader("UI Components")]
+        [SerializeField] private MovementUI _movementUI;
+
 
         public override void InstallBindings()
         {
@@ -22,6 +26,8 @@ namespace Yg.ZenjectInstallers
             Container.Bind<MapAssembler>().FromInstance(_mapAssembler);
             Container.Bind<PointOfInterestPlacer>().FromInstance(_pointOfInterestPlacer);
             Container.Bind<PlayerSpawner>().FromInstance(_playerSpawner);
+
+            Container.Bind<MovementUI>().FromInstance(_movementUI);
         }
     }
 }

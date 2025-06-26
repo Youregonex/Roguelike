@@ -7,13 +7,13 @@ namespace Yg.Player
 {
     public class PlayerSpawner : MonoBehaviour, ISaveable
     {
-        private PlayerCharacter _characterPrefab;
-        private PlayerCharacter _character;
+        private PlayerCore _characterPrefab;
+        private PlayerCore _character;
 
         private PlayerSaveData _playerSaveData = null;
         private DiContainer _container;
 
-        public PlayerCharacter Character => _character;
+        public PlayerCore Character => _character;
 
         [Inject]
         private void Construct(DiContainer container)
@@ -28,7 +28,7 @@ namespace Yg.Player
 
         public void SpawnPlayer()
         {
-            _character = _container.InstantiatePrefab(_characterPrefab, Vector2.zero, Quaternion.identity, null).GetComponent<PlayerCharacter>();
+            _character = _container.InstantiatePrefab(_characterPrefab, Vector2.zero, Quaternion.identity, null).GetComponent<PlayerCore>();
             _character.Initialize(_playerSaveData);
         }
 

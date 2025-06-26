@@ -27,7 +27,7 @@ public static class ResourceLoader
     public static TownPointOfInterestConfigSO CONFIG_TownPointOfInterest;
 
     // Prefabs
-    public static PlayerCharacter PREFAB_PlayerCharacter;
+    public static PlayerCore PREFAB_PlayerCharacter;
 
 
     static ResourceLoader()
@@ -49,6 +49,6 @@ public static class ResourceLoader
 
     private static void LoadPrefabs()
     {
-        PREFAB_PlayerCharacter = Resources.Load<PlayerCharacter>(PREFAB_PLAYER_CHARACTER_PATH);
+        PREFAB_PlayerCharacter = Resources.Load<PlayerCore>(PREFAB_PLAYER_CHARACTER_PATH);
     }
 }
