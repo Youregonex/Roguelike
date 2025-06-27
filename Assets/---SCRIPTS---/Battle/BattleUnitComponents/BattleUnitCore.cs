@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Yg.Battle.BattleUnits
 {
+    [SelectionBase]
     public class BattleUnitCore : MonoBehaviour
     {
         public event Action<BattleUnitCore> OnDeath;
@@ -12,6 +13,7 @@ namespace Yg.Battle.BattleUnits
 
         private readonly HashSet<BattleUnitComponent> _battleUnitComponentList = new();
         private HashSet<BattleUnitCore> _targetList = new();
+        private HashSet<ITickableBattleUnitComponent> _tickableComponentSet = new();
 
         [CustomHeader("Debug")]
         [SerializeField] private EUnitFaction _unitFaction;
@@ -25,6 +27,12 @@ namespace Yg.Battle.BattleUnits
 
             GatherUnitComponents();
             InitializeUnitComponents();
+        }
+
+        private void Update()
+        {
+            foreach (var component in _tickableComponentSet)
+                component.Tick();
         }
 
         public T GetUnitComponent<T>() where T : BattleUnitComponent
@@ -73,7 +81,12 @@ namespace Yg.Battle.BattleUnits
         private void GatherUnitComponents()
         {
             foreach (var component in GetComponentsInChildren<BattleUnitComponent>())
+            {
                 _battleUnitComponentList.Add(component);
+
+                if (component is ITickableBattleUnitComponent)
+                    _tickableComponentSet.Add(component as ITickableBattleUnitComponent);
+            }
         }
 
         private void InitializeUnitComponents()

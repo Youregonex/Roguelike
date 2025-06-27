@@ -866,7 +866,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -874,6 +874,69 @@ TextureImporter:
       bones: []
       spriteID: 918ac48dd088c4b0b893881a23e64c37
       internalID: 1545182197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unit_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 560
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7e047c6cd2be491a9e832cd7cfa7532
+      internalID: 407625093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unit_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 544
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0a1b0d3b2d994ad0904e81adee42700
+      internalID: -33750763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arrow
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 504
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcab985993135437db35951a05d3e687
+      internalID: 1519626195
       vertices: []
       indices: 
       edges: []
@@ -889,6 +952,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Arrow: 1519626195
       Arrow_Green_Right: 2124650564
       Building_1: -1920284365
       Building_2: 48788953
@@ -923,6 +987,8 @@ TextureImporter:
       Resource_4: -582364873
       Unit_1: 1342531098
       Unit_2: 1545182197
+      Unit_3: 407625093
+      Unit_4: -33750763
       Village_1: -165242511
       Village_2: 929077552
       Water: -2091128522

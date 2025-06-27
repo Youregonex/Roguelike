@@ -3,23 +3,25 @@ using DG.Tweening;
 
 namespace Yg.Battle.BattleUnits
 {
-    public class BattleUnitAttackComponent : BattleUnitComponent
+    public class BattleUnitAttackComponent : BattleUnitComponent, ITickableBattleUnitComponent
     {
         [CustomHeader("Settings")]
-        [SerializeField] private float _attackRange;
-        [SerializeField] private float _attackCooldownMin;
-        [SerializeField] private float _attackCooldownMax;
-        [SerializeField] private float _attackDamageMin;
-        [SerializeField] private float _attackDamageMax;
-        [SerializeField] private float _distanceCheckInterval;
-        [SerializeField] private float _knockBackForce;
+        [SerializeField] protected float _attackRange;
+        [SerializeField] protected float _attackCooldownMin;
+        [SerializeField] protected float _attackCooldownMax;
+        [SerializeField] protected float _attackDamageMin;
+        [SerializeField] protected float _attackDamageMax;
+        [SerializeField] protected float _distanceCheckInterval;
+        [SerializeField] protected float _knockBackForce;
 
         [CustomHeader("Debug")]
-        [SerializeField] private float _attackCooldownCurrent = 0f;
-        [SerializeField] private BattleUnitAnimationComponent _battleUnitAnimationComponent;
-        [SerializeField] private BattleUnitTargetComponent _battleUnitTargetComponent;
+        [SerializeField] protected float _attackCooldownCurrent = 0f;
+        [SerializeField] protected BattleUnitAnimationComponent _battleUnitAnimationComponent;
+        [SerializeField] protected BattleUnitTargetComponent _battleUnitTargetComponent;
 
-        private Tween _attackTween;
+        protected Tween _attackTween;
+
+        public float AttackRange => _attackRange;
 
         public override void InitializeComponent(BattleUnitCore battleUnitCore)
         {
@@ -34,39 +36,39 @@ namespace Yg.Battle.BattleUnits
             InvokeRepeating("AttackDistanceCheck", randomDelay, _distanceCheckInterval);
         }
 
-        private void Update()
+        public virtual void Tick()
         {
             if (_attackCooldownCurrent > 0)
                 _attackCooldownCurrent -= Time.deltaTime;
         }
 
-        private void OnDestroy()
+        protected void OnDestroy()
         {
             if (_attackTween != null)
                 _attackTween.Kill();
         }
 
-        private void AttackDistanceCheck()
+        protected void AttackDistanceCheck()
         {
             if (_battleUnitTargetComponent.CurrentTarget is null || _attackCooldownCurrent > 0) return;
             if (Vector2.Distance(transform.position, _battleUnitTargetComponent.CurrentTarget.transform.position) <= _attackRange)
                 Attack(_battleUnitTargetComponent.CurrentTarget);
         }
 
-        private void Attack(BattleUnitCore battleUnitCore)
+        protected virtual void Attack(BattleUnitCore battleUnitCore)
         {
-            float attackDamage = UnityEngine.Random.Range(_attackDamageMin, _attackDamageMax);
-            DamageStruct damage = new(_battleUnitCore.transform, attackDamage, _knockBackForce);
+            float attackDamage = CalculateDamage();
+            DamageStruct damage = new(_battleUnitCore.UnitFaction, _battleUnitCore.transform.position, attackDamage, _knockBackForce);
 
             if (battleUnitCore.TryGetUnitComponent(out BattleUnitHealthComponent target))
                 target.TakeDamage(damage);
 
-            _attackCooldownCurrent = UnityEngine.Random.Range(_attackCooldownMin, _attackCooldownMax);
-            //_battleUnitAnimationComponent.PlayAttackAnimation();
+            _attackCooldownCurrent = CalculateAttackCooldown();
+            _battleUnitAnimationComponent.PlayAttackAnimation();
             PlayAttackAnimation(battleUnitCore.transform);
         }
 
-        private void PlayAttackAnimation(Transform targetTransform)
+        protected virtual void PlayAttackAnimation(Transform targetTransform)
         {
             _attackTween?.Complete();
 
@@ -102,6 +104,16 @@ namespace Yg.Battle.BattleUnits
                         _attackTween = null;
                     });
                 });
+        }
+
+        protected virtual float CalculateDamage()
+        {
+            return UnityEngine.Random.Range(_attackDamageMin, _attackDamageMax);
+        }
+
+        protected virtual float CalculateAttackCooldown()
+        {
+            return UnityEngine.Random.Range(_attackCooldownMin, _attackCooldownMax);
         }
     }
 }

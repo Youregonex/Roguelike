@@ -22,7 +22,7 @@ namespace Yg.Battle.BattleUnits
         private void BattleUnitHealthComponent_OnDamageTaken(DamageStruct damage)
         {
             Rigidbody2D rigidbody = transform.root.GetComponent<Rigidbody2D>();
-            var knockBackDirection = Utilities.GetDirectionVectorNormalized(transform.position, damage.Origin.position, true);
+            var knockBackDirection = Utilities.GetDirectionVectorNormalized(transform.position, damage.Origin, true);
             var knockBackForce = knockBackDirection * damage.KnockBackForce;
             rigidbody.AddForce(knockBackForce, ForceMode2D.Impulse);
         }

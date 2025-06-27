@@ -2,13 +2,13 @@ using UnityEngine;
 
 namespace Yg.Battle.BattleUnits
 {
-    public class BattleUnitMovementComponent : BattleUnitComponent
+    public class BattleUnitMovementComponent : BattleUnitComponent, ITickableBattleUnitComponent
     {
         [CustomHeader("Settings")]
         [SerializeField] private float _moveSpeed;
-        [SerializeField] private float _proximityThreshold;
 
         private BattleUnitTargetComponent _battleUnitTargetComponent;
+        private BattleUnitAttackComponent _battleUnitAttackComponent;
         private Rigidbody2D _rigidBody;
 
         private bool _movementLocked = false;
@@ -18,10 +18,11 @@ namespace Yg.Battle.BattleUnits
             base.InitializeComponent(battleUnitCore);
 
             _battleUnitTargetComponent = _battleUnitCore.GetUnitComponent<BattleUnitTargetComponent>();
+            _battleUnitAttackComponent = _battleUnitCore.GetUnitComponent<BattleUnitAttackComponent>();
             _rigidBody = _battleUnitCore.GetComponent<Rigidbody2D>();
         }
 
-        private void Update()
+        public void Tick()
         {
             MoveTowardsTarget();
         }
@@ -43,7 +44,10 @@ namespace Yg.Battle.BattleUnits
                 return;
             }
 
-            if (Vector2.Distance(transform.position, _battleUnitTargetComponent.CurrentTarget.transform.position) <= _proximityThreshold)
+            if (Vector2.Distance(
+                transform.position,
+                _battleUnitTargetComponent.CurrentTarget.transform.position)
+                <= _battleUnitAttackComponent.AttackRange)
             {
                 StopMovement();
                 return;
