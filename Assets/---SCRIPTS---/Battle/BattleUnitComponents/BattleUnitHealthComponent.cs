@@ -5,7 +5,7 @@ namespace Yg.Battle.BattleUnits
 {
     public class BattleUnitHealthComponent : BattleUnitComponent
     {
-        public event Action OnDamageTaken;
+        public event Action<DamageStruct> OnDamageTaken;
 
         [CustomHeader("Settings")]
         [SerializeField] private float _maxHealth;
@@ -24,7 +24,7 @@ namespace Yg.Battle.BattleUnits
             if (_currentHealth <= 0) return;
             
             _currentHealth -= damageStruct.DamageAmount;
-            OnDamageTaken?.Invoke();
+            OnDamageTaken?.Invoke(damageStruct);
 
             if (_currentHealth <= 0)
             {

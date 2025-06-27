@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 namespace Yg.Battle.BattleUnits
 {
@@ -11,16 +12,26 @@ namespace Yg.Battle.BattleUnits
         [SerializeField] private float _attackDamageMin;
         [SerializeField] private float _attackDamageMax;
         [SerializeField] private float _distanceCheckInterval;
+        [SerializeField] private float _knockBackForce;
 
-        private float _attackCooldownCurrent = 0f;
-        private BattleUnitAnimationComponent _battleUnitAnimationComponent;
+        [CustomHeader("Debug")]
+        [SerializeField] private float _attackCooldownCurrent = 0f;
+        [SerializeField] private BattleUnitAnimationComponent _battleUnitAnimationComponent;
+        [SerializeField] private BattleUnitTargetComponent _battleUnitTargetComponent;
+
+        private Tween _attackTween;
 
         public override void InitializeComponent(BattleUnitCore battleUnitCore)
         {
             base.InitializeComponent(battleUnitCore);
 
             _battleUnitAnimationComponent = _battleUnitCore.GetUnitComponent<BattleUnitAnimationComponent>();
-            InvokeRepeating("AttackDistanceCheck", 0f, _distanceCheckInterval);
+            _battleUnitTargetComponent = _battleUnitCore.GetUnitComponent<BattleUnitTargetComponent>();
+
+            float minDelay = .1f;
+            float maxDelay = .3f;
+            float randomDelay = UnityEngine.Random.Range(minDelay, maxDelay);
+            InvokeRepeating("AttackDistanceCheck", randomDelay, _distanceCheckInterval);
         }
 
         private void Update()
@@ -29,23 +40,68 @@ namespace Yg.Battle.BattleUnits
                 _attackCooldownCurrent -= Time.deltaTime;
         }
 
+        private void OnDestroy()
+        {
+            if (_attackTween != null)
+                _attackTween.Kill();
+        }
+
         private void AttackDistanceCheck()
         {
-            if (_battleUnitCore.CurrentTarget is null || _attackCooldownCurrent > 0) return;
-            if (Vector2.Distance(transform.position, _battleUnitCore.CurrentTarget.transform.position) <= _attackRange)
-                Attack(_battleUnitCore.CurrentTarget);
+            if (_battleUnitTargetComponent.CurrentTarget is null || _attackCooldownCurrent > 0) return;
+            if (Vector2.Distance(transform.position, _battleUnitTargetComponent.CurrentTarget.transform.position) <= _attackRange)
+                Attack(_battleUnitTargetComponent.CurrentTarget);
         }
 
         private void Attack(BattleUnitCore battleUnitCore)
         {
             float attackDamage = UnityEngine.Random.Range(_attackDamageMin, _attackDamageMax);
-            DamageStruct damage = new(_battleUnitCore.transform, attackDamage);
+            DamageStruct damage = new(_battleUnitCore.transform, attackDamage, _knockBackForce);
 
             if (battleUnitCore.TryGetUnitComponent(out BattleUnitHealthComponent target))
                 target.TakeDamage(damage);
 
             _attackCooldownCurrent = UnityEngine.Random.Range(_attackCooldownMin, _attackCooldownMax);
-            _battleUnitAnimationComponent.PlayAttackAnimation();
+            //_battleUnitAnimationComponent.PlayAttackAnimation();
+            PlayAttackAnimation(battleUnitCore.transform);
+        }
+
+        private void PlayAttackAnimation(Transform targetTransform)
+        {
+            _attackTween?.Complete();
+
+            if (targetTransform is null) return;
+
+            float animationDuration = .25f;
+            float moveAmount = .3f;
+
+            Vector2 moveDirection = (targetTransform.position - transform.position).normalized;
+            Vector2 targetPosition = (Vector2)transform.position + moveDirection * moveAmount;
+
+            BattleUnitMovementComponent battleUnitMovementComponent = _battleUnitCore.GetUnitComponent<BattleUnitMovementComponent>();
+            battleUnitMovementComponent.LockMovement();
+            Transform visualTransform = _battleUnitAnimationComponent.transform;
+
+            _attackTween = visualTransform
+                .DOMove(targetPosition, animationDuration / 2f)
+                .SetEase(Ease.InOutQuad)
+                .OnComplete(() =>
+                {
+                    if (visualTransform is null || _battleUnitCore is null)
+                    {
+                        _attackTween = null;
+                        return;
+                    }
+
+                    _attackTween = visualTransform
+                    .DOMove(_battleUnitCore.transform.position, animationDuration / 2f)
+                    .SetEase(Ease.InOutQuad)
+                    .OnComplete(() =>
+                    {
+                        battleUnitMovementComponent.UnlockMovement();
+                        _attackTween = null;
+                    });
+                });
         }
     }
 }

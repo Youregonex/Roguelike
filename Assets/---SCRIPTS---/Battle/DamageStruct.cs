@@ -6,11 +6,13 @@ namespace Yg.Battle
     {
         public Transform Origin;
         public float DamageAmount;
+        public float KnockBackForce;
 
-        public DamageStruct(Transform origin, float damageAmount)
+        public DamageStruct(Transform origin, float damageAmount, float knockBackForce)
         {
             Origin = origin;
             DamageAmount = damageAmount;
+            KnockBackForce = knockBackForce;
         }
     }
 }

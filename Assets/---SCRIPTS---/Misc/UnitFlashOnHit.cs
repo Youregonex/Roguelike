@@ -6,7 +6,7 @@ namespace Yg.Battle.BattleUnits
 
         private void Start()
         {
-            _battleUnitHealthComponent = transform.root.GetComponent<BattleUnitCore>().GetUnitComponent<BattleUnitHealthComponent>();
+            _battleUnitHealthComponent = Utilities.GetRootComponent<BattleUnitCore>(transform).GetUnitComponent<BattleUnitHealthComponent>();
             _battleUnitHealthComponent.OnDamageTaken += BattleUnitHealthComponent_OnDamageTaken;
         }
 
@@ -16,7 +16,7 @@ namespace Yg.Battle.BattleUnits
             StopAllCoroutines();
         }
 
-        private void BattleUnitHealthComponent_OnDamageTaken()
+        private void BattleUnitHealthComponent_OnDamageTaken(DamageStruct damage)
         {
             if (_flashCoroutine is not null)
                 StopAllCoroutines();
