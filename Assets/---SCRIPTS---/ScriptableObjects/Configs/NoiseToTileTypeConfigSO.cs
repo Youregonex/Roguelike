@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Yg.GameConfigs
+namespace Yg.GameData.Configs
 {
     [CreateAssetMenu(fileName = "NoiseToTileTypeConfigSO", menuName = "Configs/Tiles/NoiseToTileTypeConfigSO")]
     public class NoiseToTileTypeConfigSO : ScriptableObject

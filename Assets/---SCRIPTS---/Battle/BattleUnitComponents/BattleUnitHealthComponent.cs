@@ -13,16 +13,22 @@ namespace Yg.Battle.BattleUnits
         [CustomHeader("Debug")]
         [SerializeField] private float _currentHealth;
 
+        private BattleUnitPerkComponent _battleUnitPerkComponent;
+
         public override void InitializeComponent(BattleUnitCore battleUnitCore)
         {
             base.InitializeComponent(battleUnitCore);
             _currentHealth = _maxHealth;
+
+            _battleUnitPerkComponent = _battleUnitCore.GetUnitComponent<BattleUnitPerkComponent>();
         }
 
         public void TakeDamage(DamageStruct damageStruct)
         {
             if (_currentHealth <= 0) return;
-            
+
+            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnDamageTaken, ref damageStruct);
+
             _currentHealth -= damageStruct.DamageAmount;
             OnDamageTaken?.Invoke(damageStruct);
 

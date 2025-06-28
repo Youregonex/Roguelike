@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 977042484657474695, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
       propertyPath: m_Name
-      value: PlayerRangedUnit
+      value: Unit_Spearman
       objectReference: {fileID: 0}
     - target: {fileID: 1154765076459662554, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
       propertyPath: m_Controller
@@ -20,10 +20,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -0.022
       objectReference: {fileID: 0}
+    - target: {fileID: 3110892971783839802, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
+      propertyPath: _unitData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2bad18e386a284e7598f69906f3750f7, type: 2}
     - target: {fileID: 4417709261441411573, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 407625093, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+      objectReference: {fileID: 324477005, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
     - target: {fileID: 4417709261441411573, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -76,47 +80,17 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4140094569184694052, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 977042484657474695, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4921057327330253986}
     - targetCorrespondingSourceObject: {fileID: 4600745037547878110, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6092369988378903784}
-    - targetCorrespondingSourceObject: {fileID: 4455555359077764042, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7016667423176047221}
   m_SourcePrefab: {fileID: 100100000, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
---- !u!1 &6170223798354484672 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4455555359077764042, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
-  m_PrefabInstance: {fileID: 7526717999345014282}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7016667423176047221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6170223798354484672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be7e296356b724befa0ed1da5a47baa8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackRange: 15
-  _attackCooldownMin: 1
-  _attackCooldownMax: 2
-  _attackDamageMin: 5
-  _attackDamageMax: 10
-  _distanceCheckInterval: 0.5
-  _knockBackForce: 10
-  _attackCooldownCurrent: 0
-  _battleUnitAnimationComponent: {fileID: 0}
-  _battleUnitTargetComponent: {fileID: 0}
-  _projectilePrefab: {fileID: 6479707811003740384, guid: 9f53f3613dc9a46148ce835b42e8a22a, type: 3}
-  _projectileSpeed: 20
 --- !u!1 &6317819205086421204 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4600745037547878110, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
@@ -143,3 +117,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &7348573676188916365 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 977042484657474695, guid: 545a8abccc7af4085a66799aa54f7ce0, type: 3}
+  m_PrefabInstance: {fileID: 7526717999345014282}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4921057327330253986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348573676188916365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92a21972ccfd84a0e94b6d6145a9fe49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inspectorDisplayId: 54206216-c6e8-4512-9939-39bd015f083f
+  _id: 54206216-c6e8-4512-9939-39bd015f083f

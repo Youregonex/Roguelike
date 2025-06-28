@@ -3,7 +3,7 @@ using UnityEngine;
 using Yg.SaveLoad;
 using Zenject;
 
-namespace Yg.Player
+namespace Yg.Character
 {
     public class PlayerSpawner : MonoBehaviour, ISaveable
     {

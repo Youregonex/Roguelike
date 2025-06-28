@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Yg.GameConfigs;
+using Yg.GameData.Configs;
 
 namespace Yg.MapGeneration
 {

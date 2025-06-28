@@ -7,7 +7,7 @@ using Yg.UI;
 using Yg.YgPathFinder;
 using Zenject;
 
-namespace Yg.Player
+namespace Yg.Character
 {
     public class PlayerMovementComponent : PlayerCharacterComponent
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
-using Yg.GameConfigs;
+using Yg.GameData.Configs;
 
 namespace Yg.MapGeneration
 {

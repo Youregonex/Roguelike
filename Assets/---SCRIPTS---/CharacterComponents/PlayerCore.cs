@@ -4,7 +4,7 @@ using UnityEngine;
 using Yg.MapGeneration;
 using Zenject;
 
-namespace Yg.Player
+namespace Yg.Character
 {
     public class PlayerCore : MonoBehaviour
     {

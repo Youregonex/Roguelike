@@ -4,7 +4,7 @@ using Yg.MapGeneration;
 using Yg.YgPathFinder;
 using Zenject;
 
-namespace Yg.Player
+namespace Yg.Character
 {
     public class PlayerHighlightDrawerComponent : PlayerCharacterComponent
     {

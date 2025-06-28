@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
-using Yg.GameConfigs;
+using Yg.GameData.Configs;
 using Yg.SaveLoad;
 using Zenject;
 

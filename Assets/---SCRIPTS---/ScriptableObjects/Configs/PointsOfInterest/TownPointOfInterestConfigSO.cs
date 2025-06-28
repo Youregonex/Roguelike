@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Yg.GameConfigs
+namespace Yg.GameData.Configs
 {
     [CreateAssetMenu(fileName = "TownConfig", menuName = "Configs/PointsOfInterest/TownPointOfInterestConfigSO")]
     public class TownPointOfInterestConfigSO : BasePointOfInterestConfigSO

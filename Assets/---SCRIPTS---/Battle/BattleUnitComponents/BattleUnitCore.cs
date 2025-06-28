@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using Yg.GameData.Units;
 
 namespace Yg.Battle.BattleUnits
 {
@@ -11,6 +12,9 @@ namespace Yg.Battle.BattleUnits
         public event Action<BattleUnitCore> OnDeath;
         public event Action<BattleUnitCore> OnTargetRemoval;
 
+        [CustomHeader("Settings")]
+        [SerializeField] private UnitDataSO _unitData;
+
         private readonly HashSet<BattleUnitComponent> _battleUnitComponentList = new();
         private HashSet<BattleUnitCore> _targetList = new();
         private HashSet<ITickableBattleUnitComponent> _tickableComponentSet = new();
@@ -18,6 +22,7 @@ namespace Yg.Battle.BattleUnits
         [CustomHeader("Debug")]
         [SerializeField] private EUnitFaction _unitFaction;
 
+        public UnitDataSO UnitData => _unitData;
         public EUnitFaction UnitFaction => _unitFaction;
         public IEnumerable<BattleUnitCore> TargetList => _targetList;
 

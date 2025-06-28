@@ -1,6 +1,6 @@
 using UnityEngine;
 using Yg.MapGeneration;
-using Yg.Player;
+using Yg.Character;
 using Zenject;
 using System.Collections.Generic;
 using Yg.GameData;

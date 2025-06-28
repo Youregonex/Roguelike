@@ -10,10 +10,8 @@ namespace Yg.Battle.GameSystems
         [CustomHeader("Settings")]
         [SerializeField] private Transform _playerSpawnPointTransform;
         [SerializeField] private Transform _enemySpawnPointTransform;
-        [SerializeField] private BattleUnitCore _playerMeleeUnitPrefab;
-        [SerializeField] private BattleUnitCore _playeRangedUnitPrefab;
-        [SerializeField] private BattleUnitCore _enemyMeleeUnitPrefab;
-        [SerializeField] private BattleUnitCore _enemyRangedUnitPrefab;
+        [SerializeField] private BattleUnitCore _meleeUnitPrefab;
+        [SerializeField] private BattleUnitCore _rangedUnitPrefab;
 
         private readonly List<BattleUnitCore> _playerUnitList = new();
         private readonly List<BattleUnitCore> _enemyUnitList = new();
@@ -28,50 +26,7 @@ namespace Yg.Battle.GameSystems
 
         private void InitialUnitSpawn()
         {
-            int playerMeleeUnitsAmount = 90;
-            int playerRangedUnitsAmount = 10;
-
-            int enemyMeleeUnitsAmount = 90;
-            int enemyRangedUnitsAmount = 10;
-            Vector2 randomSpawnOffset;
-
-            for (int i = 0; i < playerMeleeUnitsAmount; i++)
-            {
-                randomSpawnOffset = new(UnityEngine.Random.Range(-4f, 4f), UnityEngine.Random.Range(-4f, 4f));
-                BattleUnitCore battleUnit = Instantiate(_playerMeleeUnitPrefab, (Vector2)_playerSpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
-                battleUnit.OnDeath += BattleUnit_OnDeath;
-                battleUnit.Initialize(EUnitFaction.Player);
-                _playerUnitList.Add(battleUnit);
-            }
-
-            for (int i = 0; i < playerRangedUnitsAmount; i++)
-            {
-                randomSpawnOffset = new Vector2(UnityEngine.Random.Range(-4f, 4f), UnityEngine.Random.Range(-4f, 4f)) + new Vector2(-10f, 0f);
-                BattleUnitCore battleUnit = Instantiate(_playeRangedUnitPrefab, (Vector2)_playerSpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
-                battleUnit.OnDeath += BattleUnit_OnDeath;
-                battleUnit.Initialize(EUnitFaction.Player);
-                _playerUnitList.Add(battleUnit);
-            }
-
-            for (int i = 0; i < enemyMeleeUnitsAmount; i++)
-            {
-                randomSpawnOffset = new(UnityEngine.Random.Range(-4f, 4f), UnityEngine.Random.Range(-4f, 4f));
-                BattleUnitCore battleUnit = Instantiate(_enemyMeleeUnitPrefab, (Vector2)_enemySpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
-                battleUnit.OnDeath += BattleUnit_OnDeath;
-                battleUnit.Initialize(EUnitFaction.Enemy);
-                _enemyUnitList.Add(battleUnit);
-            }
-
-            for (int i = 0; i < enemyRangedUnitsAmount; i++)
-            {
-                randomSpawnOffset = new Vector2(UnityEngine.Random.Range(-4f, 4f), UnityEngine.Random.Range(-4f, 4f)) + new Vector2(10f, 0f);
-                BattleUnitCore battleUnit = Instantiate(_enemyRangedUnitPrefab, (Vector2)_enemySpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
-                battleUnit.OnDeath += BattleUnit_OnDeath;
-                battleUnit.Initialize(EUnitFaction.Enemy);
-                _enemyUnitList.Add(battleUnit);
-            }
-
-            AssignTargets();
+            
         }
 
         public void StartBattle(int playerMeleeCount, int playerRangedCount, int enemyMeleeCount, int enemyRangedCound)
@@ -81,7 +36,7 @@ namespace Yg.Battle.GameSystems
             for (int i = 0; i < playerMeleeCount; i++)
             {
                 randomSpawnOffset = new(UnityEngine.Random.Range(-4f, 4f), UnityEngine.Random.Range(-4f, 4f));
-                BattleUnitCore battleUnit = Instantiate(_playerMeleeUnitPrefab, (Vector2)_playerSpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
+                BattleUnitCore battleUnit = Instantiate(_meleeUnitPrefab, (Vector2)_playerSpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
                 battleUnit.OnDeath += BattleUnit_OnDeath;
                 battleUnit.Initialize(EUnitFaction.Player);
                 _playerUnitList.Add(battleUnit);
@@ -90,7 +45,7 @@ namespace Yg.Battle.GameSystems
             for (int i = 0; i < playerRangedCount; i++)
             {
                 randomSpawnOffset = new Vector2(UnityEngine.Random.Range(-4f, 4f), UnityEngine.Random.Range(-4f, 4f)) + new Vector2(-10f, 0f);
-                BattleUnitCore battleUnit = Instantiate(_playeRangedUnitPrefab, (Vector2)_playerSpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
+                BattleUnitCore battleUnit = Instantiate(_rangedUnitPrefab, (Vector2)_playerSpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
                 battleUnit.OnDeath += BattleUnit_OnDeath;
                 battleUnit.Initialize(EUnitFaction.Player);
                 _playerUnitList.Add(battleUnit);
@@ -99,7 +54,7 @@ namespace Yg.Battle.GameSystems
             for (int i = 0; i < enemyMeleeCount; i++)
             {
                 randomSpawnOffset = new(UnityEngine.Random.Range(-4f, 4f), UnityEngine.Random.Range(-4f, 4f));
-                BattleUnitCore battleUnit = Instantiate(_enemyMeleeUnitPrefab, (Vector2)_enemySpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
+                BattleUnitCore battleUnit = Instantiate(_meleeUnitPrefab, (Vector2)_enemySpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
                 battleUnit.OnDeath += BattleUnit_OnDeath;
                 battleUnit.Initialize(EUnitFaction.Enemy);
                 _enemyUnitList.Add(battleUnit);
@@ -108,7 +63,7 @@ namespace Yg.Battle.GameSystems
             for (int i = 0; i < enemyRangedCound; i++)
             {
                 randomSpawnOffset = new Vector2(UnityEngine.Random.Range(-4f, 4f), UnityEngine.Random.Range(-4f, 4f)) + new Vector2(10f, 0f);
-                BattleUnitCore battleUnit = Instantiate(_enemyRangedUnitPrefab, (Vector2)_enemySpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
+                BattleUnitCore battleUnit = Instantiate(_rangedUnitPrefab, (Vector2)_enemySpawnPointTransform.position + randomSpawnOffset, Quaternion.identity);
                 battleUnit.OnDeath += BattleUnit_OnDeath;
                 battleUnit.Initialize(EUnitFaction.Enemy);
                 _enemyUnitList.Add(battleUnit);
@@ -119,22 +74,6 @@ namespace Yg.Battle.GameSystems
 
         public void StopBattle()
         {
-            //for (int i = 0; i < _enemyUnitList.Count; i++)
-            //{
-            //    BattleUnitCore battleUnitCore = _enemyUnitList[i];
-            //    _enemyUnitList.Remove(battleUnitCore);
-            //    BattleUnit_OnDeath(battleUnitCore);
-            //    Destroy(battleUnitCore);
-            //}
-
-            //for (int i = 0; i < _playerUnitList.Count; i++)
-            //{
-            //    BattleUnitCore battleUnitCore = _playerUnitList[i];
-            //    _playerUnitList.Remove(battleUnitCore);
-            //    BattleUnit_OnDeath(battleUnitCore);
-            //    Destroy(battleUnitCore);
-            //}
-
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 

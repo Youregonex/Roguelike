@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Yg.GameConfigs
+namespace Yg.GameData.Configs
 {
     public abstract class BasePointOfInterestConfigSO : ScriptableObject
     {

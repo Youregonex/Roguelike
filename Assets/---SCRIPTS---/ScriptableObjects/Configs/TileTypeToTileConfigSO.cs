@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
 
-namespace Yg.GameConfigs
+namespace Yg.GameData.Configs
 {
     [CreateAssetMenu(fileName = "TileTypeToTileConfigSO", menuName = "Configs/Tiles/TileTypeToTileConfigSO")]
     public class TileTypeToTileConfigSO : ScriptableObject

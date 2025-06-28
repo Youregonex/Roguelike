@@ -929,7 +929,7 @@ TextureImporter:
         width: 5
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -937,6 +937,27 @@ TextureImporter:
       bones: []
       spriteID: fcab985993135437db35951a05d3e687
       internalID: 1519626195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UnitHighlight
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 496
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 871eef257ffeb494682d02411bd8071a
+      internalID: 2116807888
       vertices: []
       indices: 
       edges: []
@@ -985,6 +1006,7 @@ TextureImporter:
       Resource_2: -2037707567
       Resource_3: -1716700117
       Resource_4: -582364873
+      UnitHighlight: 2116807888
       Unit_1: 1342531098
       Unit_2: 1545182197
       Unit_3: 407625093

@@ -6,22 +6,19 @@ namespace Yg.Battle.BattleUnits
     public class BattleUnitAttackComponent : BattleUnitComponent, ITickableBattleUnitComponent
     {
         [CustomHeader("Settings")]
-        [SerializeField] protected float _attackRange;
-        [SerializeField] protected float _attackCooldownMin;
-        [SerializeField] protected float _attackCooldownMax;
-        [SerializeField] protected float _attackDamageMin;
-        [SerializeField] protected float _attackDamageMax;
         [SerializeField] protected float _distanceCheckInterval;
-        [SerializeField] protected float _knockBackForce;
 
         [CustomHeader("Debug")]
         [SerializeField] protected float _attackCooldownCurrent = 0f;
         [SerializeField] protected BattleUnitAnimationComponent _battleUnitAnimationComponent;
         [SerializeField] protected BattleUnitTargetComponent _battleUnitTargetComponent;
 
+        protected BattleUnitStatsComponent _battleUnitStatsComponent;
+        protected BattleUnitPerkComponent _battleUnitPerkComponent;
+
         protected Tween _attackTween;
 
-        public float AttackRange => _attackRange;
+        public float AttackRange => _battleUnitStatsComponent.AttackRange;
 
         public override void InitializeComponent(BattleUnitCore battleUnitCore)
         {
@@ -29,10 +26,13 @@ namespace Yg.Battle.BattleUnits
 
             _battleUnitAnimationComponent = _battleUnitCore.GetUnitComponent<BattleUnitAnimationComponent>();
             _battleUnitTargetComponent = _battleUnitCore.GetUnitComponent<BattleUnitTargetComponent>();
+            _battleUnitStatsComponent = _battleUnitCore.GetUnitComponent<BattleUnitStatsComponent>();
+            _battleUnitPerkComponent = _battleUnitCore.GetUnitComponent<BattleUnitPerkComponent>();
 
             float minDelay = .1f;
             float maxDelay = .3f;
             float randomDelay = UnityEngine.Random.Range(minDelay, maxDelay);
+
             InvokeRepeating("AttackDistanceCheck", randomDelay, _distanceCheckInterval);
         }
 
@@ -42,7 +42,7 @@ namespace Yg.Battle.BattleUnits
                 _attackCooldownCurrent -= Time.deltaTime;
         }
 
-        protected void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if (_attackTween != null)
                 _attackTween.Kill();
@@ -51,21 +51,26 @@ namespace Yg.Battle.BattleUnits
         protected void AttackDistanceCheck()
         {
             if (_battleUnitTargetComponent.CurrentTarget is null || _attackCooldownCurrent > 0) return;
-            if (Vector2.Distance(transform.position, _battleUnitTargetComponent.CurrentTarget.transform.position) <= _attackRange)
+            if (Vector2.Distance(transform.position, _battleUnitTargetComponent.CurrentTarget.transform.position) <= _battleUnitStatsComponent.AttackRange)
                 Attack(_battleUnitTargetComponent.CurrentTarget);
         }
 
         protected virtual void Attack(BattleUnitCore battleUnitCore)
         {
-            float attackDamage = CalculateDamage();
-            DamageStruct damage = new(_battleUnitCore.UnitFaction, _battleUnitCore.transform.position, attackDamage, _knockBackForce);
+            DamageStruct damage = GenerateDamageStruct();
+            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnDamageDealt, ref damage);
 
-            if (battleUnitCore.TryGetUnitComponent(out BattleUnitHealthComponent target))
-                target.TakeDamage(damage);
+            ProccessAttack(damage, battleUnitCore);
+            RefreshAttackCooldown();
 
-            _attackCooldownCurrent = CalculateAttackCooldown();
             _battleUnitAnimationComponent.PlayAttackAnimation();
             PlayAttackAnimation(battleUnitCore.transform);
+        }
+
+        protected virtual void ProccessAttack(DamageStruct damageStruct, BattleUnitCore battleUnitCore)
+        {
+            if (battleUnitCore.TryGetUnitComponent(out BattleUnitHealthComponent target))
+                target.TakeDamage(damageStruct);
         }
 
         protected virtual void PlayAttackAnimation(Transform targetTransform)
@@ -108,12 +113,25 @@ namespace Yg.Battle.BattleUnits
 
         protected virtual float CalculateDamage()
         {
-            return UnityEngine.Random.Range(_attackDamageMin, _attackDamageMax);
+            return UnityEngine.Random.Range(_battleUnitStatsComponent.AttackDamageMin, _battleUnitStatsComponent.AttackDamageMax);
         }
 
-        protected virtual float CalculateAttackCooldown()
+        protected virtual void RefreshAttackCooldown()
         {
-            return UnityEngine.Random.Range(_attackCooldownMin, _attackCooldownMax);
+            _attackCooldownCurrent =
+                UnityEngine.Random.Range(_battleUnitStatsComponent.AttackCooldownMin, _battleUnitStatsComponent.AttackCooldownMax);
+        }
+
+        protected virtual DamageStruct GenerateDamageStruct()
+        {
+            float attackDamage = CalculateDamage();
+            return new(
+                _battleUnitCore.UnitFaction,
+                _battleUnitCore.transform.position,
+                _battleUnitStatsComponent.AttackType,
+                _battleUnitStatsComponent.DamageType,
+                attackDamage,
+                _battleUnitStatsComponent.KnockBackForce);
         }
     }
 }

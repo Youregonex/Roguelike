@@ -11,6 +11,8 @@ namespace Yg.Pooling
 
         private Transform _parent;
 
+        public Queue<T> Pool => _poolQueue;
+
         public BasePool(T prefab, Transform parent = null, int createInitialObjectsAmount = 0)
         {
             _parent = parent;

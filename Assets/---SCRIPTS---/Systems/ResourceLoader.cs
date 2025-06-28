@@ -1,10 +1,13 @@
 using UnityEngine;
-using Yg.GameConfigs;
-using Yg.Player;
+using Yg.GameData.Configs;
+using Yg.Character;
+using System.Collections.Generic;
+using Yg.Battle.BattleUnits;
+using System.Linq;
 
 public static class ResourceLoader
 {
-    // Cinfigs
+    // Configs
     private static readonly string CONFIG_MAP_GENERATION_PATH = "Configs/MapGeneration/MainMapGenerationConfig";
     private static readonly string CONFIG_NOISE_TO_TILE_TYPE_PATH = "Configs/Tiles/MainNoiseToTileTypeConfig";
     private static readonly string CONFIG_TYPE_TO_TILE_PATH = "Configs/Tiles/MainTileTypeToTileConfig";
@@ -15,6 +18,7 @@ public static class ResourceLoader
 
     // Prefabs
     private static readonly string PREFAB_PLAYER_CHARACTER_PATH = "Prefabs/Agents/PlayerCharacter";
+    private static readonly string PREFAB_UNITS_PATH = "Prefabs/Units";
 
 
     // Configs
@@ -28,6 +32,8 @@ public static class ResourceLoader
 
     // Prefabs
     public static PlayerCore PREFAB_PlayerCharacter;
+
+    public static List<BattleUnitCore> BattleUnitList;
 
 
     static ResourceLoader()
@@ -50,5 +56,8 @@ public static class ResourceLoader
     private static void LoadPrefabs()
     {
         PREFAB_PlayerCharacter = Resources.Load<PlayerCore>(PREFAB_PLAYER_CHARACTER_PATH);
+
+        BattleUnitList = new();
+        BattleUnitList = Resources.LoadAll<BattleUnitCore>(PREFAB_UNITS_PATH).ToList();
     }
 }

@@ -1,5 +1,5 @@
 
 public interface ITickableBattleUnitComponent
 {
-    public virtual void Tick() { }
+    public void Tick();
 }

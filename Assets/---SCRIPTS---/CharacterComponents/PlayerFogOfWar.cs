@@ -4,7 +4,7 @@ using UnityEngine;
 using Yg.MapGeneration;
 using Zenject;
 
-namespace Yg.Player.FOW
+namespace Yg.Character.FOW
 {
     public class PlayerFogOfWar : PlayerCharacterComponent
     {

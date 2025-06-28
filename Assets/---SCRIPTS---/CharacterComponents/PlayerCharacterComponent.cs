@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Yg.Player
+namespace Yg.Character
 {
     public abstract class PlayerCharacterComponent : MonoBehaviour
     {

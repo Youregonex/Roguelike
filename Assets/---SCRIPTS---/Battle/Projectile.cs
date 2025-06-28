@@ -17,6 +17,7 @@ namespace Yg.Battle
         private Rigidbody2D _rigidbody;
 
         private Coroutine _destructionCoroutine;
+        private bool _enqueueOnDestruction = true;
 
         public void Initialize(DamageStruct damageStruct, Vector2 velocity)
         {
@@ -27,6 +28,11 @@ namespace Yg.Battle
             _rigidbody.velocity = velocity;
 
             _destructionCoroutine = StartCoroutine(DestructionDelayCoroutine());
+        }
+
+        public void DeactivatePooling()
+        {
+            _enqueueOnDestruction = false;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -43,6 +49,12 @@ namespace Yg.Battle
 
         private void DestroyProjectile()
         {
+            if(!_enqueueOnDestruction)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             _damageStruct = default;
             _rigidbody.velocity = Vector2.zero;
 

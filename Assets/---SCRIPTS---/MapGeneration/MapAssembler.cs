@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
-using Yg.GameConfigs;
+using Yg.GameData.Configs;
 using Yg.SaveLoad;
 
 namespace Yg.MapGeneration
