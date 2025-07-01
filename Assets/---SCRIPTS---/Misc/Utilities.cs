@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public static class Utilities
 {
@@ -27,6 +28,11 @@ public static class Utilities
             Debug.LogError($"Couldn't find {typeof(T)} component!");
             return null;
         }
+    }
+
+    public static bool MouseOverUI()
+    {
+        return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
 
     public static Vector2 GetDirectionVectorNormalized(Vector2 self, Vector2 target, bool oppositeDirection = false)

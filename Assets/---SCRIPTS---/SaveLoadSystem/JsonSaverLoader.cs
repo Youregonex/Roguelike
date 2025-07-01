@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using UnityEngine;
+using Yg.Converters;
 
 namespace Yg.SaveLoad
 {
@@ -32,7 +33,7 @@ namespace Yg.SaveLoad
             }
             catch(Exception e)
             {
-                Debug.LogWarning($"Saving error: {e.Message}, StackTrace: {e.StackTrace}");
+                Debug.LogWarning($"Saving error: {e.Message} {e.StackTrace}");
             }
         }
 
@@ -49,7 +50,7 @@ namespace Yg.SaveLoad
             }
             catch(Exception e)
             {
-                Debug.LogWarning($"Error: {e.Message}, StackTrace: {e.StackTrace}");
+                Debug.LogWarning($"Error: {e.Message} {e.StackTrace}");
                 return default;
             }
         }

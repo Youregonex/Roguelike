@@ -2,24 +2,22 @@ using System;
 using Newtonsoft.Json.Linq;
 using Yg.MapGeneration;
 
-public class PointOfInterestConverter : JsonCreationConverter<BasePointOfInterest>
+namespace Yg.Converters
 {
-    protected override BasePointOfInterest Create(Type objectType, JObject obj)
+    public class PointOfInterestConverter : JsonCreationConverter<BasePointOfInterest>
     {
-        EPointOfInterestType type = ((EPointOfInterestType)(int)obj["PointType"]);
-
-        switch (type)
+        protected override BasePointOfInterest Create(Type objectType, JObject obj)
         {
-            case EPointOfInterestType.Resource:
-                return new ResourcePoint();
-            case EPointOfInterestType.Castle:
-                return new CastlePoint();
-            case EPointOfInterestType.Town:
-                return new TownPoint();
-            case EPointOfInterestType.Village:
-                return new VillagePoint();
-            default:
-                return null;
+            EPointOfInterestType type = (EPointOfInterestType)(int)obj["PointType"];
+
+            return type switch
+            {
+                EPointOfInterestType.Resource => new ResourcePoint(),
+                EPointOfInterestType.Castle => new CastlePoint(),
+                EPointOfInterestType.Town => new TownPoint(),
+                EPointOfInterestType.Village => new VillagePoint(),
+                _ => null,
+            };
         }
     }
 }

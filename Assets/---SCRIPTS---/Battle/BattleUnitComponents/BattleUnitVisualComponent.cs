@@ -12,13 +12,15 @@ namespace Yg.Battle.BattleUnits
             base.InitializeComponent(battleUnitCore);
 
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-
             _rigidbody = _battleUnitCore.GetComponent<Rigidbody2D>();
+
+            if (_battleUnitCore.UnitFaction == EUnitFaction.Enemy)
+                _spriteRenderer.flipX = true;
         }
 
         public void Tick()
         {
-            _spriteRenderer.flipX = _rigidbody.velocity.x <= 0 ? true : false;
+            //_spriteRenderer.flipX = _rigidbody.velocity.x <= 0 ? true : false;
         }
     }
 }

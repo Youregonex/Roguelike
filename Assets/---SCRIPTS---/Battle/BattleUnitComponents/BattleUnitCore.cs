@@ -40,6 +40,14 @@ namespace Yg.Battle.BattleUnits
                 component.Tick();
         }
 
+        public void DealDamage(DamageStruct damageStruct, BattleUnitCore target)
+        {
+            GetUnitComponent<BattleUnitPerkComponent>().ApplyPerks(EPerkApplicationEvent.OnDamageDealt, ref damageStruct);
+
+            if (target.TryGetUnitComponent(out BattleUnitHealthComponent targetHealthComponent))
+                targetHealthComponent.TakeDamage(damageStruct);
+        }
+
         public T GetUnitComponent<T>() where T : BattleUnitComponent
         {
             return _battleUnitComponentList.OfType<T>().FirstOrDefault();

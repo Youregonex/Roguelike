@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Yg.Character;
 using Yg.GameData.Configs;
 
 namespace Yg.MapGeneration
@@ -17,9 +18,9 @@ namespace Yg.MapGeneration
         }
 
 
-        public override void Interact()
+        public override void Interact(PlayerCore playerCore)
         {
-            Debug.Log("Town");
+            playerCore.EncounterBattle();
         }
 
         public override Tile GetPointTile()

@@ -6,13 +6,13 @@ using Zenject;
 
 namespace Yg.Character
 {
-    public class PlayerHighlightDrawerComponent : PlayerCharacterComponent
+    public class PlayerHighlightDrawerComponent : CharacterComponent
     {
         [CustomHeader("Settings")]
         [SerializeField] private GameObject _mouseGameObject;
 
         private TileGameObjectPlacer _tileGameObjectPlacer;
-        private PlayerMovementComponent _movementComponent;
+        private CharacterMovementComponent _movementComponent;
 
         private List<BaseTile> _currentPath = new();
 
@@ -23,11 +23,11 @@ namespace Yg.Character
             _tileGameObjectPlacer.OnTileHighlight += TileGameObjectPlacer_OnTileHighlight;
         }
 
-        public override void InitializeComponent(PlayerCore playerCore)
+        public override void InitializeComponent(CharacterCore playerCore)
         {
             base.InitializeComponent(playerCore);
 
-            _movementComponent = _playerCore.GetPlayerComponent<PlayerMovementComponent>();
+            _movementComponent = _characterCore.GetCharacterComponent<CharacterMovementComponent>();
             _movementComponent.OnMovementStart += MovementComponent_OnMovementStart;
             _movementComponent.OnMovementStop += MovementComponent_OnMovementStop;
         }
@@ -35,8 +35,11 @@ namespace Yg.Character
         private void MovementComponent_OnMovementStop()
         {
             BaseTile hoveredTile = _tileGameObjectPlacer.GetTileAtPosition(Utilities.GetMouseSnapedPosition());
-            TileGameObjectPlacer_OnTileHighlight(hoveredTile);
+
             _mouseGameObject.SetActive(true);
+
+            if (hoveredTile is not null)
+                TileGameObjectPlacer_OnTileHighlight(hoveredTile);
         }
 
         private void MovementComponent_OnMovementStart()
@@ -45,20 +48,19 @@ namespace Yg.Character
             UnhighlightCurrentPath();
         }
 
-        public override void LoadComponent(PlayerSaveData playerSaveData) { }
-        public override void SaveComponent(PlayerSaveData playerSaveData) { }
+        public override void LoadComponent(CharacterSaveData playerSaveData) { }
+        public override void SaveComponent(CharacterSaveData playerSaveData) { }
 
         private void TileGameObjectPlacer_OnTileHighlight(BaseTile hoveredTile)
         {
+            UnhighlightCurrentPath();
             _mouseGameObject.transform.position = (Vector2)hoveredTile.Origin;
 
+            if (Utilities.MouseOverUI()) return;
             if (_movementComponent.IsMoving) return;
-
-            UnhighlightCurrentPath();
-
             if (!hoveredTile.PlayerWalkable || _movementComponent.MovesLeft <= 0) return;
 
-            _currentPath = Pathfinder.FindPath(_playerCore.GetCurrentTile(), hoveredTile, true, _movementComponent.MovesLeft);
+            _currentPath = Pathfinder.FindPath(_characterCore.GetCurrentTile(), hoveredTile, true, _movementComponent.MovesLeft);
             HighlightCurrentPath();
         }
 

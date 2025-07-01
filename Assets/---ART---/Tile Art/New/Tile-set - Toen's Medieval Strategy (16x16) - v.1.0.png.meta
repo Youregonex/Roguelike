@@ -756,7 +756,7 @@ TextureImporter:
       name: Peasant_1
       rect:
         serializedVersion: 2
-        x: 80
+        x: 81
         y: 609
         width: 16
         height: 16
@@ -837,7 +837,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Unit_1
+      name: Unit_Spearman
       rect:
         serializedVersion: 2
         x: 16
@@ -879,7 +879,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Unit_3
+      name: Unit_Archer
       rect:
         serializedVersion: 2
         x: 0
@@ -950,7 +950,7 @@ TextureImporter:
         width: 6
         height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -958,6 +958,90 @@ TextureImporter:
       bones: []
       spriteID: 871eef257ffeb494682d02411bd8071a
       internalID: 2116807888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShieldIcon
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 417
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12cf34f4e376e48e1a3175fa6ae4340d
+      internalID: 1100355448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unit_Knight
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 560
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2b83a6e943b6457689b170e77ba643a
+      internalID: 2005238886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unit_Rider
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 560
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73561b518615545acb27c4cf3c889e00
+      internalID: -1063656196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unit_Monk
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 256
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 842bb6a7e5cca402b8cf529f68c8ab80
+      internalID: 856926583
       vertices: []
       indices: 
       edges: []
@@ -1006,11 +1090,15 @@ TextureImporter:
       Resource_2: -2037707567
       Resource_3: -1716700117
       Resource_4: -582364873
+      ShieldIcon: 1100355448
       UnitHighlight: 2116807888
-      Unit_1: 1342531098
       Unit_2: 1545182197
-      Unit_3: 407625093
       Unit_4: -33750763
+      Unit_Archer: 407625093
+      Unit_Knight: 2005238886
+      Unit_Monk: 856926583
+      Unit_Rider: -1063656196
+      Unit_Spearman: 324477005
       Village_1: -165242511
       Village_2: 929077552
       Water: -2091128522

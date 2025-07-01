@@ -2,8 +2,8 @@ using UnityEngine;
 using Yg.GameData.Configs;
 using Yg.Character;
 using System.Collections.Generic;
-using Yg.Battle.BattleUnits;
 using System.Linq;
+using Yg.GameData.Units;
 
 public static class ResourceLoader
 {
@@ -18,7 +18,7 @@ public static class ResourceLoader
 
     // Prefabs
     private static readonly string PREFAB_PLAYER_CHARACTER_PATH = "Prefabs/Agents/PlayerCharacter";
-    private static readonly string PREFAB_UNITS_PATH = "Prefabs/Units";
+    private static readonly string PREFAB_UNITS_PATH = "ScriptableObjects/Units";
 
 
     // Configs
@@ -33,13 +33,18 @@ public static class ResourceLoader
     // Prefabs
     public static PlayerCore PREFAB_PlayerCharacter;
 
-    public static List<BattleUnitCore> BattleUnitList;
+    public static List<UnitDataSO> SO_UnitDataSOList;
 
 
     static ResourceLoader()
     {
         LoadConfigs();
         LoadPrefabs();
+    }
+
+    public static UnitDataSO GetUnitDataSO(string prefabId)
+    {
+        return SO_UnitDataSOList.Where(e => e.PrefabId == prefabId).FirstOrDefault();
     }
 
     private static void LoadConfigs()
@@ -57,7 +62,7 @@ public static class ResourceLoader
     {
         PREFAB_PlayerCharacter = Resources.Load<PlayerCore>(PREFAB_PLAYER_CHARACTER_PATH);
 
-        BattleUnitList = new();
-        BattleUnitList = Resources.LoadAll<BattleUnitCore>(PREFAB_UNITS_PATH).ToList();
+        SO_UnitDataSOList = new();
+        SO_UnitDataSOList = Resources.LoadAll<UnitDataSO>(PREFAB_UNITS_PATH).ToList();
     }
 }

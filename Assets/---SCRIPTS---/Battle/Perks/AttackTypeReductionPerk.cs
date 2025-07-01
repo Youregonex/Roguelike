@@ -14,5 +14,10 @@ namespace Yg.GameData.Perks
             if (damageStruct.AttackType == DefenceFromAttackType)
                 damageStruct.DamageAmount -= damageStruct.DamageAmount * DamageReductionPercent;
         }
+
+        private void OnValidate()
+        {
+            PerkDescription = $"Reduce <b><color=#466C96>{DefenceFromAttackType}</color></b> damage taken by <b><color=#466C96>{DamageReductionPercent * 100}%</color></b>.";
+        }
     }
 }

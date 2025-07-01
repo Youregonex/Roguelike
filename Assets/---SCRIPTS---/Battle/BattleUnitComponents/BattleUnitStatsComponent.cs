@@ -10,6 +10,7 @@ namespace Yg.Battle.BattleUnits
         public event Action OnInitializationComplete;
 
         public float MoveSpeed { get; private set; }
+        public float MaxHealth { get; private set; }
         public EAttackType AttackType { get; private set; }
         public EDamageType DamageType { get; private set; }
         public float AttackRange { get; private set; }
@@ -19,6 +20,7 @@ namespace Yg.Battle.BattleUnits
         public float AttackDamageMax { get; private set; }
         public float KnockBackForce { get; private set; }
         public List<Perk> PerkList { get; private set; }
+        public List<SpellSO> SpellSOList { get; private set; }
 
         public override void InitializeComponent(BattleUnitCore battleUnitCore)
         {
@@ -33,6 +35,7 @@ namespace Yg.Battle.BattleUnits
         protected virtual void SetupStats(UnitDataSO unitDataSO)
         {
             MoveSpeed = unitDataSO.MoveSpeed;
+            MaxHealth = unitDataSO.MaxHealth;
             AttackType = unitDataSO.AttackType;
             DamageType = unitDataSO.DamageType;
             AttackRange = unitDataSO.AttackRange;
@@ -42,6 +45,7 @@ namespace Yg.Battle.BattleUnits
             AttackDamageMax = unitDataSO.AttackDamageMax;
             KnockBackForce = unitDataSO.KnockBackForce;
             PerkList = unitDataSO.PerkList;
+            SpellSOList = unitDataSO.SpellSOList;
         }
     }
 }

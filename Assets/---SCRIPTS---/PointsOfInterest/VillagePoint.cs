@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Yg.Character;
 using Yg.GameData.Configs;
 
 namespace Yg.MapGeneration
 {
     public class VillagePoint : BasePointOfInterest
     {
-
         public VillagePoint() { }
 
         public VillagePoint(
@@ -17,9 +17,12 @@ namespace Yg.MapGeneration
             PointType = EPointOfInterestType.Village;
         }
 
-        public override void Interact()
+        public override void Interact(PlayerCore playerCore)
         {
-            Debug.Log("Village");
+            if (Visited) return;
+
+            playerCore.GetCharacterComponent<PlayerWarbandComponent>().InitiateUnitSelction();
+            Visited = true;
         }
 
         public override Tile GetPointTile()

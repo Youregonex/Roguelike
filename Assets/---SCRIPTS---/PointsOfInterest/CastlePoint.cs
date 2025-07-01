@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Yg.Character;
 using Yg.GameData.Configs;
 
 namespace Yg.MapGeneration
@@ -21,7 +22,7 @@ namespace Yg.MapGeneration
             CastleOrigin = origin;
         }
 
-        public override void Interact()
+        public override void Interact(PlayerCore playerCore)
         {
             Debug.Log($"Castle origin: {CastleOrigin}");
         }

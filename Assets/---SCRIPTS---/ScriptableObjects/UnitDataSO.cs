@@ -9,13 +9,16 @@ namespace Yg.GameData.Units
     [CreateAssetMenu(fileName = "UnitData", menuName = "Data/UnitData")]
     public class UnitDataSO : ScriptableObject
     {
+        [field: SerializeField] public string UnitName { get; private set; }
         [field: SerializeField] public BattleUnitCore UnitPrefab { get; private set; }
         [field: SerializeField] public string PrefabId { get; private set; }
-        [field: SerializeField] public Sprite UnitSprite { get; private set; }
+        [field: SerializeField] public Sprite UnitIcon { get; private set; }
+        [field: SerializeField] public int DefaultSquadSize { get; private set; }
 
         [field: Space(10f)]
 
         [field: SerializeField] public float MoveSpeed { get; private set; }
+        [field: SerializeField] public float MaxHealth { get; private set; }
         [field: SerializeField] public EAttackType AttackType { get; private set; }
         [field: SerializeField] public EDamageType DamageType { get; private set; }
         [field: SerializeField] public float AttackRange { get; private set; }
@@ -28,6 +31,7 @@ namespace Yg.GameData.Units
         [field: Space(10f)]
 
         [field: SerializeField] public List<Perk> PerkList { get; private set; }
+        [field: SerializeField] public List<SpellSO> SpellSOList { get; private set; }
 
         private void OnValidate()
         {

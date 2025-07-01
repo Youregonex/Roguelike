@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Yg.MapGeneration;
 using Yg.UI;
@@ -9,44 +7,23 @@ using Zenject;
 
 namespace Yg.Character
 {
-    public class PlayerMovementComponent : PlayerCharacterComponent
+    public class PlayerMovementComponent : CharacterMovementComponent
     {
-        public event Action OnTilePositionSnap;
-        public event Action OnMovementStart;
-        public event Action OnMovementStop;
-
-        [CustomHeader("Settings")]
-        [SerializeField] private float _moveSpeed;
-        [SerializeField] private int _maxMovesPerTurn;
-
-        private TileGameObjectPlacer _tileGameObjectPlacer;
         private MovementUI _movementUI;
-
-        private List<BaseTile> _currentPath = new();
-
-        private Vector2Int _pressedTilePosition;
-        private Vector2 _currentMovementPoint;
-        private int _movesLeft;
-
-        private bool _isInitialized = false;
-        private bool _isMoving = false;
         private bool _stopFlag = false;
+        private Vector2Int _pressedTilePosition;
 
-        private Coroutine _currentMoveCoroutine;
-
-        public int MovesLeft => _movesLeft;
-        public bool IsMoving => _isMoving;
+        private bool _movementLocked = false;
 
         [Inject]
-        private void Construct(TileGameObjectPlacer tileGameObjectPlacer, MovementUI movementUI)
+        protected void Construct(MovementUI movementUI)
         {
-            _tileGameObjectPlacer = tileGameObjectPlacer;
             _movementUI = movementUI;
         }
 
-        public override void InitializeComponent(PlayerCore playerCore)
+        public override void InitializeComponent(CharacterCore characterCore)
         {
-            base.InitializeComponent(playerCore);
+            base.InitializeComponent(characterCore);
 
             if (!_componentLoaded)
                 _movesLeft = _maxMovesPerTurn;
@@ -71,44 +48,41 @@ namespace Yg.Character
                 ProcessMousePress();
         }
 
-        public override void LoadComponent(PlayerSaveData playerSaveData)
+        public override void LoadComponent(CharacterSaveData characterSaveData)
         {
+            if(characterSaveData is not PlayerSaveData)
+            {
+                Debug.LogError("Wrong save data type!");
+                return;
+            }
+
+            PlayerSaveData playerSaveData = characterSaveData as PlayerSaveData;
+
             _movesLeft = playerSaveData.MovesLeft;
             _componentLoaded = true;
         }
 
-        public override void SaveComponent(PlayerSaveData playerSaveData)
+        public override void SaveComponent(CharacterSaveData characterSaveData)
         {
+            if (characterSaveData is not PlayerSaveData)
+            {
+                Debug.LogError("Wrong save data type!");
+                return;
+            }
+
+            PlayerSaveData playerSaveData = characterSaveData as PlayerSaveData;
             playerSaveData.MovesLeft = _movesLeft;
         }
 
-        private void ProcessMousePress()
-        {
-            _pressedTilePosition = Utilities.GetMouseSnapedPosition();
-            BaseTile pressedTile = _tileGameObjectPlacer.GetTileAtPosition(_pressedTilePosition);
+        public void LockMovement() => _movementLocked = true;
+        public void UnlockMovement() => _movementLocked = false;
 
-            if (pressedTile == null || !pressedTile.PlayerWalkable || _movesLeft <= 0) return;
-
-            _currentPath = Pathfinder.FindPath(_playerCore.GetCurrentTile(), pressedTile, true, _movesLeft);
-
-            if (_currentPath.Count <= 0) return;
-            if (_currentMoveCoroutine != null)
-                StopAllCoroutines();
-
-            _currentMoveCoroutine = StartCoroutine(MoveAlongPath());
-        }
-
-        private void ResetMoves()
-        {
-            _movesLeft = _maxMovesPerTurn;
-            _movementUI.UpdateMoves(_movesLeft);
-        }
-
-        private IEnumerator MoveAlongPath()
+        protected override IEnumerator MoveAlongPath()
         {
             _isMoving = true;
             float tileProximitySnapThreshold = .1f;
-            OnMovementStart?.Invoke();
+
+            InvokeOnMovementStart();
 
             for (int i = 0; i < _currentPath.Count; i++)
             {
@@ -120,7 +94,8 @@ namespace Yg.Character
                 }
 
                 transform.root.position = new(_currentPath[i].Origin.x, _currentPath[i].Origin.y);
-                OnTilePositionSnap?.Invoke();
+
+                InvokeOnTilePositionSnap();
                 _movesLeft--;
                 _movementUI.UpdateMoves(_movesLeft);
 
@@ -136,19 +111,28 @@ namespace Yg.Character
             StopMovement();
         }
 
-        private void StopMovement()
+        protected override void ResetMoves()
         {
-            _currentPath.Clear();
-            _currentMoveCoroutine = null;
-            _isMoving = false;
-
-            OnMovementStop?.Invoke();
+            base.ResetMoves();
+            _movementUI.UpdateMoves(_movesLeft);
         }
 
-        private void OnDrawGizmos()
+        private void ProcessMousePress()
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(_currentMovementPoint, .3f);
+            if (Utilities.MouseOverUI() || _movementLocked) return;
+
+            _pressedTilePosition = Utilities.GetMouseSnapedPosition();
+            BaseTile pressedTile = _tileGameObjectPlacer.GetTileAtPosition(_pressedTilePosition);
+
+            if (pressedTile == null || !pressedTile.PlayerWalkable || _movesLeft <= 0) return;
+
+            _currentPath = Pathfinder.FindPath(_characterCore.GetCurrentTile(), pressedTile, true, _movesLeft);
+
+            if (_currentPath.Count <= 0) return;
+            if (_currentMoveCoroutine != null)
+                StopAllCoroutines();
+
+            _currentMoveCoroutine = StartCoroutine(MoveAlongPath());
         }
     }
 }

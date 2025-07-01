@@ -8,12 +8,12 @@ namespace Yg.Character
     public class PlayerSpawner : MonoBehaviour, ISaveable
     {
         private PlayerCore _characterPrefab;
-        private PlayerCore _character;
+        private PlayerCore _playerCore;
 
-        private PlayerSaveData _playerSaveData = null;
+        private CharacterSaveData _playerSaveData = null;
         private DiContainer _container;
 
-        public PlayerCore Character => _character;
+        public PlayerCore PlayerCore => _playerCore;
 
         [Inject]
         private void Construct(DiContainer container)
@@ -28,23 +28,27 @@ namespace Yg.Character
 
         public void SpawnPlayer()
         {
-            _character = _container.InstantiatePrefab(_characterPrefab, Vector2.zero, Quaternion.identity, null).GetComponent<PlayerCore>();
-            _character.Initialize(_playerSaveData);
+            _playerCore = _container.InstantiatePrefab(_characterPrefab, Vector2.zero, Quaternion.identity, null).GetComponent<PlayerCore>();
+            _playerCore.Initialize(_playerSaveData);
         }
 
         public object CaptureState()
         {
-            PlayerSaveData playerSaveData = _character.SavePlayerState();
+            CharacterSaveData playerSaveData = _playerCore.SaveCharacterState();
 
             return playerSaveData;
         }
 
         public void RestoreState(object data)
         {
-            var playerData = data as PlayerSaveData
-                ?? JsonConvert.DeserializeObject<PlayerSaveData>(JsonConvert.SerializeObject(data));
+            var playerData = data as CharacterSaveData
+                ?? JsonConvert.DeserializeObject<CharacterSaveData>(JsonConvert.SerializeObject(data));
 
-            if (playerData == null) Debug.LogError("Data is null");
+            if (playerData is null)
+            {
+                Debug.LogError("Data is null");
+                return;
+            }
 
             _playerSaveData = playerData;
         }

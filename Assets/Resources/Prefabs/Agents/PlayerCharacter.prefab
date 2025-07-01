@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &265979922551808916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4803815741223242633}
+  - component: {fileID: 2723266693315092300}
+  m_Layer: 0
+  m_Name: InteractComponent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4803815741223242633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265979922551808916}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3834533590021277085}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2723266693315092300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265979922551808916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cecbdbdceadb4973907dc8bc38d3a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionRange: 1.5
 --- !u!1 &2166913536524986303
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,6 +129,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2208596079287512859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2797539410780705279}
+  - component: {fileID: 6524189102536106099}
+  m_Layer: 0
+  m_Name: PlayerWarband
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2797539410780705279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2208596079287512859}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3834533590021277085}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6524189102536106099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2208596079287512859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf014e1ed9de743259f138f25a119bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _warbandSize: 5
+  _warbandSlotList: []
+  _unitDataSO: {fileID: 11400000, guid: a30ea91d459304e3aa6db8606cbbf651, type: 2}
 --- !u!1 &4605360643885186016
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +302,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3834533590021277085}
-  - component: {fileID: 8382128381514547433}
+  - component: {fileID: 6605129163942807628}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -235,9 +327,11 @@ Transform:
   - {fileID: 7977097679481782140}
   - {fileID: 8292964949124641629}
   - {fileID: 527804693390508386}
+  - {fileID: 2797539410780705279}
+  - {fileID: 4803815741223242633}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8382128381514547433
+--- !u!114 &6605129163942807628
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -303,7 +397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8292964949124641629}
-  - component: {fileID: 7968841298629978903}
+  - component: {fileID: 4367736187611029794}
   m_Layer: 0
   m_Name: PlayerMovementComponent
   m_TagString: Untagged
@@ -326,7 +420,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3834533590021277085}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7968841298629978903
+--- !u!114 &4367736187611029794
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

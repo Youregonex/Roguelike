@@ -1,6 +1,8 @@
 using UnityEngine.Tilemaps;
 using Newtonsoft.Json;
 using UnityEngine;
+using Yg.Converters;
+using Yg.Character;
 
 namespace Yg.MapGeneration
 {
@@ -9,6 +11,7 @@ namespace Yg.MapGeneration
     {
         [JsonProperty] public Vector2Int PointPosition { get; protected set; }
         [JsonProperty] public EPointOfInterestType PointType { get; protected set; }
+        [JsonProperty] public bool Visited { get; protected set; }
 
         public BasePointOfInterest() { }
 
@@ -17,7 +20,7 @@ namespace Yg.MapGeneration
             PointPosition = position;
         }
 
-        public abstract void Interact();
+        public abstract void Interact(PlayerCore playerCore);
         public abstract Tile GetPointTile();
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Yg.Character;
 
 namespace Yg.MapGeneration
 {
@@ -53,6 +54,11 @@ namespace Yg.MapGeneration
             return lowest * DIAGONAL_MOVE_COST + horizontalMovesRequired * DEFAULT_MOVE_COST;
         }
 
+        public void InteractWithPointOfInterest(PlayerCore playerCore)
+        {
+            _pointOfInterest?.Interact(playerCore);
+        }
+
         public void SetG(float g) => G = g;
         public void SetH(float h) => H = h;
         public void SetPreviousTile(BaseTile previousTile) => PreviousTile = previousTile;
@@ -90,11 +96,6 @@ namespace Yg.MapGeneration
                 if(neighbour != null)
                     Neighbours.Add(neighbour);
             }
-        }
-
-        private void OnMouseDown()
-        {
-            _pointOfInterest?.Interact();
         }
 
         private void OnMouseEnter()

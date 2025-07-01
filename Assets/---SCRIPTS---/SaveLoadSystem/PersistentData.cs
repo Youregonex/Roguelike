@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
+using Yg.Character;
 using Yg.SaveLoad;
 
 namespace Yg.GameData
@@ -12,11 +13,19 @@ namespace Yg.GameData
 
         private Dictionary<string, object> _saveData;
 
+        public BattleTransitionData BattleTransitionData { get; private set; }
+
+
         public PersistentData()
         {
             _dataSaverLoader = new JsonSaverLoader();
             _saveData = _dataSaverLoader.LoadData<Dictionary<string, object>>(SAVE_FILE_NAME);
             Debug.Log($"Persistent data. Loaded Json:\n {JsonConvert.SerializeObject(_saveData)}");
+        }
+
+        public void SetBattleTransitionData(BattleTransitionData battleTransitionData)
+        {
+            BattleTransitionData = battleTransitionData;
         }
 
         public void SaveData()
@@ -61,6 +70,18 @@ namespace Yg.GameData
             foreach (var saveableEntity in GameObject.FindObjectsOfType<SaveableEntity>())
                 if (_saveData.TryGetValue(saveableEntity.Id, out object data))
                     saveableEntity.RestoreState(data);
+        }
+    }
+
+    public class BattleTransitionData
+    {
+        public List<WarbandSlot> PlayerWarband;
+        public List<WarbandSlot> EnemyWarband;
+
+        public BattleTransitionData(List<WarbandSlot> playerWarband, List<WarbandSlot> enemyWarband)
+        {
+            PlayerWarband = playerWarband;
+            EnemyWarband = enemyWarband;
         }
     }
 }

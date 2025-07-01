@@ -7,20 +7,29 @@ namespace Yg.Battle.BattleUnits
     {
         public event Action<DamageStruct> OnDamageTaken;
 
-        [CustomHeader("Settings")]
-        [SerializeField] private float _maxHealth;
-
         [CustomHeader("Debug")]
         [SerializeField] private float _currentHealth;
 
         private BattleUnitPerkComponent _battleUnitPerkComponent;
+        private BattleUnitStatsComponent _battleUnitStatsComponent;
 
         public override void InitializeComponent(BattleUnitCore battleUnitCore)
         {
             base.InitializeComponent(battleUnitCore);
-            _currentHealth = _maxHealth;
 
             _battleUnitPerkComponent = _battleUnitCore.GetUnitComponent<BattleUnitPerkComponent>();
+            _battleUnitStatsComponent = _battleUnitCore.GetUnitComponent<BattleUnitStatsComponent>();
+
+            if(_battleUnitStatsComponent.MaxHealth == 0)
+                _battleUnitStatsComponent.OnInitializationComplete += BattleUnitStatsComponent_OnInitializationComplete;
+            else
+                _currentHealth = _battleUnitStatsComponent.MaxHealth;
+        }
+
+        private void BattleUnitStatsComponent_OnInitializationComplete()
+        {
+            _battleUnitStatsComponent.OnInitializationComplete -= BattleUnitStatsComponent_OnInitializationComplete;
+            _currentHealth = _battleUnitStatsComponent.MaxHealth;
         }
 
         public void TakeDamage(DamageStruct damageStruct)

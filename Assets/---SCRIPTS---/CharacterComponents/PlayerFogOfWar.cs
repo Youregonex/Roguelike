@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using UnityEngine;
 using Yg.MapGeneration;
 using Zenject;
 
 namespace Yg.Character.FOW
 {
-    public class PlayerFogOfWar : PlayerCharacterComponent
+    public class PlayerFogOfWar : CharacterComponent
     {
         [CustomHeader("TEST SETTINGS")]
         [SerializeField] private int _visionRange;
@@ -14,7 +13,7 @@ namespace Yg.Character.FOW
         private Tileplacer _tileplacer;
         private MapAssembler _mapAssembler;
         private TileGameObjectPlacer _tileGameObjectPlacer;
-        private PlayerMovementComponent _playerMovementComponent;
+        private CharacterMovementComponent _playerMovementComponent;
 
         private HashSet<Vector2Int> _revealedTilePositionSet = new();
 
@@ -30,9 +29,9 @@ namespace Yg.Character.FOW
             _tileGameObjectPlacer = tileGameObjectPlacer;
         }
 
-        public override void InitializeComponent(PlayerCore playerCharacter)
+        public override void InitializeComponent(CharacterCore playerCharacter)
         {
-            _playerMovementComponent = transform.root.GetComponent<PlayerCore>().GetPlayerComponent<PlayerMovementComponent>();
+            _playerMovementComponent = transform.root.GetComponent<CharacterCore>().GetCharacterComponent<CharacterMovementComponent>();
             _playerMovementComponent.OnTilePositionSnap += PlayerCharacter_OnTilePositionSnap;
 
             ComputeVisionOffsets();
@@ -48,30 +47,29 @@ namespace Yg.Character.FOW
             _playerMovementComponent.OnTilePositionSnap -= PlayerCharacter_OnTilePositionSnap;
         }
 
-        public override void SaveComponent(PlayerSaveData playerSaveData)
+        public override void SaveComponent(CharacterSaveData characterSaveData)
         {
+            if (characterSaveData is not PlayerSaveData)
+            {
+                Debug.LogError("Wrong save data type!");
+                return;
+            }
+
+            PlayerSaveData playerSaveData = characterSaveData as PlayerSaveData;
             playerSaveData.RevealedFOWSet = _revealedTilePositionSet;
         }
 
-        public override void LoadComponent(PlayerSaveData playerSaveData)
+        public override void LoadComponent(CharacterSaveData characterSaveData)
         {
+            if (characterSaveData is not PlayerSaveData)
+            {
+                Debug.LogError("Wrong save data type!");
+                return;
+            }
+
+            PlayerSaveData playerSaveData = characterSaveData as PlayerSaveData;
             _revealedTilePositionSet = playerSaveData.RevealedFOWSet;
         }
-
-        //public object CaptureState()
-        //{
-        //    return _revealedTilePositionSet;
-        //}
-
-        //public void RestoreState(object data)
-        //{
-        //    var saveData = data as HashSet<Vector2Int>
-        //        ?? JsonConvert.DeserializeObject<HashSet<Vector2Int>>(JsonConvert.SerializeObject(data));
-
-        //    if (saveData == null) Debug.LogError("Data is null");
-
-        //    _revealedTilePositionSet = saveData;
-        //}
 
         private void ComputeVisionOffsets()
         {

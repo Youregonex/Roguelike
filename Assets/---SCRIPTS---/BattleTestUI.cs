@@ -34,7 +34,7 @@ public class BattleTestUI : MonoBehaviour
             int enemyMeleeAmount = Mathf.RoundToInt(_enemyMeleeSlider.value * _maxUnits);
             int enemyRangedAmount = Mathf.RoundToInt(_enemyRangedSlider.value * _maxUnits);
 
-            _battleUnitSpawner.StartBattle(playerMeleeAmount, playerRangedAmount, enemyMeleeAmount, enemyRangedAmount);
+            _battleUnitSpawner.StartBattleTEST(playerMeleeAmount, playerRangedAmount, enemyMeleeAmount, enemyRangedAmount);
         });
 
         _playerMeleeSlider.onValueChanged.AddListener(x =>
@@ -59,7 +59,7 @@ public class BattleTestUI : MonoBehaviour
 
         _stopButton.onClick.AddListener(() =>
         {
-            _battleUnitSpawner.StopBattle();
+            _battleUnitSpawner.StopBattleTEST();
         });
     }
 }

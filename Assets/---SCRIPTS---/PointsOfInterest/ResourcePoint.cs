@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Yg.Character;
 using Yg.GameData.Configs;
 
 namespace Yg.MapGeneration
@@ -20,7 +21,7 @@ namespace Yg.MapGeneration
             ResourceAmount = resourcePointOfInterestConfigSO.ResourceAmount;
         }
 
-        public override void Interact()
+        public override void Interact(PlayerCore playerCore)
         {
             Debug.Log($"Resource {ResourceAmount}");
         }

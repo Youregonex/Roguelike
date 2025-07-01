@@ -1,79 +1,70 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Yg.MapGeneration;
+using Yg.Systems;
 using Zenject;
 
 namespace Yg.Character
 {
-    public class PlayerCore : MonoBehaviour
+    public class PlayerCore : CharacterCore
     {
-        private TileGameObjectPlacer _tileGameObjectPlacer;
-
-        private readonly HashSet<PlayerCharacterComponent> _playerCharacterComponentList = new();
+        private BattleInitiator _battleInitiator;
+        private UnitSelectionGenerator _unitSelectionGenerator;
 
         [Inject]
-        private void Costruct(TileGameObjectPlacer tileGameObjectPlacer)
+        private void Construct(BattleInitiator battleInitiator)
         {
-            _tileGameObjectPlacer = tileGameObjectPlacer;
+            _battleInitiator = battleInitiator;
         }
 
-        public void Initialize(PlayerSaveData playerSaveData)
+        public override void Initialize(CharacterSaveData characterSaveData)
         {
-            GatherPlayerCharacterComponents();
-
-            if (playerSaveData is not null)
-                LoadPlayerState(playerSaveData);
-
-            InitializePlayerCharacterComponents();
+            base.Initialize(characterSaveData);
+            _unitSelectionGenerator = new();
         }
 
-        public T GetPlayerComponent<T>() where T : PlayerCharacterComponent
-        {
-            return _playerCharacterComponentList.OfType<T>().FirstOrDefault();
-        }
-
-        public PlayerSaveData SavePlayerState()
+        public override CharacterSaveData SaveCharacterState()
         {
             PlayerSaveData playerSaveData = new();
+            playerSaveData.CharacterSaveDataType = ECharacterSaveDataType.Player;
+
             playerSaveData.Position = Vector2Int.RoundToInt(transform.position);
 
-            foreach (var component in _playerCharacterComponentList)
+            foreach (var component in _characterComponentSet)
                 component.SaveComponent(playerSaveData);
 
             return playerSaveData;
         }
 
-        public BaseTile GetCurrentTile()
+        public void EncounterBattle()
         {
-            Vector2Int currentPosition = new(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
-            return _tileGameObjectPlacer.GetTileAtPosition(currentPosition);
+            List<WarbandSlot> enemyWarband = _unitSelectionGenerator.GenerateBattleEncounterWarband();
+            List<WarbandSlot> playerWarband = new(GetCharacterComponent<PlayerWarbandComponent>().Warband);
+            _battleInitiator.StartBattle(playerWarband, enemyWarband);
         }
 
-        private void LoadPlayerState(PlayerSaveData playerSaveData)
+        protected override void LoadCharacterState(CharacterSaveData characterSaveData)
         {
-            transform.position = (Vector2)playerSaveData.Position;
-            foreach (var component in _playerCharacterComponentList)
+            if(characterSaveData is not PlayerSaveData)
+            {
+                Debug.LogError("Player core recieved CharacterSaveData instead of PlayerSaveData");
+                return;
+            }
+
+            PlayerSaveData playerSaveData = characterSaveData as PlayerSaveData;
+            transform.position = (Vector2)characterSaveData.Position;
+            foreach (var component in _characterComponentSet)
                 component.LoadComponent(playerSaveData);
-        }
-
-        private void GatherPlayerCharacterComponents()
-        {
-            foreach (var component in GetComponentsInChildren<PlayerCharacterComponent>())
-                _playerCharacterComponentList.Add(component);
-        }
-
-        private void InitializePlayerCharacterComponents()
-        {
-            foreach (var component in _playerCharacterComponentList)
-                component.InitializeComponent(this);
         }
     }
 
-    public class PlayerSaveData
+    public class PlayerSaveData : CharacterSaveData
     {
-        public Vector2Int Position;
         public HashSet<Vector2Int> RevealedFOWSet;
         public int MovesLeft;
+
+        public void DebugData()
+        {
+            Debug.Log($"PlayerSaveData:\nType {CharacterSaveDataType}\nPosition {Position}\nWarbandSize {WarbandSize}\nCount{WarbandSlotSaveDataList.Count}\nRevealed {RevealedFOWSet.Count}\nMovesLeft{MovesLeft}");
+        }
     }
 }

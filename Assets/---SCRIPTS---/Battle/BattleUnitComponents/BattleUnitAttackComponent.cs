@@ -58,7 +58,7 @@ namespace Yg.Battle.BattleUnits
         protected virtual void Attack(BattleUnitCore battleUnitCore)
         {
             DamageStruct damage = GenerateDamageStruct();
-            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnDamageDealt, ref damage);
+            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnAttack, ref damage);
 
             ProccessAttack(damage, battleUnitCore);
             RefreshAttackCooldown();
@@ -67,10 +67,9 @@ namespace Yg.Battle.BattleUnits
             PlayAttackAnimation(battleUnitCore.transform);
         }
 
-        protected virtual void ProccessAttack(DamageStruct damageStruct, BattleUnitCore battleUnitCore)
+        protected virtual void ProccessAttack(DamageStruct damageStruct, BattleUnitCore target)
         {
-            if (battleUnitCore.TryGetUnitComponent(out BattleUnitHealthComponent target))
-                target.TakeDamage(damageStruct);
+            _battleUnitCore.DealDamage(damageStruct, target);
         }
 
         protected virtual void PlayAttackAnimation(Transform targetTransform)

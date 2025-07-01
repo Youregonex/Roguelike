@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd50b475bcbd4e04af924b15aa3be06, type: 3}
+  m_Name: Unit_Archer
+  m_EditorClassIdentifier: 
+  <UnitName>k__BackingField: Archer
+  <UnitPrefab>k__BackingField: {fileID: 7309333256827841471, guid: 39f8b02eb98cc4bcd86f703b0809eb39, type: 3}
+  <PrefabId>k__BackingField: a088cddc-75ad-4dc3-847f-6452efe87478
+  <UnitIcon>k__BackingField: {fileID: 407625093, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+  <DefaultSquadSize>k__BackingField: 3
+  <MoveSpeed>k__BackingField: 2
+  <MaxHealth>k__BackingField: 15
+  <AttackType>k__BackingField: 2
+  <DamageType>k__BackingField: 1
+  <AttackRange>k__BackingField: 10
+  <AttackCooldownMin>k__BackingField: 1.5
+  <AttackCooldownMax>k__BackingField: 1.75
+  <AttackDamageMin>k__BackingField: 2
+  <AttackDamageMax>k__BackingField: 5
+  <KnockBackForce>k__BackingField: 5
+  <PerkList>k__BackingField: []
+  <SpellSOList>k__BackingField: []
+  <ProjectilePrefab>k__BackingField: {fileID: 6479707811003740384, guid: 9f53f3613dc9a46148ce835b42e8a22a, type: 3}
+  <ProjectileSpeed>k__BackingField: 30

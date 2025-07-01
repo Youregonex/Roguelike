@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Shielded
   <PerkApplicationEvent>k__BackingField: 0
-  <DamageReductionPercent>k__BackingField: 0.8
+  <PerkDescription>k__BackingField: 
+  <PerkIcon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+  <DamageReductionPercent>k__BackingField: 0.2
   <DefenceFromAttackType>k__BackingField: 2

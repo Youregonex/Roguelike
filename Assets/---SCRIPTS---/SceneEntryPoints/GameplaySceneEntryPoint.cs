@@ -42,9 +42,6 @@ namespace Yg.EntryPoint
         {
             if (Input.GetKeyDown(KeyCode.F))
                 _persistentData.SaveData();
-
-            if (Input.GetKeyDown(KeyCode.G))
-                _persistentData.LoadData();
         }
 
         private void InitializeScene()
@@ -98,7 +95,7 @@ namespace Yg.EntryPoint
         private void MoveCameraInPosition()
         {
             Camera mainCamera = Camera.main;
-            Vector3 cameraPosition = _playerSpawner.Character.transform.position;
+            Vector3 cameraPosition = _playerSpawner.PlayerCore.transform.position;
             cameraPosition.z = -10;
             mainCamera.transform.position = cameraPosition;
         }
