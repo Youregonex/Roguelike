@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e9b83b0b3a20425a915be922bfc10b1, type: 3}
+  m_Script: {fileID: 11500000, guid: f8d2e989c702444c3956fce700b0df16, type: 3}
   m_Name: Shielded
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Shielded
   <PerkApplicationEvent>k__BackingField: 0
-  <PerkDescription>k__BackingField: 
-  <PerkIcon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+  <PerkDescription>k__BackingField: Reduce <b><color=#466C96>Ranged</color></b> damage
+    taken by <b><color=#466C96>20%</color></b>.
+  <PerkIcon>k__BackingField: {fileID: 0}
   <DamageReductionPercent>k__BackingField: 0.2
   <DefenceFromAttackType>k__BackingField: 2

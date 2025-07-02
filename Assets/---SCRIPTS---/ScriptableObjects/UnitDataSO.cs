@@ -30,7 +30,7 @@ namespace Yg.GameData.Units
 
         [field: Space(10f)]
 
-        [field: SerializeField] public List<Perk> PerkList { get; private set; }
+        [field: SerializeField] public List<PerkSO> PerkList { get; private set; }
         [field: SerializeField] public List<SpellSO> SpellSOList { get; private set; }
 
         private void OnValidate()

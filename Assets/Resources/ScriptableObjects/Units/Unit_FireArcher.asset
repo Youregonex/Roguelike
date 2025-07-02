@@ -28,7 +28,7 @@ MonoBehaviour:
   <AttackDamageMax>k__BackingField: 5
   <KnockBackForce>k__BackingField: 5
   <PerkList>k__BackingField:
-  - {fileID: 11400000, guid: 3b31b00e24bf64f84962df0eea8280f2, type: 2}
+  - {fileID: 11400000, guid: 865b99dcee6c4459a9d87bd962034d6c, type: 2}
   <SpellSOList>k__BackingField: []
   <ProjectilePrefab>k__BackingField: {fileID: 6479707811003740384, guid: 9f53f3613dc9a46148ce835b42e8a22a, type: 3}
   <ProjectileSpeed>k__BackingField: 40

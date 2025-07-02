@@ -19,8 +19,10 @@ namespace Yg.Battle.BattleUnits
         public float AttackDamageMin { get; private set; }
         public float AttackDamageMax { get; private set; }
         public float KnockBackForce { get; private set; }
-        public List<Perk> PerkList { get; private set; }
+        public List<PerkSO> PerkList { get; private set; }
         public List<SpellSO> SpellSOList { get; private set; }
+
+        public bool IsInitialized { get; private set; } = false;
 
         public override void InitializeComponent(BattleUnitCore battleUnitCore)
         {
@@ -29,6 +31,7 @@ namespace Yg.Battle.BattleUnits
 
             SetupStats(unitDataSO);
 
+            IsInitialized = true;
             OnInitializationComplete?.Invoke();
         }
 

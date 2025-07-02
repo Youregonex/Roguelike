@@ -4,21 +4,25 @@ using Yg.Battle.BattleUnits;
 
 namespace Yg.GameData.Perks
 {
-    [CreateAssetMenu(fileName = "Perk", menuName = "Perks/AttackTypeReductionPerk")]
     public class AttackTypeReductionPerk : Perk
     {
-        [field: SerializeField, Range(0f, 1f)] public float DamageReductionPercent { get; private set; }
-        [field: SerializeField] public EAttackType DefenceFromAttackType { get; private set; }
+        public AttackTypeReductionPerkSO AttackTypeReductionPerkSO { get; private set; }
+
+        public AttackTypeReductionPerk(PerkSO perkSO) : base(perkSO)
+        {
+            if(!(PerkSO is AttackTypeReductionPerkSO))
+            {
+                Debug.LogError("Wrong PerkSO!");
+                return;
+            }
+
+            AttackTypeReductionPerkSO = perkSO as AttackTypeReductionPerkSO;
+        }
 
         public override void ApplyPerk(BattleUnitCore applier, BattleUnitCore target, ref DamageStruct damageStruct)
         {
-            if (damageStruct.AttackType == DefenceFromAttackType)
-                damageStruct.DamageAmount -= damageStruct.DamageAmount * DamageReductionPercent;
-        }
-
-        protected override void Validate()
-        {
-            PerkDescription = $"Reduce <b><color=#466C96>{DefenceFromAttackType}</color></b> damage taken by <b><color=#466C96>{DamageReductionPercent * 100}%</color></b>.";
+            if (damageStruct.AttackType == AttackTypeReductionPerkSO.DefenceFromAttackType)
+                damageStruct.DamageAmount -= damageStruct.DamageAmount * AttackTypeReductionPerkSO.DamageReductionPercent;
         }
     }
 }

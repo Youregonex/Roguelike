@@ -30,7 +30,6 @@ namespace Yg.Battle.BattleUnits
         public void Initialize(EUnitFaction unitFaction)
         {
             _unitFaction = unitFaction;
-
             GatherUnitComponents();
             InitializeUnitComponents();
         }

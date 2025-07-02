@@ -15,7 +15,7 @@ namespace Yg.UI
             _perkTooltip.gameObject.SetActive(false);
         }
 
-        public void ShowTooltip(Perk perk, RectTransform rectTransform)
+        public void ShowTooltip(PerkSO perk, RectTransform rectTransform)
         {
             _perkTooltip.gameObject.SetActive(true);
             _perkTooltip.transform.position = (Vector2)rectTransform.position + _tooltipOffset;

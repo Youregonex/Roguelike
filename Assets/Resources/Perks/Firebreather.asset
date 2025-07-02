@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 744688f2364f54f64a66c3f5c09f8c66, type: 3}
+  m_Script: {fileID: 11500000, guid: f60420905255b4fbbb953058aa43a0f5, type: 3}
   m_Name: Firebreather
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Firebreather

@@ -1,22 +1,18 @@
-using UnityEngine;
 using Yg.Battle;
 using Yg.Battle.BattleUnits;
 
 namespace Yg.GameData.Perks
 {
-    public abstract class Perk : ScriptableObject
+    public abstract class Perk
     {
-        [field: SerializeField] public string Name { get; private set; }
-        [field: SerializeField] public EPerkApplicationEvent PerkApplicationEvent { get; protected set; }
-        [field: SerializeField, TextArea(3,10)] public string PerkDescription { get; protected set; }
-        [field: SerializeField] public Sprite PerkIcon { get; protected set; }
+        public PerkSO PerkSO { get; private set; }
+
+
+        public Perk(PerkSO perkSO)
+        {
+            PerkSO = perkSO;
+        }
 
         public abstract void ApplyPerk(BattleUnitCore applier, BattleUnitCore target, ref DamageStruct damageStruct);
-        protected abstract void Validate();
-
-        protected void OnValidate()
-        {
-            Validate();
-        }
     }
 }
