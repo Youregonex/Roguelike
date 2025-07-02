@@ -164,7 +164,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.114052296}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.25
 --- !u!1 &1648724477330260493
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334912e75e74541f9977aae0e6c6a6df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 20
   _currentHealth: 0
 --- !u!1 &3380486580624654813
 GameObject:

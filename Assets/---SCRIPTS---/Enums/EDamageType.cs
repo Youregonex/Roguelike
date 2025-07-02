@@ -4,6 +4,9 @@ namespace Yg.Battle
     public enum EDamageType
     {
         None,
-        Physical
+        Physical,
+        Fire,
+        Frost,
+        Nature
     }
 }

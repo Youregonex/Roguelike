@@ -6,6 +6,7 @@ using Yg.Character;
 using Yg.GameData;
 using Zenject;
 using System;
+using System.Linq;
 
 namespace Yg.UI
 {
@@ -20,12 +21,18 @@ namespace Yg.UI
         [SerializeField] private SpriteRenderer _mouseSquadVisual;
         [SerializeField] private List<SquadPlacementArea> _squadPlacementAreaList;
         [SerializeField] private Button _startBattleButton;
+        [SerializeField] private Button _autoPlaceButton;
+
+        [CustomHeader("Debug")]
+        [SerializeField] private int _listAmount;
 
         private PersistentData _persistentData;
-        private List<SquadUI> _squadUIList = new();
-
         private SquadUI _currentSquadUI;
         private SquadPlacementArea _currentSquadPlacementArea;
+
+        private List<SquadUI> _squadUIList = new();
+
+        private int _lastPlacementIndex = 0;
 
         private Vector3 _mouseVisualPosition;
 
@@ -57,6 +64,11 @@ namespace Yg.UI
                 _window.gameObject.SetActive(false);
                 OnTroopsReady?.Invoke();
             });
+
+            _autoPlaceButton.onClick.AddListener(() =>
+            {
+                AutoPlaceTroops();
+            });
         }
 
         private void Update()
@@ -69,18 +81,26 @@ namespace Yg.UI
                 _mouseSquadVisual.sprite = _currentSquadUI.WarbandSlot.UnitData.UnitIcon;
             else
                 _mouseSquadVisual.sprite = null;
+
+            _startBattleButton.interactable = _squadUIList.Count == 0;
+
+            //Debug
+            _listAmount = _squadUIList.Count;
         }
 
         private void OnDestroy()
         {
             for (int i = 0; i < _squadUIList.Count; i++)
             {
+                if (_squadUIList[i] is null) continue;
+
                 _squadUIList[i].OnSquadClicked -= SquadUI_OnSquadClicked;
                 _squadUIList[i].OnSquadReleased -= SquadUI_OnSquadReleased;
             }
 
             for (int i = 0; i < _squadPlacementAreaList.Count; i++)
             {
+                if (_squadPlacementAreaList[i] is null) continue;
                 _squadPlacementAreaList[i].OnHover -= SquadPlacementArea_OnSelect;
                 _squadPlacementAreaList[i].OnHoverEnd -= SquadPlacementArea_OnDeselect;
                 _squadPlacementAreaList[i].OnClick -= SquadPlacementUI_OnClick;
@@ -111,27 +131,24 @@ namespace Yg.UI
                     SquadUI previousSquadUI = _currentSquadPlacementArea.SquadUI;
                     _currentSquadPlacementArea.SetSquadUI(squadPlacementArea.SquadUI);
                     squadPlacementArea.SetSquadUI(previousSquadUI);
-                    _currentSquadPlacementArea = null;
-                    _currentSquadUI = null;
+                    ClearCurrentSelection();
                 }
                 else
                 {
                     _currentSquadPlacementArea.SetSquadUI(_currentSquadUI);
                     squadPlacementArea.ClearSquadUI();
-                    _currentSquadPlacementArea = null;
-                    _currentSquadUI = null;
+                    ClearCurrentSelection();
                 }
-
-                UnhighlightPlacementAreas();
             }
             else
             {
                 _currentSquadUI?.Show();
+                _squadUIList.Add(squadPlacementArea.SquadUI);
                 squadPlacementArea.ClearSquadUI();
-                _currentSquadUI = null;
-                _currentSquadPlacementArea = null;
-                UnhighlightPlacementAreas();
+                ClearCurrentSelection();
             }
+
+            UnhighlightPlacementAreas();
         }
 
         private void SquadPlacementUI_OnClick(SquadPlacementArea squadPlacementArea)
@@ -157,20 +174,32 @@ namespace Yg.UI
         {
             if (_currentSquadPlacementArea is not null)
             {
-                _currentSquadPlacementArea.SetSquadUI(squadUI);
-                _currentSquadUI = null;
-                _currentSquadPlacementArea = null;
+                if(!_currentSquadPlacementArea.Empty)
+                {
+                    SquadUI previousSquadUI = _currentSquadPlacementArea.SquadUI;
+                    _currentSquadPlacementArea.SetSquadUI(squadUI);
 
-                UnhighlightPlacementAreas();
+                    _squadUIList.Remove(squadUI);
+                    _squadUIList.Add(previousSquadUI);
+                    previousSquadUI.Show();
 
-                _squadUIList.Remove(squadUI);
+                    ClearCurrentSelection();
+                }
+                else
+                {
+                    _currentSquadPlacementArea.SetSquadUI(squadUI);
+                    _squadUIList.Remove(squadUI);
+
+                    ClearCurrentSelection();
+                }
             }
             else
             {
-                _currentSquadUI = null;
                 squadUI.Show();
-                UnhighlightPlacementAreas();
+                ClearCurrentSelection();
             }
+
+            UnhighlightPlacementAreas();
         }
 
         private void SquadUI_OnSquadClicked(SquadUI squadUI)
@@ -178,6 +207,65 @@ namespace Yg.UI
             _currentSquadUI = squadUI;
             squadUI.Hide();
             HighlightPlacementArea();
+        }
+
+        private void AutoPlaceTroops()
+        {
+            ReturnTroopsToHand();
+
+            _squadPlacementAreaList = _squadPlacementAreaList.OrderByDescending(e => e.transform.position.x).ToList();
+
+            List<WarbandSlot> enemyWarband = _persistentData.BattleTransitionData.EnemyWarband;
+
+            List<SquadUI> meleeSquads = _squadUIList.Where(e => e.WarbandSlot.UnitData.AttackType == EAttackType.Melee).ToList();
+            List<SquadUI> rangeSquads = _squadUIList.Where(e => e.WarbandSlot.UnitData.AttackType == EAttackType.Ranged).ToList();
+
+            for (int i = 0; i < meleeSquads.Count; i++)
+            {
+                if (i < _squadPlacementAreaList.Count)
+                {
+                    _squadPlacementAreaList[i].SetSquadUI(meleeSquads[i]);
+                    _lastPlacementIndex = i + 1;
+                }
+                else
+                {
+                    Debug.LogError("Not enough placement areas for melee squads!");
+                    return;
+                }
+            }
+
+            int placementIndex = 0;
+            for (int i = 0; i < rangeSquads.Count; i++)
+            {
+                placementIndex = i + _lastPlacementIndex;
+                if (placementIndex < _squadPlacementAreaList.Count)
+                    _squadPlacementAreaList[placementIndex].SetSquadUI(rangeSquads[i]);
+                else
+                {
+                    Debug.LogError("Not enough placement areas for ranged squads!");
+                    return;
+                }
+            }
+
+            for (int i = 0; i < _squadUIList.Count; i++)
+                _squadUIList[i].Hide();
+
+            _squadUIList.Clear();
+        }
+
+        private void ReturnTroopsToHand()
+        {
+            for (int i = 0; i < _squadPlacementAreaList.Count; i++)
+            {
+                if (_squadPlacementAreaList[i].Empty) continue;
+                SquadPlacementUI_OnRelease(_squadPlacementAreaList[i]);
+            }
+        }
+
+        private void ClearCurrentSelection()
+        {
+            _currentSquadUI = null;
+            _currentSquadPlacementArea = null;
         }
 
         private void UnhighlightPlacementAreas()

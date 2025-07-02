@@ -39,14 +39,14 @@ namespace Yg.Battle
                     DamageStruct damageStruct = new()
                     {
                         UnitFaction = caster.UnitFaction,
-                        Origin = caster.transform.position,
+                        Origin = caster,
                         AttackType = EAttackType.Magic,
                         DamageType = aoeSpellSO.DamageType,
                         DamageAmount = aoeSpellSO.Damage,
                         KnockBackForce = 0f
                     };
 
-                    caster.DealDamage(damageStruct, possibleTarget);
+                    caster.DealDamage(damageStruct, possibleTarget, true);
                 }
             }
         }

@@ -173,9 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf014e1ed9de743259f138f25a119bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _warbandSize: 5
+  _warbandSize: 18
   _warbandSlotList: []
-  _unitDataSO: {fileID: 11400000, guid: a30ea91d459304e3aa6db8606cbbf651, type: 2}
 --- !u!1 &4605360643885186016
 GameObject:
   m_ObjectHideFlags: 0

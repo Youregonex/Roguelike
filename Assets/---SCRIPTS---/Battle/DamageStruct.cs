@@ -1,11 +1,11 @@
-using UnityEngine;
+using Yg.Battle.BattleUnits;
 
 namespace Yg.Battle
 {
     public struct DamageStruct
     {
         public EUnitFaction UnitFaction;
-        public Vector2 Origin;
+        public BattleUnitCore Origin;
         public EAttackType AttackType;
         public EDamageType DamageType;
         public float DamageAmount;
@@ -13,7 +13,7 @@ namespace Yg.Battle
 
         public DamageStruct(
             EUnitFaction unitFaction,
-            Vector2 origin,
+            BattleUnitCore origin,
             EAttackType attackType,
             EDamageType damageType,
             float damageAmount,

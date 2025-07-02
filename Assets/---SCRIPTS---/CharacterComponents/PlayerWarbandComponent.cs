@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Yg.GameData.Units;
 using Yg.Systems;
 using Yg.UI;
 using Zenject;
@@ -14,9 +12,6 @@ namespace Yg.Character
         private RecruitmentUI _recruitmentUI;
         private UnitSelectionGenerator _unitSelectionGenerator;
         private PlayerMovementComponent _playerMovementComponent;
-
-        [CustomHeader("Debug")]
-        [SerializeField] protected UnitDataSO _unitDataSO;
 
         [Inject]
         private void Construct(WarbandUI warbandUI, RecruitmentUI recruitmentUI)
@@ -38,10 +33,9 @@ namespace Yg.Character
         {
             if (Input.GetKeyDown(KeyCode.G))
             {
-                int num = UnityEngine.Random.Range(1, 11);
-                WarbandSlot warbandSlot = new(_unitDataSO, num);
+                WarbandSlot warbandSlot = _unitSelectionGenerator.GenerateRandomUnitChoiceList(1)[0];
                 AddSquad(warbandSlot);
-                Debug.Log($"Added squad: {_unitDataSO.UnitName} | {num}. Total slots: {_warbandSlotList.Count}");
+                Debug.Log($"Added squad: {warbandSlot.UnitData.UnitName}");
             }
 
             if (Input.GetKeyDown(KeyCode.L))

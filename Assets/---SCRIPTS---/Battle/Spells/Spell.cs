@@ -22,12 +22,34 @@ namespace Yg.Battle
         }
 
         public abstract bool TryCast(BattleUnitCore caster);
+
+        protected virtual void StartCast(BattleUnitCore caster)
+        {
+            if(caster.TryGetUnitComponent(out BattleUnitAttackComponent battleUnitAttackComponent))
+                battleUnitAttackComponent.LockAttack();
+
+            if (caster.TryGetUnitComponent(out BattleUnitMovementComponent battleUnitMovementComponent))
+                battleUnitMovementComponent.LockMovement();
+        }
+
         protected abstract void ApplySpellEffect(BattleUnitCore caster);
+
+        protected virtual void StopCast(BattleUnitCore caster)
+        {
+            if (caster.TryGetUnitComponent(out BattleUnitAttackComponent battleUnitAttackComponent))
+                battleUnitAttackComponent.UnlockAttack();
+
+            if (caster.TryGetUnitComponent(out BattleUnitMovementComponent battleUnitMovementComponent))
+                battleUnitMovementComponent.UnlockMovement();
+
+            ApplyCooldown();
+        }
 
         protected virtual void Cast(BattleUnitCore caster)
         {
+            StartCast(caster);
             ApplySpellEffect(caster);
-            ApplyCooldown();
+            StopCast(caster);
         }
 
         private void ApplyCooldown() => _currentCooldown = _spellSO.Cooldown;

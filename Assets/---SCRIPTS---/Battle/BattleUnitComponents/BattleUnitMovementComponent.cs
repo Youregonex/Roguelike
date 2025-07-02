@@ -4,11 +4,10 @@ namespace Yg.Battle.BattleUnits
 {
     public class BattleUnitMovementComponent : BattleUnitComponent, ITickableBattleUnitComponent
     {
-        [CustomHeader("Settings")]
-        [SerializeField] private float _moveSpeed;
-
         private BattleUnitTargetComponent _battleUnitTargetComponent;
         private BattleUnitAttackComponent _battleUnitAttackComponent;
+        private BattleUnitStatsComponent _battleUnitStatsComponent;
+
         private Rigidbody2D _rigidBody;
 
         private bool _movementLocked = false;
@@ -19,6 +18,8 @@ namespace Yg.Battle.BattleUnits
 
             _battleUnitTargetComponent = _battleUnitCore.GetUnitComponent<BattleUnitTargetComponent>();
             _battleUnitAttackComponent = _battleUnitCore.GetUnitComponent<BattleUnitAttackComponent>();
+            _battleUnitStatsComponent = _battleUnitCore.GetUnitComponent<BattleUnitStatsComponent>();
+
             _rigidBody = _battleUnitCore.GetComponent<Rigidbody2D>();
         }
 
@@ -54,7 +55,7 @@ namespace Yg.Battle.BattleUnits
             }
 
             var velocityDirection = Utilities.GetDirectionVectorNormalized(transform.position, _battleUnitTargetComponent.CurrentTarget.transform.position);
-            var resultVelocity = velocityDirection * _moveSpeed;
+            var resultVelocity = velocityDirection * _battleUnitStatsComponent.MoveSpeed;
             _rigidBody.velocity = resultVelocity;
         }
 

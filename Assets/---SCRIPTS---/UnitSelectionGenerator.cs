@@ -12,25 +12,17 @@ namespace Yg.Systems
             List<WarbandSlot> choices = new();
 
             int randomUnitIndex;
-            UnitDataSO unitDataSO;
 
             for (int i = 0; i < choicesAmount; i++)
             {
                 randomUnitIndex = UnityEngine.Random.Range(0, unitDataSOList.Count);
-                unitDataSO = unitDataSOList[randomUnitIndex];
+                UnitDataSO unitDataSO = unitDataSOList[randomUnitIndex];
 
                 WarbandSlot warbandSlot = new(unitDataSO, unitDataSO.DefaultSquadSize);
                 choices.Add(warbandSlot);
             }
 
             return choices;
-        }
-
-        public List<WarbandSlot> GenerateBattleEncounterWarband()
-        {
-            int maxSlots = 7;
-
-            return GenerateRandomUnitChoiceList(maxSlots);
         }
     }
 }

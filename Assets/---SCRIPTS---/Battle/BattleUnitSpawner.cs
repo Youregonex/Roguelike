@@ -7,11 +7,14 @@ using Yg.GameData;
 using Yg.GameData.Units;
 using Yg.UI;
 using Zenject;
+using System;
 
 namespace Yg.Battle.GameSystems
 {
     public class BattleUnitSpawner : MonoBehaviour
     {
+        public event Action OnUnitSpawnComplete;
+
         private const string GAMEPLAY_SCENE_NAME = "Gameplay";
 
         [CustomHeader("Settings")]
@@ -46,6 +49,7 @@ namespace Yg.Battle.GameSystems
             SpawnEnemyTroops();
 
             AssignTargets();
+            OnUnitSpawnComplete?.Invoke();
         }
 
         public void Initialize(PersistentData persistentData)
@@ -87,8 +91,8 @@ namespace Yg.Battle.GameSystems
             for (int i = 0; i < warbandSlot.SlotSize; i++)
             {
                 bounds = squadPlacementArea.Collider.bounds;
-                randomPositionX = Random.Range(bounds.min.x, bounds.max.x);
-                randomPositionY = Random.Range(bounds.min.y, bounds.max.y);
+                randomPositionX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
+                randomPositionY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
 
                 spawnPosition = new(randomPositionX, randomPositionY);
 
@@ -178,8 +182,8 @@ namespace Yg.Battle.GameSystems
 
             Destroy(battleUnitCore.gameObject);
 
-            if (!_TEST && (_playerUnitList.Count == 0 || _enemyUnitList.Count == 0))
-                SceneManager.LoadScene(GAMEPLAY_SCENE_NAME);
+            //if (!_TEST && (_playerUnitList.Count == 0 || _enemyUnitList.Count == 0))
+            //    SceneManager.LoadScene(GAMEPLAY_SCENE_NAME);
         }
 
         private void AssignTargets()

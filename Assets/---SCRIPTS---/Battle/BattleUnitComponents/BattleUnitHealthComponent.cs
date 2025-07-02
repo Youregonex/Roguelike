@@ -36,7 +36,7 @@ namespace Yg.Battle.BattleUnits
         {
             if (_currentHealth <= 0) return;
 
-            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnDamageTaken, ref damageStruct);
+            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnDamageTaken, _battleUnitCore, null, ref damageStruct);
 
             _currentHealth -= damageStruct.DamageAmount;
             OnDamageTaken?.Invoke(damageStruct);

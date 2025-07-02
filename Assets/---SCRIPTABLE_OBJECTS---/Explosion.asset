@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Explosion
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Explosion
-  <Description>k__BackingField: Deals <b><color=#466B95>7</color></b> <b><color=#466B95>Physical</color></b>
+  <Description>k__BackingField: Deals <b><color=#466B95>7</color></b> <b><color=#466B95>Fire</color></b>
     damage in <b><color=#466B95>4m</color></b> range.
   <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
   <Cooldown>k__BackingField: 15
   <Range>k__BackingField: 10
   <ImpactRadius>k__BackingField: 4
-  <DamageType>k__BackingField: 1
+  <DamageType>k__BackingField: 2
   <Damage>k__BackingField: 7
   <SpellVFX>k__BackingField: {fileID: 885052112669815828, guid: c2e02f13124381e4c8a851149cd599da, type: 3}

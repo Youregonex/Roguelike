@@ -11,6 +11,12 @@ namespace Yg.GameData.Perks
         [field: SerializeField, TextArea(3,10)] public string PerkDescription { get; protected set; }
         [field: SerializeField] public Sprite PerkIcon { get; protected set; }
 
-        public abstract void ApplyPerk(ref DamageStruct damageStruct);
+        public abstract void ApplyPerk(BattleUnitCore applier, BattleUnitCore target, ref DamageStruct damageStruct);
+        protected abstract void Validate();
+
+        protected void OnValidate()
+        {
+            Validate();
+        }
     }
 }

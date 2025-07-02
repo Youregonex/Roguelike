@@ -41,7 +41,12 @@ namespace Yg.Battle
             {
                 if (battleUnitCore.UnitFaction != _damageStruct.UnitFaction)
                 {
-                    battleUnitCore.GetUnitComponent<BattleUnitHealthComponent>().TakeDamage(_damageStruct);
+                    if (_damageStruct.Origin is not null)
+
+                        _damageStruct.Origin.DealDamage(_damageStruct, battleUnitCore, true);
+                    else
+                        battleUnitCore.GetUnitComponent<BattleUnitHealthComponent>().TakeDamage(_damageStruct);
+
                     DestroyProjectile();
                 }
             }

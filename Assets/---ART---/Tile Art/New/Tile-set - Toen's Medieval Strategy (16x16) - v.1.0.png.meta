@@ -753,11 +753,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Peasant_1
+      name: Character_Teemp
       rect:
         serializedVersion: 2
         x: 81
-        y: 609
+        y: 608
         width: 16
         height: 16
       alignment: 0
@@ -1026,13 +1026,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Unit_Monk
+      name: Unit_FireMonk
       rect:
         serializedVersion: 2
-        x: 99
-        y: 256
-        width: 9
-        height: 14
+        x: 0
+        y: 239
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1042,6 +1042,27 @@ TextureImporter:
       bones: []
       spriteID: 842bb6a7e5cca402b8cf529f68c8ab80
       internalID: 856926583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unit_Peasant
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 608
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 085128b0dc8704a34ad3d636cdf9eb8e
+      internalID: -1484822731
       vertices: []
       indices: 
       edges: []
@@ -1068,6 +1089,7 @@ TextureImporter:
       Building_7: -415998946
       Building_8: 1637020163
       Castle: -1151295276
+      Character_Teemp: 2095661159
       Forest: 901818144
       Forest_1: 91085699
       Forest_2: -844654829
@@ -1085,7 +1107,6 @@ TextureImporter:
       Mountain_1: -370135690
       Mountain_2: 851347152
       Mountain_3: -1269248129
-      Peasant_1: 2095661159
       Resource_1: -1806648648
       Resource_2: -2037707567
       Resource_3: -1716700117
@@ -1095,8 +1116,9 @@ TextureImporter:
       Unit_2: 1545182197
       Unit_4: -33750763
       Unit_Archer: 407625093
+      Unit_FireMonk: 856926583
       Unit_Knight: 2005238886
-      Unit_Monk: 856926583
+      Unit_Peasant: -1484822731
       Unit_Rider: -1063656196
       Unit_Spearman: 324477005
       Village_1: -165242511

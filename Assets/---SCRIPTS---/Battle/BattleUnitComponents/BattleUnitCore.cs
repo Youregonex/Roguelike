@@ -11,6 +11,7 @@ namespace Yg.Battle.BattleUnits
     {
         public event Action<BattleUnitCore> OnDeath;
         public event Action<BattleUnitCore> OnTargetRemoval;
+        public event Action<BattleUnitCore, float> OnDamageDealt;
 
         [CustomHeader("Settings")]
         [SerializeField] private UnitDataSO _unitData;
@@ -40,12 +41,15 @@ namespace Yg.Battle.BattleUnits
                 component.Tick();
         }
 
-        public void DealDamage(DamageStruct damageStruct, BattleUnitCore target)
+        public void DealDamage(DamageStruct damageStruct, BattleUnitCore target, bool applyPerks)
         {
-            GetUnitComponent<BattleUnitPerkComponent>().ApplyPerks(EPerkApplicationEvent.OnDamageDealt, ref damageStruct);
+            if(applyPerks)
+                GetUnitComponent<BattleUnitPerkComponent>().ApplyPerks(EPerkApplicationEvent.OnDamageDealt, this, target, ref damageStruct);
 
             if (target.TryGetUnitComponent(out BattleUnitHealthComponent targetHealthComponent))
                 targetHealthComponent.TakeDamage(damageStruct);
+
+            OnDamageDealt?.Invoke(this, damageStruct.DamageAmount);
         }
 
         public T GetUnitComponent<T>() where T : BattleUnitComponent

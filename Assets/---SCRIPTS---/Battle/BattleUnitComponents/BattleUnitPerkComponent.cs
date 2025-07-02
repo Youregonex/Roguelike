@@ -27,12 +27,12 @@ namespace Yg.Battle.BattleUnits
                 _battleUnitStatsComponent.PerkList.Remove(perk);
         }
 
-        public void ApplyPerks(EPerkApplicationEvent perkApplicationEvent, ref DamageStruct damageStruct)
+        public void ApplyPerks(EPerkApplicationEvent perkApplicationEvent, BattleUnitCore applier, BattleUnitCore target, ref DamageStruct damageStruct)
         {
             List<Perk> perks = _battleUnitStatsComponent.PerkList.Where(e => e.PerkApplicationEvent == perkApplicationEvent).ToList();
 
             foreach (var perk in perks)
-                perk.ApplyPerk(ref damageStruct);
+                perk.ApplyPerk(applier, target, ref damageStruct);
         }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using Yg.Battle;
 using Yg.Battle.BattleUnits;
 
-public class BombSkill : MonoBehaviour
+public class MouseBomb : MonoBehaviour
 {
     [CustomHeader("Settings")]
     [SerializeField] private GameObject _explosionPrefab;
@@ -26,10 +26,9 @@ public class BombSkill : MonoBehaviour
         {
             if(hit.transform.TryGetComponent(out BattleUnitCore battleUnitCore))
             {
-                DamageStruct damageStruct = new(EUnitFaction.None, position, EAttackType.Magic, EDamageType.Physical, 10f, 20f);
+                DamageStruct damageStruct = new(EUnitFaction.None, null, EAttackType.Magic, EDamageType.Physical, 10f, 20f);
                 battleUnitCore.GetUnitComponent<BattleUnitHealthComponent>().TakeDamage(damageStruct);
             }
         }
-
     }
 }

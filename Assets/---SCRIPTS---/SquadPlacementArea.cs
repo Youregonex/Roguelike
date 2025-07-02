@@ -22,9 +22,10 @@ namespace Yg.Battle
 
         private BoxCollider2D _boxCollider;
 
+        private bool _interactable = true;
+
         public SquadUI SquadUI => _squadUI;
         public WarbandSlot WarbandSlot => _warbandSlot;
-
         public BoxCollider2D Collider => _boxCollider;
         public bool Empty => (_squadUI is null) && (_warbandSlot is null);
 
@@ -46,27 +47,36 @@ namespace Yg.Battle
             _warbandSlot = warbandSlot;
             _squadIconSR.sprite = warbandSlot.UnitData.UnitIcon;
             _squadIconSR.flipX = true;
+            _interactable = false;
         }
 
         public void OnMouseDown()
         {
+            if (!_interactable) return;
+
             OnClick?.Invoke(this);
             ClearAreaVisual();
         }
 
         public void OnMouseUp()
         {
+            if (!_interactable) return;
+
             OnRelease?.Invoke(this);
         }
 
         public void OnMouseEnter()
         {
+            if (!_interactable) return;
+
             PrePlacementHighlight();
             OnHover?.Invoke(this);
         }
 
         public void OnMouseExit()
         {
+            if (!_interactable) return;
+
             PrePlacementUnhighlight();
             OnHoverEnd?.Invoke(this);
         }
@@ -74,6 +84,7 @@ namespace Yg.Battle
         public void ClearSquadUI()
         {
             _squadUI = null;
+            ClearAreaVisual();
         }
 
         public void DefaultHighlight()

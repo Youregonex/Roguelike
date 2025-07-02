@@ -16,6 +16,9 @@ namespace Yg.Battle.BattleUnits
         protected BattleUnitStatsComponent _battleUnitStatsComponent;
         protected BattleUnitPerkComponent _battleUnitPerkComponent;
 
+        private BattleUnitCore _currentTarget => _battleUnitTargetComponent.CurrentTarget;
+        protected bool _attackLocked = false;
+
         protected Tween _attackTween;
 
         public float AttackRange => _battleUnitStatsComponent.AttackRange;
@@ -42,6 +45,9 @@ namespace Yg.Battle.BattleUnits
                 _attackCooldownCurrent -= Time.deltaTime;
         }
 
+        public void LockAttack() => _attackLocked = true;
+        public void UnlockAttack() => _attackLocked = false;
+
         protected virtual void OnDestroy()
         {
             if (_attackTween != null)
@@ -50,26 +56,26 @@ namespace Yg.Battle.BattleUnits
 
         protected void AttackDistanceCheck()
         {
-            if (_battleUnitTargetComponent.CurrentTarget is null || _attackCooldownCurrent > 0) return;
-            if (Vector2.Distance(transform.position, _battleUnitTargetComponent.CurrentTarget.transform.position) <= _battleUnitStatsComponent.AttackRange)
-                Attack(_battleUnitTargetComponent.CurrentTarget);
+            if (_currentTarget is null || _attackCooldownCurrent > 0 || _attackLocked) return;
+            if (Vector2.Distance(transform.position, _currentTarget.transform.position) <= _battleUnitStatsComponent.AttackRange)
+                Attack(_currentTarget);
         }
 
-        protected virtual void Attack(BattleUnitCore battleUnitCore)
+        protected virtual void Attack(BattleUnitCore target)
         {
             DamageStruct damage = GenerateDamageStruct();
-            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnAttack, ref damage);
+            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnAttack, _battleUnitCore, target, ref damage);
 
-            ProccessAttack(damage, battleUnitCore);
+            ProccessAttack(damage, target);
             RefreshAttackCooldown();
 
             _battleUnitAnimationComponent.PlayAttackAnimation();
-            PlayAttackAnimation(battleUnitCore.transform);
+            PlayAttackAnimation(target.transform);
         }
 
         protected virtual void ProccessAttack(DamageStruct damageStruct, BattleUnitCore target)
         {
-            _battleUnitCore.DealDamage(damageStruct, target);
+            _battleUnitCore.DealDamage(damageStruct, target, true);
         }
 
         protected virtual void PlayAttackAnimation(Transform targetTransform)
@@ -126,7 +132,7 @@ namespace Yg.Battle.BattleUnits
             float attackDamage = CalculateDamage();
             return new(
                 _battleUnitCore.UnitFaction,
-                _battleUnitCore.transform.position,
+                _battleUnitCore,
                 _battleUnitStatsComponent.AttackType,
                 _battleUnitStatsComponent.DamageType,
                 attackDamage,
