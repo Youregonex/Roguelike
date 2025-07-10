@@ -26,5 +26,6 @@ public abstract class FlashOnHit : MonoBehaviour
         yield return new WaitForSeconds(_flashDuration);
 
         _spriteRenderer.material = _initialMaterial;
+        _flashCoroutine = null;
     }
 }

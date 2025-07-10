@@ -6,13 +6,12 @@ using Zenject;
 
 namespace Yg.UI
 {
-    public class SpellUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class SpellUI : TooltipHolderUI
     {
         [CustomHeader("Settings")]
         [SerializeField] private Image _spellImage;
 
         private SpellSO _spellSO;
-        private TooltipDrawer _tooltipDrawer;
 
         [Inject]
         private void Construct(TooltipDrawer tooltipDrawer)
@@ -20,20 +19,20 @@ namespace Yg.UI
             _tooltipDrawer = tooltipDrawer;
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            _tooltipDrawer.ShowTooltip(_spellSO, (RectTransform)transform);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            _tooltipDrawer.HideTooltip();
-        }
-
         public void SetSpell(SpellSO spellSO)
         {
             _spellSO = spellSO;
             _spellImage.sprite = _spellSO.Icon;
+        }
+
+        protected override void ShowTooltip()
+        {
+            _tooltipDrawer.ShowTooltip(_spellSO);
+        }
+
+        public override void OnPointerExit(PointerEventData eventData)
+        {
+            _tooltipDrawer.HideTooltips();
         }
     }
 }

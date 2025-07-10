@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e94bfe5fb2c43f096e6a924a03bfbf, type: 3}
+  m_Name: Poison
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Poison
+  <Description>k__BackingField: Deals <b><color=#466C96>3 Nature</color></b> damage
+    every <b><color=#466C96>2s</color></b>
+  <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+  <Duration>k__BackingField: 10
+  <Tickable>k__BackingField: 1
+  <VFX>k__BackingField: {fileID: 4213110547372183873, guid: cbd8792f06540403e8f7f975b1b69f33, type: 3}
+  <Interval>k__BackingField: 2
+  <DamageType>k__BackingField: 4
+  <Damage>k__BackingField: 3

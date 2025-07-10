@@ -6,13 +6,12 @@ using Zenject;
 
 namespace Yg.UI
 {
-    public class PerkUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class PerkUI : TooltipHolderUI
     {
         [CustomHeader("Settings")]
         [SerializeField] private Image _perkImage;
 
         private PerkSO _perk;
-        private TooltipDrawer _tooltipDrawer;
 
         [Inject]
         private void Construct(TooltipDrawer tooltipDrawer)
@@ -20,20 +19,20 @@ namespace Yg.UI
             _tooltipDrawer = tooltipDrawer;
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            _tooltipDrawer.ShowTooltip(_perk, (RectTransform)transform);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            _tooltipDrawer.HideTooltip();
-        }
-
         public void SetPerk(PerkSO perk)
         {
             _perk = perk;
-            _perkImage.sprite = _perk.PerkIcon;
+            _perkImage.sprite = _perk.Icon;
+        }
+
+        protected override void ShowTooltip()
+        {
+            _tooltipDrawer.ShowTooltip(_perk);
+        }
+
+        public override void OnPointerExit(PointerEventData eventData)
+        {
+            _tooltipDrawer.HideTooltips();
         }
     }
 }

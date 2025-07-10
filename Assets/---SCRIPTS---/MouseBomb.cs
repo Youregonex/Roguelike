@@ -26,7 +26,7 @@ public class MouseBomb : MonoBehaviour
         {
             if(hit.transform.TryGetComponent(out BattleUnitCore battleUnitCore))
             {
-                DamageStruct damageStruct = new(EUnitFaction.None, null, EAttackType.Magic, EDamageType.Physical, 10f, 20f);
+                DamageStruct damageStruct = new(EUnitFaction.None, null, position, EAttackType.Spell, EDamageType.Physical, 10f, 20f);
                 battleUnitCore.GetUnitComponent<BattleUnitHealthComponent>().TakeDamage(damageStruct);
             }
         }

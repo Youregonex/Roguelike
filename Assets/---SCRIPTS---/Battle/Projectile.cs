@@ -1,51 +1,53 @@
 using UnityEngine;
 using Yg.Battle.BattleUnits;
-using System;
 using System.Collections;
+using Yg.Pooling;
 
 namespace Yg.Battle
 {
     [SelectionBase]
     public class Projectile : MonoBehaviour
     {
-        public event Action<Projectile> OnProjectileDestruction;
-
         [CustomHeader("Settings")]
         [SerializeField] private float _destructionDelay;
 
-        private DamageStruct _damageStruct;
+        private Projectile _projectilePrefab;
+        private UltimatePooler _ultimatePooler;
+        private DamageStruct _currentDamageStruct;
         private Rigidbody2D _rigidbody;
 
         private Coroutine _destructionCoroutine;
-        private bool _enqueueOnDestruction = true;
 
-        public void Initialize(DamageStruct damageStruct, Vector2 velocity)
+        public bool IsInitialized { get; private set; }
+
+        public void Initialize(UltimatePooler ultimatePooler, Projectile prefab, DamageStruct damageStruct, Vector2 velocity)
         {
-            if (_rigidbody is null)
-                _rigidbody = GetComponent<Rigidbody2D>();
+            _rigidbody = GetComponent<Rigidbody2D>();
+            _ultimatePooler = ultimatePooler;
+            _projectilePrefab = prefab;
+            IsInitialized = true;
 
-            _damageStruct = damageStruct;
+            Setup(damageStruct, velocity);
+        }
+
+        public void Setup(DamageStruct damageStruct, Vector2 velocity)
+        {
+            _currentDamageStruct = damageStruct;
             _rigidbody.velocity = velocity;
 
             _destructionCoroutine = StartCoroutine(DestructionDelayCoroutine());
         }
 
-        public void DeactivatePooling()
-        {
-            _enqueueOnDestruction = false;
-        }
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.transform.TryGetComponent(out BattleUnitCore battleUnitCore))
+            if (collision.transform.TryGetComponent(out BattleUnitCore target))
             {
-                if (battleUnitCore.UnitFaction != _damageStruct.UnitFaction)
+                if (target.UnitFaction != _currentDamageStruct.UnitFaction)
                 {
-                    if (_damageStruct.Origin is not null)
-
-                        _damageStruct.Origin.DealDamage(_damageStruct, battleUnitCore, true);
+                    if (_currentDamageStruct.Sender is not null)
+                        _currentDamageStruct.Sender.DealDamage(_currentDamageStruct, target, true);
                     else
-                        battleUnitCore.GetUnitComponent<BattleUnitHealthComponent>().TakeDamage(_damageStruct);
+                        target.GetUnitComponent<BattleUnitHealthComponent>().TakeDamage(_currentDamageStruct);
 
                     DestroyProjectile();
                 }
@@ -54,13 +56,7 @@ namespace Yg.Battle
 
         private void DestroyProjectile()
         {
-            if(!_enqueueOnDestruction)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            _damageStruct = default;
+            _currentDamageStruct = default;
             _rigidbody.velocity = Vector2.zero;
 
             if (_destructionCoroutine is not null)
@@ -69,7 +65,7 @@ namespace Yg.Battle
                 _destructionCoroutine = null;
             }
 
-            OnProjectileDestruction?.Invoke(this);
+            _ultimatePooler.Enqueue(_projectilePrefab, this);
         }
 
         private IEnumerator DestructionDelayCoroutine()

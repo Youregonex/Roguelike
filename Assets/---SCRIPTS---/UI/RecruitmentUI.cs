@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using Yg.Character;
 using System;
 using Zenject;
 using DG.Tweening;
 using TMPro;
+using Yg.GameData.Units;
 
 namespace Yg.UI
 {
     public class RecruitmentUI : MonoBehaviour
     {
-        public event Action<WarbandSlot> OnChoiceMade;
-        public event Action<WarbandSlot, WarbandSlot> OnReplaceChoiceMade;
+        public event Action<UnitDataSO> OnChoiceMade;
+        public event Action<WarbandSlot, UnitDataSO> OnReplaceChoiceMade;
 
         [CustomHeader("Settings")]
         [SerializeField] private RectTransform _windowRectTransform;
@@ -56,7 +56,7 @@ namespace Yg.UI
             StopAllCoroutines();
         }
 
-        public void Show(List<WarbandSlot> _selectionChoices)
+        public void Show(List<UnitDataSO> _selectionChoices)
         {
             _windowRectTransform.gameObject.SetActive(true);
             StartCoroutine(ShowSequence(_selectionChoices));
@@ -78,7 +78,7 @@ namespace Yg.UI
 
         private void WarbandSlotUI_OnSelected(WarbandSlotUI warbandSlotUI)
         {
-            OnReplaceChoiceMade?.Invoke(warbandSlotUI.WarbandSlot, _currentChoice.WarbandSlot);
+            OnReplaceChoiceMade?.Invoke(warbandSlotUI.WarbandSlot, _currentChoice.UnitData);
 
             foreach (var warbandSlot in _warbandUI.WarbandSlotUIList)
                 warbandSlotUI.OnSelected -= WarbandSlotUI_OnSelected;
@@ -86,18 +86,19 @@ namespace Yg.UI
             _warbandUI.ScaleDown();
         }
 
-        private IEnumerator ShowSequence(List<WarbandSlot> _selectionChoices)
+        private IEnumerator ShowSequence(List<UnitDataSO> _selectionChoices)
         {
             yield return StartCoroutine(PlayOpenAnimation());
             yield return StartCoroutine(CreateRecruitmentChoices(_selectionChoices));
         }
 
-        private IEnumerator CreateRecruitmentChoices(List<WarbandSlot> _selectionChoices)
+        private IEnumerator CreateRecruitmentChoices(List<UnitDataSO> _selectionChoices)
         {
             for (int i = 0; i < _selectionChoices.Count; i++)
             {
-                RecruitmentChoiceUI recruitmentChoiceUI = Instantiate(_recruitmentChoiceUIPrefab);
+                RecruitmentChoiceUI recruitmentChoiceUI = _container.InstantiatePrefab(_recruitmentChoiceUIPrefab).GetComponent<RecruitmentChoiceUI>();
                 recruitmentChoiceUI.transform.SetParent(_recruitmentChoiceUIHolder);
+                recruitmentChoiceUI.transform.localScale = Vector3.one;
                 _recruitmentChoiceUIList.Add(recruitmentChoiceUI);
 
                 recruitmentChoiceUI.Initialize(_container, _selectionChoices[i]);
@@ -146,7 +147,7 @@ namespace Yg.UI
             }
 
             _currentChoice = currentChoice;
-            OnChoiceMade?.Invoke(_currentChoice.WarbandSlot);
+            OnChoiceMade?.Invoke(_currentChoice.UnitData);
         }
     }
 }

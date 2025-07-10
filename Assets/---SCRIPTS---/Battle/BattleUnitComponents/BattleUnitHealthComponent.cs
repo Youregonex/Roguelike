@@ -1,4 +1,3 @@
-using UnityEngine;
 using System;
 
 namespace Yg.Battle.BattleUnits
@@ -7,11 +6,10 @@ namespace Yg.Battle.BattleUnits
     {
         public event Action<DamageStruct> OnDamageTaken;
 
-        [CustomHeader("Debug")]
-        [SerializeField] private float _currentHealth;
-
         private BattleUnitPerkComponent _battleUnitPerkComponent;
         private BattleUnitStatsComponent _battleUnitStatsComponent;
+
+        private Stat Health;
 
         public override void InitializeComponent(BattleUnitCore battleUnitCore)
         {
@@ -20,32 +18,34 @@ namespace Yg.Battle.BattleUnits
             _battleUnitPerkComponent = _battleUnitCore.GetUnitComponent<BattleUnitPerkComponent>();
             _battleUnitStatsComponent = _battleUnitCore.GetUnitComponent<BattleUnitStatsComponent>();
 
-            if(_battleUnitStatsComponent.MaxHealth == 0)
-                _battleUnitStatsComponent.OnInitializationComplete += BattleUnitStatsComponent_OnInitializationComplete;
+            if (_battleUnitStatsComponent.IsInitialized)
+                GetStats();
             else
-                _currentHealth = _battleUnitStatsComponent.MaxHealth;
+                _battleUnitStatsComponent.OnInitializationComplete += BattleUnitStatsComponent_OnInitializationComplete;
+        }
+
+        private void GetStats()
+        {
+            Health = _battleUnitStatsComponent.GetStat(EStat.Health);
         }
 
         private void BattleUnitStatsComponent_OnInitializationComplete()
         {
             _battleUnitStatsComponent.OnInitializationComplete -= BattleUnitStatsComponent_OnInitializationComplete;
-            _currentHealth = _battleUnitStatsComponent.MaxHealth;
+            GetStats();
         }
 
         public void TakeDamage(DamageStruct damageStruct)
         {
-            if (_currentHealth <= 0) return;
+            if (Health.CurrentValue <= 0) return;
 
-            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnDamageTaken, _battleUnitCore, null, ref damageStruct);
+            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnDamageTaken, null, ref damageStruct);
 
-            _currentHealth -= damageStruct.DamageAmount;
+            Health.DecreaseCurrentValue(damageStruct.DamageAmount, false);
             OnDamageTaken?.Invoke(damageStruct);
 
-            if (_currentHealth <= 0)
-            {
-                _currentHealth = 0;
+            if (Health.CurrentValue <= 0)
                 Die();
-            }
         }
 
         private void Die()

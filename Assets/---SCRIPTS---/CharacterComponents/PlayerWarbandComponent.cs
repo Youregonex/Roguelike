@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Yg.GameData.Equipment;
+using Yg.GameData.Units;
 using Yg.Systems;
 using Yg.UI;
 using Zenject;
@@ -8,16 +10,23 @@ namespace Yg.Character
 {
     public class PlayerWarbandComponent : CharacterWarbandComponent
     {
-        private WarbandUI _warbandUI;
-        private RecruitmentUI _recruitmentUI;
+        private const int MAX_ARMORY_SLOTS = 3;
+
         private UnitSelectionGenerator _unitSelectionGenerator;
+        private EquipmentBuilder _equipmentBuilder;
         private PlayerMovementComponent _playerMovementComponent;
 
+        private List<EquipmentData> _armoryList = new(MAX_ARMORY_SLOTS);
+
+        private WarbandUI _warbandUI;
+        private RecruitmentUI _recruitmentUI;
+
         [Inject]
-        private void Construct(WarbandUI warbandUI, RecruitmentUI recruitmentUI)
+        private void Construct(WarbandUI warbandUI, RecruitmentUI recruitmentUI, EquipmentBuilder equipmentBuilder)
         {
             _warbandUI = warbandUI;
             _recruitmentUI = recruitmentUI;
+            _equipmentBuilder = equipmentBuilder;
         }
 
         public override void InitializeComponent(CharacterCore characterCore)
@@ -33,9 +42,8 @@ namespace Yg.Character
         {
             if (Input.GetKeyDown(KeyCode.G))
             {
-                WarbandSlot warbandSlot = _unitSelectionGenerator.GenerateRandomUnitChoiceList(1)[0];
-                AddSquad(warbandSlot);
-                Debug.Log($"Added squad: {warbandSlot.UnitData.UnitName}");
+                UnitDataSO unitDataSO = _unitSelectionGenerator.GenerateRandomUnitChoiceList(1)[0];
+                AddSquad(unitDataSO);
             }
 
             if (Input.GetKeyDown(KeyCode.L))
@@ -43,62 +51,67 @@ namespace Yg.Character
                 for (int i = 0; i < _warbandSlotList.Count; i++)
                     RemoveSquad(_warbandSlotList[i]);
             }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                int testTier = UnityEngine.Random.Range(1, 4 + 1);
+                AddEquipmentSlotToFirstEmptySlot(_equipmentBuilder.BuildEquipment(testTier));
+            }
         }
 
         public void InitiateUnitSelction()
         {
             int optionsAmount = 3;
-            List<WarbandSlot> options = _unitSelectionGenerator.GenerateRandomUnitChoiceList(optionsAmount);
+            List<UnitDataSO> options = _unitSelectionGenerator.GenerateRandomUnitChoiceList(optionsAmount);
             _recruitmentUI.Show(options);
             _recruitmentUI.OnChoiceMade += RecruitmentUI_OnChoiceMade;
             _playerMovementComponent.LockMovement();
         }
 
-        public override bool AddSquad(WarbandSlot warbandSlot)
+        public override void AddWarbandSlot(WarbandSlot warbandSlot)
         {
-            if (warbandSlot.Empty)
-            {
-                Debug.LogError("Trying to add empty squad!");
-                return false;
-            }
+            base.AddWarbandSlot(warbandSlot);
+            _warbandUI.UpdateSlotsUnitData();
+        }
 
+        public override bool AddSquad(UnitDataSO unitDataSO)
+        {
             for (int i = 0; i < _warbandSlotList.Count; i++)
             {
-                if (_warbandSlotList[i].Empty)
-                {
-                    _warbandSlotList[i].UpdateData(warbandSlot.UnitData, warbandSlot.SlotSize);
-                    _warbandUI.UpdateSlotsData();
-                    return true;
-                }
+                if (!_warbandSlotList[i].UnitEmpty) continue;
+
+                _warbandSlotList[i].UpdateUnitData(unitDataSO);
+                _warbandUI.UpdateSlotsUnitData();
+                return true;
             }
 
-            Debug.Log("There is no free space in warband!");
+            Debug.Log($"Not enough space in warband for {unitDataSO.Name}");
             return false;
         }
 
         public override void RemoveSquad(WarbandSlot warbandSlot)
         {
-            warbandSlot.ClearSlot();
-            _warbandUI.UpdateSlotsData();
+            warbandSlot.RemoveUnit();
+            _warbandUI.UpdateSlotsUnitData();
         }
 
-        public override void AddWarbandSlot()
+        public override void AddEmptyWarbandSlot()
         {
-            base.AddWarbandSlot();
-            _warbandUI.UpdateSlotsData();
+            base.AddEmptyWarbandSlot();
+            _warbandUI.UpdateSlotsUnitData();
         }
 
         public override void RemoveWarbandSlot()
         {
             base.RemoveWarbandSlot();
-            _warbandUI.UpdateSlotsData();
+            _warbandUI.UpdateSlotsUnitData();
         }
 
-        private void RecruitmentUI_OnChoiceMade(WarbandSlot warbandSlot)
+        private void RecruitmentUI_OnChoiceMade(UnitDataSO unitDataSO)
         {
             _recruitmentUI.OnChoiceMade -= RecruitmentUI_OnChoiceMade;
 
-            if (AddSquad(warbandSlot))
+            if (AddSquad(unitDataSO))
             {
                 _recruitmentUI.Hide();
                 _playerMovementComponent.UnlockMovement();
@@ -110,18 +123,40 @@ namespace Yg.Character
             }
         }
 
-        private void RecruitmentUI_OnReplaceChoiceMade(WarbandSlot replaceSlot, WarbandSlot newSlot)
+        private void RecruitmentUI_OnReplaceChoiceMade(WarbandSlot replaceSlot, UnitDataSO unitDataSO)
         {
             _recruitmentUI.OnReplaceChoiceMade -= RecruitmentUI_OnReplaceChoiceMade;
-            ReplaceWarbandSlot(replaceSlot, newSlot);
+            ReplaceWarbandSlotSquad(replaceSlot, unitDataSO);
             _recruitmentUI.Hide();
             _playerMovementComponent.UnlockMovement();
         }
 
-        private void ReplaceWarbandSlot(WarbandSlot replaceSlot, WarbandSlot newSlot)
+        protected override void ReplaceWarbandSlotSquad(WarbandSlot replaceSlot, UnitDataSO unitDataSO)
         {
-            replaceSlot.UpdateData(newSlot.UnitData, newSlot.SlotSize);
-            _warbandUI.UpdateSlotsData();
+            base.ReplaceWarbandSlotSquad(replaceSlot, unitDataSO);
+            _warbandUI.UpdateSlotsUnitData();
+        }
+
+        protected override void AddEquipmentSlotToFirstEmptySlot(EquipmentData equipmentData)
+        {
+            for (int i = 0; i < _warbandSlotList.Count; i++)
+            {
+                if (!_warbandSlotList[i].CanFitNewEqupment) continue;
+
+                _warbandSlotList[i].AddEquipmentData(equipmentData);
+                _warbandUI.UpdateSlotsEquipmentData();
+                return;
+            }
+
+            for (int i = 0; i < _armoryList.Count; i++)
+            {
+                if (_armoryList[i].IsEmpty) continue;
+
+                _armoryList[i] = equipmentData;
+                return;
+            }
+
+            Debug.Log($"There is no space in armory for item: {equipmentData.Name}");
         }
 
         private void InitializeWarbandUI()

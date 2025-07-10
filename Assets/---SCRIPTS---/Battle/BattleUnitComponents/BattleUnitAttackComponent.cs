@@ -5,8 +5,7 @@ namespace Yg.Battle.BattleUnits
 {
     public class BattleUnitAttackComponent : BattleUnitComponent, ITickableBattleUnitComponent
     {
-        [CustomHeader("Settings")]
-        [SerializeField] protected float _distanceCheckInterval;
+        private const float MIN_ATTACK_SPEED = .01f;
 
         [CustomHeader("Debug")]
         [SerializeField] protected float _attackCooldownCurrent = 0f;
@@ -17,11 +16,15 @@ namespace Yg.Battle.BattleUnits
         protected BattleUnitPerkComponent _battleUnitPerkComponent;
 
         private BattleUnitCore _currentTarget => _battleUnitTargetComponent.CurrentTarget;
+
+        private Stat AttackRange;
+        private Stat AttackDamage;
+        private Stat AttackSpeed;
+        private Stat KnockBackForce;
+
         protected bool _attackLocked = false;
 
         protected Tween _attackTween;
-
-        public float AttackRange => _battleUnitStatsComponent.AttackRange;
 
         public override void InitializeComponent(BattleUnitCore battleUnitCore)
         {
@@ -32,17 +35,27 @@ namespace Yg.Battle.BattleUnits
             _battleUnitStatsComponent = _battleUnitCore.GetUnitComponent<BattleUnitStatsComponent>();
             _battleUnitPerkComponent = _battleUnitCore.GetUnitComponent<BattleUnitPerkComponent>();
 
+            if (_battleUnitStatsComponent.IsInitialized)
+                GetStats();
+            else _battleUnitStatsComponent.OnInitializationComplete += BattleUnitStatsComponent_OnInitializationComplete;
+
+
             float minDelay = .1f;
             float maxDelay = .3f;
             float randomDelay = UnityEngine.Random.Range(minDelay, maxDelay);
+        }
 
-            InvokeRepeating("AttackDistanceCheck", randomDelay, _distanceCheckInterval);
+        private void BattleUnitStatsComponent_OnInitializationComplete()
+        {
+            _battleUnitStatsComponent.OnInitializationComplete += BattleUnitStatsComponent_OnInitializationComplete;
+            GetStats();
         }
 
         public virtual void Tick()
         {
             if (_attackCooldownCurrent > 0)
                 _attackCooldownCurrent -= Time.deltaTime;
+            else AttackDistanceCheck();
         }
 
         public void LockAttack() => _attackLocked = true;
@@ -52,19 +65,23 @@ namespace Yg.Battle.BattleUnits
         {
             if (_attackTween != null)
                 _attackTween.Kill();
+
+            _battleUnitStatsComponent.OnInitializationComplete -= BattleUnitStatsComponent_OnInitializationComplete;
         }
 
         protected void AttackDistanceCheck()
         {
-            if (_currentTarget is null || _attackCooldownCurrent > 0 || _attackLocked) return;
-            if (Vector2.Distance(transform.position, _currentTarget.transform.position) <= _battleUnitStatsComponent.AttackRange)
+            if (_currentTarget == null) return;
+            if (_attackCooldownCurrent > 0 || _attackLocked) return;
+
+            if(Utilities.IsWithinRange(transform.position, _currentTarget.transform.position, AttackRange.CurrentValue))
                 Attack(_currentTarget);
         }
 
         protected virtual void Attack(BattleUnitCore target)
         {
             DamageStruct damage = GenerateDamageStruct();
-            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnAttack, _battleUnitCore, target, ref damage);
+            _battleUnitPerkComponent.ApplyPerks(EPerkApplicationEvent.OnAttack, target, ref damage);
 
             ProccessAttack(damage, target);
             RefreshAttackCooldown();
@@ -78,11 +95,19 @@ namespace Yg.Battle.BattleUnits
             _battleUnitCore.DealDamage(damageStruct, target, true);
         }
 
+        protected void GetStats()
+        {
+            AttackRange = _battleUnitStatsComponent.GetStat(EStat.AttackRange);
+            AttackDamage = _battleUnitStatsComponent.GetStat(EStat.AttackDamage);
+            AttackSpeed = _battleUnitStatsComponent.GetStat(EStat.AttackSpeed);
+            KnockBackForce = _battleUnitStatsComponent.GetStat(EStat.KnockBackForce);
+        }
+
         protected virtual void PlayAttackAnimation(Transform targetTransform)
         {
             _attackTween?.Complete();
 
-            if (targetTransform is null) return;
+            if (targetTransform == null) return;
 
             float animationDuration = .25f;
             float moveAmount = .3f;
@@ -99,7 +124,7 @@ namespace Yg.Battle.BattleUnits
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() =>
                 {
-                    if (visualTransform is null || _battleUnitCore is null)
+                    if (visualTransform == null || _battleUnitCore == null)
                     {
                         _attackTween = null;
                         return;
@@ -118,13 +143,12 @@ namespace Yg.Battle.BattleUnits
 
         protected virtual float CalculateDamage()
         {
-            return UnityEngine.Random.Range(_battleUnitStatsComponent.AttackDamageMin, _battleUnitStatsComponent.AttackDamageMax);
+            return AttackDamage.CurrentValue;
         }
 
         protected virtual void RefreshAttackCooldown()
         {
-            _attackCooldownCurrent =
-                UnityEngine.Random.Range(_battleUnitStatsComponent.AttackCooldownMin, _battleUnitStatsComponent.AttackCooldownMax);
+            _attackCooldownCurrent = 1f / Mathf.Max(AttackSpeed.CurrentValue, MIN_ATTACK_SPEED);
         }
 
         protected virtual DamageStruct GenerateDamageStruct()
@@ -133,10 +157,11 @@ namespace Yg.Battle.BattleUnits
             return new(
                 _battleUnitCore.UnitFaction,
                 _battleUnitCore,
+                transform.position,
                 _battleUnitStatsComponent.AttackType,
                 _battleUnitStatsComponent.DamageType,
                 attackDamage,
-                _battleUnitStatsComponent.KnockBackForce);
+                KnockBackForce.CurrentValue);
         }
     }
 }

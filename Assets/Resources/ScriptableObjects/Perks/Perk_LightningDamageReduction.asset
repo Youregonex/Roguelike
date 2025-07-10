@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 294ded321361a464087301da1abaa5e1, type: 3}
+  m_Name: Perk_LightningDamageReduction
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Lightning resistance
+  <PerkId>k__BackingField: af205645-e1ab-47e2-ad45-df08a7d81290
+  <Description>k__BackingField: Reduce <b><color=#466C96>Lightning</color></b> damage
+    taken by <b><color=#466C96>40%</color></b>.
+  <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+  <Tags>k__BackingField: 03000000
+  <PerkApplicationEvent>k__BackingField: 0
+  <DamageReductionPercent>k__BackingField: 0.4
+  <DamageType>k__BackingField: 5

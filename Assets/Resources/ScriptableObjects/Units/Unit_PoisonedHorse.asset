@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed56fc5ca8b1414787984523fe32f5b, type: 3}
+  m_Name: Unit_PoisonedHorse
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Poisoned horse
+  <Prefab>k__BackingField: {fileID: 2944207676587258401, guid: 22ef347e6e0924b58be8364816fa6819, type: 3}
+  <PrefabId>k__BackingField: 2a82d49c-b5fc-44ed-bd8f-9ac158441276
+  <Icon>k__BackingField: {fileID: 784326042, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+  <DefaultSquadSize>k__BackingField: 12
+  <UnitStatDataList>k__BackingField:
+  - <Name>k__BackingField: Move speed
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 0
+    <MaxValue>k__BackingField: 4
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Health
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 1
+    <MaxValue>k__BackingField: 55
+    <IgnoreMaxValue>k__BackingField: 0
+  - <Name>k__BackingField: Attack range
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 2
+    <MaxValue>k__BackingField: 1
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Attack speed
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 3
+    <MaxValue>k__BackingField: 0.7
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Attack damage
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 4
+    <MaxValue>k__BackingField: 12
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Knock back force
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 5
+    <MaxValue>k__BackingField: 15
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Knock back resistance
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 6
+    <MaxValue>k__BackingField: 10
+    <IgnoreMaxValue>k__BackingField: 1
+  <AttackType>k__BackingField: 1
+  <DamageType>k__BackingField: 1
+  <PerkSOList>k__BackingField:
+  - {fileID: 11400000, guid: 7c91c7799349f49b08b85d3c3ee18127, type: 2}
+  <SpellSOList>k__BackingField: []

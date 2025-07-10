@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c83601e58aac4dbda59d462caeca7be, type: 3}
+  m_Name: Spell_LightningShield
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Lightning shield
+  <SpellId>k__BackingField: 4d28114d-9d24-4654-bd2d-631ec34b2291
+  <Description>k__BackingField: Creates lightning shield around caster which deals
+    <b><color=#466B95>1 Lightning</color></b> damage in <b><color=#466B95>1.5m</color></b>
+    radius every <b><color=#466B95>0.3s</color></b> for <b><color=#466B95>6s</color></b>.
+  <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+  <Tags>k__BackingField: 08000000
+  <Cooldown>k__BackingField: 12
+  <ActivationRange>k__BackingField: 1.2
+  <Duration>k__BackingField: 6
+  <ImpactRadius>k__BackingField: 1.5
+  <AffectionType>k__BackingField: 5
+  <Value>k__BackingField: 1
+  <KnockbackValue>k__BackingField: 10
+  <StatusEffectList>k__BackingField: []
+  <VFX>k__BackingField: {fileID: 4461597884684093261, guid: 52aeb2416dd7a4178a3e6d20a34d74ce, type: 3}
+  <DamageInterval>k__BackingField: 0.3

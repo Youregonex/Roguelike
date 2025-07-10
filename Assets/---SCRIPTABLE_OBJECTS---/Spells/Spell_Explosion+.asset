@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762b659786b8949f4be8ce3783362c5b, type: 3}
+  m_Name: Spell_Explosion+
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Explosion+
+  <SpellId>k__BackingField: aff0cebe-dc41-4c3a-93db-f6dfb1c832f0
+  <Description>k__BackingField: Deals <b><color=#466B95>5</color></b> <b><color=#466B95>Fire</color></b>
+    damage in <b><color=#466B95>4m</color></b> radius.
+  <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+  <Tags>k__BackingField: 06000000
+  <Cooldown>k__BackingField: 12
+  <ActivationRange>k__BackingField: 15
+  <Duration>k__BackingField: 2
+  <ImpactRadius>k__BackingField: 4
+  <AffectionType>k__BackingField: 2
+  <Value>k__BackingField: 5
+  <KnockbackValue>k__BackingField: 90
+  <StatusEffectList>k__BackingField:
+  - {fileID: 11400000, guid: 17937a05543e4494dbf5bac4e35bcb92, type: 2}
+  - {fileID: 11400000, guid: c3ffd8d26d620416789e23cc6a078135, type: 2}
+  <VFX>k__BackingField: {fileID: 378254532289445882, guid: 952f0c3483b8948efbf99652f072bb31, type: 3}

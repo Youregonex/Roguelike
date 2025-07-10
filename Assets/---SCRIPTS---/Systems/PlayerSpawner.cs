@@ -5,6 +5,7 @@ using Zenject;
 
 namespace Yg.Character
 {
+    [SelectionBase]
     public class PlayerSpawner : MonoBehaviour, ISaveable
     {
         private PlayerCore _characterPrefab;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Yg.GameData.Units;
 using Yg.Systems;
 using Zenject;
 
@@ -37,8 +38,16 @@ namespace Yg.Character
 
         public void EncounterBattle()
         {
-            int maxSlots = 18;
-            List<WarbandSlot> enemyWarband = _unitSelectionGenerator.GenerateRandomUnitChoiceList(maxSlots);
+            int maxSlots = 6;
+            List<WarbandSlot> enemyWarband = new();
+            List<UnitDataSO> enemyUnits = _unitSelectionGenerator.GenerateRandomUnitChoiceList(maxSlots);
+
+            for (int i = 0; i < enemyUnits.Count; i++)
+            {
+                WarbandSlot warbandSlot = new(enemyUnits[i]);
+                enemyWarband.Add(warbandSlot);
+            }
+
             List<WarbandSlot> playerWarband = new(GetCharacterComponent<PlayerWarbandComponent>().Warband);
             _battleInitiator.StartBattle(playerWarband, enemyWarband);
         }

@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using Yg.UI;
 using Yg.Character;
 
 namespace Yg.Battle
@@ -10,24 +9,19 @@ namespace Yg.Battle
         public event Action<SquadPlacementArea> OnHover;
         public event Action<SquadPlacementArea> OnHoverEnd;
         public event Action<SquadPlacementArea> OnClick;
-        public event Action<SquadPlacementArea> OnRelease;
 
         [CustomHeader("Settings")]
         [SerializeField] private SpriteRenderer _squadIconSR;
         [SerializeField] private SpriteRenderer _highlightSR;
         [SerializeField] private SpriteRenderer _prePlacementHighlightSR;
 
-        private SquadUI _squadUI = null;
         private WarbandSlot _warbandSlot;
-
         private BoxCollider2D _boxCollider;
 
-        private bool _interactable = true;
-
-        public SquadUI SquadUI => _squadUI;
         public WarbandSlot WarbandSlot => _warbandSlot;
         public BoxCollider2D Collider => _boxCollider;
-        public bool Empty => (_squadUI is null) && (_warbandSlot is null);
+        public SpriteRenderer SquadIconSR => _squadIconSR;
+        public bool Empty => _warbandSlot is null || _warbandSlot.UnitEmpty;
 
         private void Awake()
         {
@@ -36,55 +30,10 @@ namespace Yg.Battle
             DefaultUnhighlight();
         }
 
-        public void SetSquadUI(SquadUI squadUI)
-        {
-            _squadUI = squadUI;
-            _squadIconSR.sprite = squadUI.WarbandSlot.UnitData.UnitIcon;
-        }
-
         public void SetWarbandSlot(WarbandSlot warbandSlot)
         {
             _warbandSlot = warbandSlot;
-            _squadIconSR.sprite = warbandSlot.UnitData.UnitIcon;
-            _squadIconSR.flipX = true;
-            _interactable = false;
-        }
-
-        public void OnMouseDown()
-        {
-            if (!_interactable) return;
-
-            OnClick?.Invoke(this);
-            ClearAreaVisual();
-        }
-
-        public void OnMouseUp()
-        {
-            if (!_interactable) return;
-
-            OnRelease?.Invoke(this);
-        }
-
-        public void OnMouseEnter()
-        {
-            if (!_interactable) return;
-
-            PrePlacementHighlight();
-            OnHover?.Invoke(this);
-        }
-
-        public void OnMouseExit()
-        {
-            if (!_interactable) return;
-
-            PrePlacementUnhighlight();
-            OnHoverEnd?.Invoke(this);
-        }
-
-        public void ClearSquadUI()
-        {
-            _squadUI = null;
-            ClearAreaVisual();
+            _squadIconSR.sprite = warbandSlot.UnitData.Icon;
         }
 
         public void DefaultHighlight()
@@ -97,19 +46,37 @@ namespace Yg.Battle
             _highlightSR.color = new(1f, 1f, 1f, .3f);
         }
 
-        private void PrePlacementHighlight()
+        public void PrePlacementHighlight()
         {
             _prePlacementHighlightSR.gameObject.SetActive(true);
         }
 
-        private void PrePlacementUnhighlight()
+        public void PrePlacementUnhighlight()
         {
             _prePlacementHighlightSR.gameObject.SetActive(false);
         }
 
-        private void ClearAreaVisual()
+        public void ClearSlot()
         {
+            _warbandSlot = null;
             _squadIconSR.sprite = null;
+        }
+
+        private void OnMouseDown()
+        {
+            OnClick?.Invoke(this);
+        }
+
+        private void OnMouseEnter()
+        {
+            OnHover?.Invoke(this);
+            PrePlacementHighlight();
+        }
+
+        private void OnMouseExit()
+        {
+            OnHoverEnd?.Invoke(this);
+            PrePlacementUnhighlight();
         }
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using Yg.Battle;
 using Yg.Battle.GameSystems;
 using Yg.GameData;
+using Yg.UI;
 using Zenject;
 
 namespace Yg.EntryPoint
@@ -10,17 +11,20 @@ namespace Yg.EntryPoint
     {
         private PersistentData _persistentData;
         private BattleUnitSpawner _battleUnitSpawner;
-        private EnemySquadPlacer _enemySquadPlacer;
+        private BattleSquadPlacer _battleSquadPlacer;
+        private SquadPlacementUI _squadPlacementUI;
 
         [Inject]
         private void Construct(
             PersistentData persistentData,
             BattleUnitSpawner battleUnitSpawner,
-            EnemySquadPlacer enemySquadPlacer)
+            BattleSquadPlacer enemySquadPlacer,
+            SquadPlacementUI squadPlacementUI)
         {
             _battleUnitSpawner = battleUnitSpawner;
             _persistentData = persistentData;
-            _enemySquadPlacer = enemySquadPlacer;
+            _battleSquadPlacer = enemySquadPlacer;
+            _squadPlacementUI = squadPlacementUI;
         }
 
         private void Awake()
@@ -31,7 +35,8 @@ namespace Yg.EntryPoint
         private void InitializeScene()
         {
             _battleUnitSpawner.Initialize(_persistentData);
-            _enemySquadPlacer.Initialize();
+            _battleSquadPlacer.Initialize();
+            _squadPlacementUI.Initialize();
         }
     }
 }

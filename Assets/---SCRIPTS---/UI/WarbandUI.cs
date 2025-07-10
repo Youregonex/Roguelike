@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Yg.Character;
 using DG.Tweening;
+using Zenject;
+using System.Collections;
+using UnityEngine.UI;
 
 namespace Yg.UI
 {
@@ -11,27 +14,42 @@ namespace Yg.UI
         [SerializeField] private RectTransform _warbandWindowRectTransform;
         [SerializeField] private RectTransform _warbandSlotUIHolder;
         [SerializeField] private WarbandSlotUI _warbandSlotUIPrefab;
+        [SerializeField] private PerkUI _perkUIPrefab;
+        [SerializeField] private SpellUI _spellUIPrefab;
 
         [CustomHeader("DOTween Settings")]
         [SerializeField] private float _scaleTargetValue = 1.3f;
         [SerializeField] private float _animationDuration = .5f;
 
+        private DiContainer _container;
+
         private List<WarbandSlotUI> _warbandSlotUIList = new();
 
         public IEnumerable<WarbandSlotUI> WarbandSlotUIList => _warbandSlotUIList;
 
-        public void CreateWarbandSlotUI(WarbandSlot warbandSlot)
+        [Inject]
+        private void Construct(DiContainer container)
         {
-            WarbandSlotUI warbandSlotUI = Instantiate(_warbandSlotUIPrefab);
-            warbandSlotUI.transform.SetParent(_warbandSlotUIHolder);
-            _warbandSlotUIList.Add(warbandSlotUI);
-            warbandSlotUI.SetSlotData(warbandSlot);
+            _container = container;
         }
 
-        public void UpdateSlotsData()
+        public void CreateWarbandSlotUI(WarbandSlot warbandSlot)
+        {
+            WarbandSlotUI warbandSlotUI = _container.InstantiatePrefab(_warbandSlotUIPrefab, _warbandSlotUIHolder).GetComponent<WarbandSlotUI>();
+            _warbandSlotUIList.Add(warbandSlotUI);
+            warbandSlotUI.AssignWarbandSlot(warbandSlot);
+        }
+
+        public void UpdateSlotsUnitData()
         {
             foreach (var warbandSlotUI in _warbandSlotUIList)
-                warbandSlotUI.UpdateSlotData();
+                warbandSlotUI.UpdateUnitData();
+        }
+
+        public void UpdateSlotsEquipmentData()
+        {
+            foreach (var warbandSlotUI in _warbandSlotUIList)
+                warbandSlotUI.UpdateEquipmentData();
         }
 
         public void Show()
@@ -55,4 +73,3 @@ namespace Yg.UI
         }
     }
 }
-

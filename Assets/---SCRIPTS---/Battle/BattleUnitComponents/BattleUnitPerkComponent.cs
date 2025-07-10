@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Yg.GameData.Perks;
 
 namespace Yg.Battle.BattleUnits
@@ -7,7 +8,7 @@ namespace Yg.Battle.BattleUnits
     public class BattleUnitPerkComponent : BattleUnitComponent
     {
         private BattleUnitStatsComponent _battleUnitStatsComponent;
-        private List<Perk> _perkList = new();
+        private readonly HashSet<Perk> _perkSet = new();
 
         public override void InitializeComponent(BattleUnitCore battleUnitCore)
         {
@@ -15,44 +16,52 @@ namespace Yg.Battle.BattleUnits
 
             _battleUnitStatsComponent = _battleUnitCore.GetUnitComponent<BattleUnitStatsComponent>();
 
-            if(!_battleUnitStatsComponent.IsInitialized)
+            if (!_battleUnitStatsComponent.IsInitialized)
                 _battleUnitStatsComponent.OnInitializationComplete += BattleUnitStatsComponent_OnInitializationComplete;
+            else
+                BuildPerksFromStats();
+        }
+
+        public void AddPerk(PerkSO perkSO)
+        {
+            if (_perkSet.Where(e => e.PerkDataSO.Name == perkSO.Name).Any()) return;
+
+            Perk perk = perkSO.BuildPerk();
+            _perkSet.Add(perk);
+        }
+
+        public void RemovePerk(PerkSO perkSO)
+        {
+            _perkSet.Remove(_perkSet.Where(e => e.PerkDataSO.Name == perkSO.Name).FirstOrDefault());
+        }
+
+        public void ApplyPerks(EPerkApplicationEvent perkApplicationEvent, BattleUnitCore target, ref DamageStruct damageStruct)
+        {
+            List<Perk> perks = _perkSet.Where(e => e.PerkDataSO.PerkApplicationEvent == perkApplicationEvent).ToList();
+
+            foreach (var perk in perks)
+                perk.ApplyPerk(_battleUnitCore, target, ref damageStruct);
+        }
+
+        public void ApplyPerks(EPerkApplicationEvent perkApplicationEvent, BattleUnitCore target)
+        {
+            List<Perk> perks = _perkSet.Where(e => e.PerkDataSO.PerkApplicationEvent == perkApplicationEvent).ToList();
+            DamageStruct emptyStruct = new();
+
+            foreach (var perk in perks)
+                perk.ApplyPerk(_battleUnitCore, target, ref emptyStruct);
         }
 
         private void BattleUnitStatsComponent_OnInitializationComplete()
         {
             _battleUnitStatsComponent.OnInitializationComplete -= BattleUnitStatsComponent_OnInitializationComplete;
-
-            for (int i = 0; i < _battleUnitStatsComponent.PerkList.Count; i++)
-            {
-                Perk perk = _battleUnitStatsComponent.PerkList[i].BuildPerk();
-                _perkList.Add(perk);
-            }
+            BuildPerksFromStats();
         }
 
-        public void AddPerk(PerkSO perkSO)
+        private void BuildPerksFromStats()
         {
-            if (_battleUnitStatsComponent.PerkList.Contains(perkSO)) return;
-
-            _battleUnitStatsComponent.PerkList.Add(perkSO);
-            Perk perk = perkSO.BuildPerk();
-            _perkList.Add(perk);
-        }
-
-        public void RemovePerk(PerkSO perkSO)
-        {
-            if (!_battleUnitStatsComponent.PerkList.Contains(perkSO)) return;
-
-            _battleUnitStatsComponent.PerkList.Remove(perkSO);
-            _perkList.Remove(_perkList.Where(e => e.PerkSO == perkSO).FirstOrDefault());
-        }
-
-        public void ApplyPerks(EPerkApplicationEvent perkApplicationEvent, BattleUnitCore applier, BattleUnitCore target, ref DamageStruct damageStruct)
-        {
-            List<Perk> perks = _perkList.Where(e => e.PerkSO.PerkApplicationEvent == perkApplicationEvent).ToList();
-
-            foreach (var perk in perks)
-                perk.ApplyPerk(applier, target, ref damageStruct);
+            for (int i = 0; i < _battleUnitStatsComponent.PerkSOList.Count; i++)
+                AddPerk(_battleUnitStatsComponent.PerkSOList[i]);
         }
     }
 }

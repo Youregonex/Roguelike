@@ -12,23 +12,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd50b475bcbd4e04af924b15aa3be06, type: 3}
   m_Name: Unit_FireArcher
   m_EditorClassIdentifier: 
-  <UnitName>k__BackingField: Fire archer
-  <UnitPrefab>k__BackingField: {fileID: 7309333256827841471, guid: 5e68dcf7c1ab8462fa6bfb632e304142, type: 3}
+  <Name>k__BackingField: Fire archer
+  <Prefab>k__BackingField: {fileID: 7309333256827841471, guid: 5e68dcf7c1ab8462fa6bfb632e304142, type: 3}
   <PrefabId>k__BackingField: 4ae8b09e-40f0-405e-a6e9-8c8aa2b844a1
-  <UnitIcon>k__BackingField: {fileID: -33750763, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+  <Icon>k__BackingField: {fileID: -33750763, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
   <DefaultSquadSize>k__BackingField: 4
-  <MoveSpeed>k__BackingField: 2
-  <MaxHealth>k__BackingField: 15
+  <UnitStatDataList>k__BackingField:
+  - <Name>k__BackingField: Move speed
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 0
+    <MaxValue>k__BackingField: 2
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Health
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 1
+    <MaxValue>k__BackingField: 30
+    <IgnoreMaxValue>k__BackingField: 0
+  - <Name>k__BackingField: Attack range
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 2
+    <MaxValue>k__BackingField: 7
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Attack speed
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 3
+    <MaxValue>k__BackingField: 0.8
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Attack damage
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 4
+    <MaxValue>k__BackingField: 7
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Knock back force
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 5
+    <MaxValue>k__BackingField: 5
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Knock back resistance
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 6
+    <MaxValue>k__BackingField: 5
+    <IgnoreMaxValue>k__BackingField: 1
   <AttackType>k__BackingField: 2
   <DamageType>k__BackingField: 1
-  <AttackRange>k__BackingField: 12
-  <AttackCooldownMin>k__BackingField: 1.6
-  <AttackCooldownMax>k__BackingField: 1.75
-  <AttackDamageMin>k__BackingField: 3
-  <AttackDamageMax>k__BackingField: 5
-  <KnockBackForce>k__BackingField: 5
-  <PerkList>k__BackingField:
+  <PerkSOList>k__BackingField:
   - {fileID: 11400000, guid: 865b99dcee6c4459a9d87bd962034d6c, type: 2}
   <SpellSOList>k__BackingField: []
-  <ProjectilePrefab>k__BackingField: {fileID: 6479707811003740384, guid: 9f53f3613dc9a46148ce835b42e8a22a, type: 3}
+  <ProjectilePrefab>k__BackingField: {fileID: 8526621860008795342, guid: ef9ba83a07eb8444fbab25a7efb3d128, type: 3}
   <ProjectileSpeed>k__BackingField: 40

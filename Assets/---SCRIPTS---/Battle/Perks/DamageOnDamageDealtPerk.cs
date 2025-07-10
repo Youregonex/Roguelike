@@ -10,7 +10,7 @@ namespace Yg.GameData.Perks
 
         public DamageOnDamageDealtPerk(PerkSO perkSO) : base(perkSO)
         {
-            if (!(PerkSO is DamageOnDamageDealtPerkSO))
+            if (!(PerkDataSO is DamageOnDamageDealtPerkSO))
             {
                 Debug.LogError("Wrong PerkSO!");
                 return;
@@ -21,12 +21,13 @@ namespace Yg.GameData.Perks
 
         public override void ApplyPerk(BattleUnitCore applier, BattleUnitCore target, ref DamageStruct damageStruct)
         {
-            if (target is null || applier is null) return;
+            if (target == null || applier == null) return;
 
             DamageStruct damage = new(
                 applier.UnitFaction,
                 applier,
-                EAttackType.Magic,
+                applier.transform.position,
+                EAttackType.Spell,
                 DamageOnDamageDealtPerkSO.DamageType,
                 DamageOnDamageDealtPerkSO.Damage,
                 0f);

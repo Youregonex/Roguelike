@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Yg.GameData.Equipment;
 using Yg.GameData.Units;
 
 namespace Yg.Character
@@ -13,6 +15,7 @@ namespace Yg.Character
         [SerializeField] protected List<WarbandSlot> _warbandSlotList = new();
 
         public IEnumerable<WarbandSlot> Warband => _warbandSlotList;
+        public bool HasEmptySlot => _warbandSlotList.Where(e => e.UnitEmpty).Any();
 
         public override void InitializeComponent(CharacterCore characterCore)
         {
@@ -26,16 +29,23 @@ namespace Yg.Character
         {
             _warbandSize = characterSaveData.WarbandSize;
 
-            InitializeWarband();
-
             for (int i = 0; i < characterSaveData.WarbandSlotSaveDataList.Count; i++)
             {
-                if (characterSaveData.WarbandSlotSaveDataList[i].Empty) continue;
+                WarbandSlot warbandSlot = new();
 
-                UnitDataSO unitDataSO = ResourceLoader.GetUnitDataSO(characterSaveData.WarbandSlotSaveDataList[i].PrefabId);
-                WarbandSlot warbandSlot = new(unitDataSO, characterSaveData.WarbandSlotSaveDataList[i].SlotSize);
+                for (int j = 0; j < characterSaveData.WarbandSlotSaveDataList[i].EquipmentDataList.Count; j++)
+                {
+                    if (characterSaveData.WarbandSlotSaveDataList[i].EquipmentDataList[j].IsEmpty) continue;
+                    warbandSlot.AddEquipmentData(characterSaveData.WarbandSlotSaveDataList[i].EquipmentDataList[j]);
+                }
 
-                AddSquad(warbandSlot);
+                if (!characterSaveData.WarbandSlotSaveDataList[i].Empty)
+                {
+                    UnitDataSO unitDataSO = ResourceLoader.GetUnitDataSO(characterSaveData.WarbandSlotSaveDataList[i].PrefabId);
+                    warbandSlot.UpdateUnitData(unitDataSO);
+                }
+
+                AddWarbandSlot(warbandSlot);
             }
         }
 
@@ -53,7 +63,7 @@ namespace Yg.Character
             characterSaveData.WarbandSize = _warbandSize;
         }
 
-        public virtual void AddWarbandSlot()
+        public virtual void AddEmptyWarbandSlot()
         {
             if (_warbandSlotList.Count < _warbandSize)
                 _warbandSlotList.Add(new WarbandSlot());
@@ -65,35 +75,52 @@ namespace Yg.Character
                 _warbandSlotList.RemoveAt(0);
         }
 
-        public virtual bool AddSquad(WarbandSlot warbandSlot)
+        public virtual void AddWarbandSlot(WarbandSlot warbandSlot)
         {
-            if(warbandSlot.Empty)
-            {
-                Debug.LogError("Trying to add empty squad!");
-                return false;
-            }
-
-            for (int i = 0; i < _warbandSlotList.Count; i++)
-            {
-                if (_warbandSlotList[i].Empty)
-                {
-                    _warbandSlotList[i].UpdateData(warbandSlot.UnitData, warbandSlot.SlotSize);
-                    return true;
-                }
-            }
-
-            return false;
+            _warbandSlotList.Add(warbandSlot);
         }
 
         public virtual void RemoveSquad(WarbandSlot warbandSlot)
         {
-            warbandSlot.ClearSlot();
+            warbandSlot.RemoveUnit();
+        }
+
+        public virtual bool AddSquad(UnitDataSO unitDataSO)
+        {
+            for (int i = 0; i < _warbandSlotList.Count; i++)
+            {
+                if (!_warbandSlotList[i].UnitEmpty) continue;
+
+                _warbandSlotList[i].UpdateUnitData(unitDataSO);
+                return true;
+            }
+
+            Debug.Log($"Not enough space in warband for {unitDataSO.Name}");
+            return false;
+        }
+
+        protected virtual void ReplaceWarbandSlotSquad(WarbandSlot replaceSlot, UnitDataSO unitDataSO)
+        {
+            replaceSlot.UpdateUnitData(unitDataSO);
+        }
+
+        protected virtual void AddEquipmentSlotToFirstEmptySlot(EquipmentData equipmentData)
+        {
+            for (int i = 0; i < _warbandSlotList.Count; i++)
+            {
+                if (!_warbandSlotList[i].CanFitNewEqupment) continue;
+
+                _warbandSlotList[i].AddEquipmentData(equipmentData);
+                return;
+            }
+
+            Debug.Log($"There is no space in warband slots for item: {equipmentData.Name}");
         }
 
         private void InitializeWarband()
         {
             for (int i = 0; i < _warbandSize; i++)
-                AddWarbandSlot();
+                AddEmptyWarbandSlot();
         }
     }
 }

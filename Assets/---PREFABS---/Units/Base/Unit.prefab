@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8149446107226437333}
   - component: {fileID: 5601693198437627621}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MovementComponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5abe0811d2b2c49859110931484d4a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 2
 --- !u!1 &977042484657474695
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +56,7 @@ GameObject:
   - component: {fileID: 3110892971783839802}
   - component: {fileID: 7128933550013873887}
   - component: {fileID: 2154356918882139234}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,15 +77,16 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3038820526543652068}
+  - {fileID: 792849395415454567}
   - {fileID: 8149446107226437333}
   - {fileID: 2606972661935802099}
   - {fileID: 8500329566532218288}
   - {fileID: 3123401644042697921}
   - {fileID: 5102473795533987343}
-  - {fileID: 792849395415454567}
   - {fileID: 8223650121215145161}
   - {fileID: 3474764775473734456}
   - {fileID: 2811746449458047897}
+  - {fileID: 2885046360568636200}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3110892971783839802
@@ -175,7 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3123401644042697921}
   - component: {fileID: 7548810570584110197}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TargetComponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,6 +210,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetSelectionInterval: 0.75
+  _targetCheckRadius: 5
+  _unitLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _currentTarget: {fileID: 0}
 --- !u!1 &2926995019458292399
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2606972661935802099}
   - component: {fileID: 6883163022049204688}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HealthComponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334912e75e74541f9977aae0e6c6a6df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentHealth: 0
 --- !u!1 &3380486580624654813
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 792849395415454567}
   - component: {fileID: 4880777308533444070}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StatsComponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,7 +313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2811746449458047897}
   - component: {fileID: 2845018725420096245}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpellComponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -354,7 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8500329566532218288}
   - component: {fileID: 4140094569184694052}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackComponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,7 +392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86bbeba5aa54817a88f02adae49103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distanceCheckInterval: 0.5
   _attackCooldownCurrent: 0
   _battleUnitAnimationComponent: {fileID: 0}
   _battleUnitTargetComponent: {fileID: 0}
@@ -404,7 +407,7 @@ GameObject:
   - component: {fileID: 5424746283131513787}
   - component: {fileID: 7213854672514152576}
   - component: {fileID: 6727557380929948431}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +486,8 @@ GameObject:
   - component: {fileID: 718977214419653524}
   - component: {fileID: 4417709261441411573}
   - component: {fileID: 689926799668435095}
-  m_Layer: 0
+  - component: {fileID: 6083887804250032195}
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -543,8 +547,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1854969839
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -573,6 +577,18 @@ MonoBehaviour:
   _flashDuration: 0.125
   _spriteRenderer: {fileID: 0}
   _initialMaterial: {fileID: 0}
+--- !u!114 &6083887804250032195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4732766664806167652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d05468ff751545a2a3508564b2fc83f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5404216602162650991
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +599,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5102473795533987343}
   - component: {fileID: 4060038220082448558}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: KnockBackComponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -627,7 +643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8223650121215145161}
   - component: {fileID: 2558924655413442808}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerUnitHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -663,6 +679,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _highlightCircleGO: {fileID: 8318691843257375246}
+--- !u!1 &7500429181325124946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2885046360568636200}
+  - component: {fileID: 2591984113235329100}
+  m_Layer: 6
+  m_Name: StatusEffectComponent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2885046360568636200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7500429181325124946}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5287335399899805984}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2591984113235329100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7500429181325124946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fde8ac6765ca473f9858763d26041a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7779157748117540089
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,7 +733,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3474764775473734456}
   - component: {fileID: 732062833224498771}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PerkComponent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -717,7 +777,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5729105954018739805}
   - component: {fileID: 5141996424615805884}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -777,8 +837,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 714949591
+  m_SortingLayer: 4
   m_SortingOrder: 3
   m_Sprite: {fileID: 2116807888, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

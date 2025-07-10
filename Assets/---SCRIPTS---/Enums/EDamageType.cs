@@ -7,6 +7,7 @@ namespace Yg.Battle
         Physical,
         Fire,
         Frost,
-        Nature
+        Nature,
+        Lightning
     }
 }

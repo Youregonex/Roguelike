@@ -1,0 +1,438 @@
+{
+    "RarityNames": {
+        "Forgotten": "Forgotten",
+        "Remembered": "Remembered",
+        "Spoken": "Spoken",
+        "Sung": "Sung",
+        "Exalted": "Exalted"
+    },
+    "Prefixes": {
+        "Blood": [
+            "Bloody",
+            "Crimson",
+            "Sanguine",
+            "Gorebound",
+            "Veincarved",
+            "Bloodsoaked",
+            "Hemorrhaged",
+            "Scarlet",
+            "Red-Fanged",
+            "The Bleeding"
+        ],
+        "Fire": [
+            "Blazing",
+            "Charred",
+            "Flaming",
+            "Ashen",
+            "Emberlit",
+            "Scorched",
+            "Infernal",
+            "Molten",
+            "Cinderkissed",
+            "Pyrebound"
+        ],
+        "Frost": [
+            "Frozen",
+            "Chilled",
+            "Shivering",
+            "Icy",
+            "Frostbitten",
+            "Winterborn",
+            "Snowblind",
+            "Glacial",
+            "Rimeforged",
+            "Hailcarved"
+        ],
+        "Nature": [
+            "Verdant",
+            "Thorned",
+            "Blooming",
+            "Overgrown",
+            "Rooted",
+            "Petalbound",
+            "Barkwoven",
+            "Mossy",
+            "Vineclad",
+            "Wildborn"
+        ],
+        "Lightning": [
+            "Charged",
+            "Stormforged",
+            "Thundering",
+            "Electrified",
+            "Shockwreathed",
+            "Sparked",
+            "Voltbound",
+            "Skykissed",
+            "Arc-touched",
+            "Boltcarved"
+        ],
+        "Mechanical": [
+            "Gearforged",
+            "Oiled",
+            "Clockwork",
+            "Steam-driven",
+            "Rustetched",
+            "Cogbound",
+            "Woundsteel",
+            "Metalshod",
+            "Brassclad",
+            "Ironlinked"
+        ],
+        "Shadow": [
+            "Shrouded",
+            "Veiled",
+            "Nightbound",
+            "Umbral",
+            "Duskwrought",
+            "Gloomforged",
+            "Voidkissed",
+            "Eclipsed",
+            "Silentshade",
+            "Shadeborn"
+        ],
+        "Light": [
+            "Radiant",
+            "Holy",
+            "Sunforged",
+            "Brightwoven",
+            "Dawnlit",
+            "Blessed",
+            "Glorybound",
+            "Beaconed",
+            "Haloborn",
+            "Sanctified"
+        ],
+        "Buff": [
+            "Uplifting",
+            "Empowered",
+            "Champion’s",
+            "Shielding",
+            "Booned",
+            "Fortified",
+            "Bolstered",
+            "Inspired",
+            "Guarded"
+        ],
+        "Debuff": [
+            "Withering",
+            "Cursed",
+            "Crippling",
+            "Hexed",
+            "Weakened",
+            "Tainted",
+            "Afflicted",
+            "Enfeebling",
+            "Corroded",
+            "Poisoned"
+        ],
+        "Stone": [
+            "Stalwart",
+            "Stonebound",
+            "Granite",
+            "Basaltforged",
+            "Earthen",
+            "Pebbled",
+            "Obsidian",
+            "Golemshod",
+            "Rockhewn",
+            "Boulderborn"
+        ]
+    },
+    "Items": [
+        {
+            "Name": "axe",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "bow",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "sword",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "blade",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "dagger",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "orb",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "mantle",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "helm",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "banner",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "whip",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "glove",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "mirror",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "trinket",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "ring",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "armor",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "javelin",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        },
+        {
+            "Name": "spear",
+            "IconPath": "Icons/Equipment/DefaultIcon"
+        }
+    ],
+    "Suffixes": {
+        "Blood": [
+            "of the Crimson Thief",
+            "of Cruel Thirst",
+            "of the Blood Price",
+            "of Hemorrhage",
+            "of Gory Feasts",
+            "of Vein and Vow",
+            "of Bloodletting",
+            "of the Sanguine Rite",
+            "of Red Sacrifice",
+            "of the Murderer's Pact"
+        ],
+        "Fire": [
+            "of the Burning Path",
+            "of Ash and Ember",
+            "of Wildfire",
+            "of Cinder Rain",
+            "of the Flame Tongue",
+            "of Pyric Devotion",
+            "of Infernal Chains",
+            "of the Ember Pact",
+            "of Scorched Earth",
+            "of the Smoldering Wake"
+        ],
+        "Frost": [
+            "of the Icebound",
+            "of Winter’s Bite",
+            "of Rime and Silence",
+            "of the Frozen Soul",
+            "of Hailstorms",
+            "of Shivering Death",
+            "of Cold Reckoning",
+            "of Frosted Will",
+            "of Permafrost",
+            "of Endless Snow"
+        ],
+        "Nature": [
+            "of the Thornlord",
+            "of Wild Bloom",
+            "of the Rooted Ones",
+            "of the Verdant Pact",
+            "of Blossoming Death",
+            "of the Forest’s Grasp",
+            "of Bark and Bone",
+            "of Green Wrath",
+            "of the Grovewatcher",
+            "of Living Soil"
+        ],
+        "Lightning": [
+            "of Stormcallers",
+            "of Skyfire",
+            "of the Electric Vow",
+            "of Thunder Reign",
+            "of Arc and Wrath",
+            "of the Crackling Doom",
+            "of Tempest",
+            "of Lightning Wounds",
+            "of Flash and Fury",
+            "of the Stormclad"
+        ],
+        "Mechanical": [
+            "of Iron Will",
+            "of Cogs and Smoke",
+            "of the Woundsteel Engine",
+            "of Machined Vow",
+            "of Brass Assembly",
+            "of Clockwork Rage",
+            "of Screws and Sparks",
+            "of Oiled Gears",
+            "of the Forge Master",
+            "of Steam Logic"
+        ],
+        "Shadow": [
+            "of the Pale King",
+            "of Forgotten Whispers",
+            "of Duskfall",
+            "of the Gloamhall Pact",
+            "of Umbral Chains",
+            "of the Black Vow",
+            "of the Quiet Blade",
+            "of Silent Sorrow",
+            "of Lost Faces",
+            "of the Nocturne"
+        ],
+        "Light": [
+            "of the Dawnbearer",
+            "of Halo’s Blessing",
+            "of the Shining Path",
+            "of Radiant Grace",
+            "of the Beacon Flame",
+            "of Sunborn Duty",
+            "of the Bright Sacrifice",
+            "of Divine Light",
+            "of Hope and Fire",
+            "of Guiding Eyes"
+        ],
+        "Buff": [
+            "of the Hero’s Echo",
+            "of Boonful Might",
+            "of the Iron Boon",
+            "of Fortified Vow",
+            "of Warded Kin",
+            "of the Courageous",
+            "of Exalted Force",
+            "of Shielding Songs",
+            "of Empowerment",
+            "of Resilient Brotherhood"
+        ],
+        "Debuff": [
+            "of Decay",
+            "of the Weeping Curse",
+            "of Shattered Flesh",
+            "of Crippled Spirit",
+            "of Rot",
+            "of Hexwoven Blight",
+            "of Enfeebled Rage",
+            "of Wretched Chains",
+            "of the Black Mark",
+            "of Lingering Pain"
+        ],
+        "Stone": [
+            "of the Golem King",
+            "of Basalt Bones",
+            "of Granite Oath",
+            "of Rock’s Endurance",
+            "of Stony Sleep",
+            "of Pebbled Grip",
+            "of Obsidian Heart",
+            "of Boulder Might",
+            "of Earthwake",
+            "of the Stalwart Wall"
+        ]
+    },
+    "CreationPhrases": [
+        "forged with",
+        "reborn in",
+        "inscribed with",
+        "infused by",
+        "cursed with",
+        "crafted in",
+        "created with",
+        "blessed by",
+        "wrought from",
+        "stolen from",
+        "shaped by",
+        "carved in",
+        "tempered with",
+        "drenched in",
+        "sung into",
+        "etched with",
+        "woven with"
+    ],
+    "StatTitles": {
+        "MoveSpeed": [
+            "the wind",
+            "fleet steps",
+            "haste",
+            "gale stride",
+            "dancing feet",
+            "swift motion",
+            "air’s call",
+            "the leaping path"
+        ],
+        "Health": [
+            "vitality",
+            "the mountain",
+            "endurance",
+            "stoneblood",
+            "the iron form",
+            "tenacity",
+            "unbroken will",
+            "boundless life"
+        ],
+        "AttackRange": [
+            "far sight",
+            "precision",
+            "hawk's reach",
+            "eagle’s gaze",
+            "true aim",
+            "unerring arc",
+            "keen distance",
+            "arcane mark"
+        ],
+        "AttackSpeed": [
+            "fury",
+            "the quickening",
+            "relentlessness",
+            "tempest edge",
+            "flurry",
+            "unceasing pace",
+            "blade rush",
+            "sudden wrath"
+        ],
+        "AttackDamage": [
+            "destruction",
+            "brutality",
+            "force",
+            "ruin",
+            "vengeance",
+            "death's hand",
+            "the crushing blow",
+            "sundered earth"
+        ],
+        "KnockBackForce": [
+            "momentum",
+            "the shove",
+            "impact",
+            "tidal crash",
+            "iron push",
+            "the overwhelming",
+            "quake pulse",
+            "the thunderstep"
+        ],
+        "KnockBackResistance": [
+            "steadfastness",
+            "stonehide",
+            "immovability",
+            "relentless force",
+            "unyielding earth",
+            "the unmoved",
+            "fortress stance",
+            "enduring frame",
+            "stubborn might"
+        ]
+    }
+}

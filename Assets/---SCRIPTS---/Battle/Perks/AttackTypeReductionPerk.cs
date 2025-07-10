@@ -10,7 +10,7 @@ namespace Yg.GameData.Perks
 
         public AttackTypeReductionPerk(PerkSO perkSO) : base(perkSO)
         {
-            if(!(PerkSO is AttackTypeReductionPerkSO))
+            if(!(PerkDataSO is AttackTypeReductionPerkSO))
             {
                 Debug.LogError("Wrong PerkSO!");
                 return;

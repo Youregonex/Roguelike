@@ -18,9 +18,7 @@ namespace Yg.Battle.BattleUnits
 
         private void BattleUnitHealthComponent_OnDamageTaken(DamageStruct damage)
         {
-            if (_flashCoroutine is not null)
-                StopAllCoroutines();
-
+            if (_flashCoroutine is not null) return;
             StartCoroutine(FlashSprite());
         }
     }

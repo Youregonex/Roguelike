@@ -22,7 +22,9 @@ namespace Yg.GameData.Perks
         public override void ApplyPerk(BattleUnitCore applier, BattleUnitCore target, ref DamageStruct damageStruct)
         {
             if (damageStruct.DamageType == DamageTypeReductionPerkSO.DamageType)
-                damageStruct.DamageAmount -= damageStruct.DamageAmount * DamageTypeReductionPerkSO.DamageReductionPercent;
+            {
+                damageStruct.DamageAmount -= damageStruct.DamageAmount * DamageTypeReductionPerkSO.DamageReductionPercent;;
+            }
         }
     }
 }

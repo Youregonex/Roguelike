@@ -2,6 +2,7 @@ using Yg.GameData.Units;
 using System;
 using System.Collections.Generic;
 using Yg.GameData.Perks;
+using System.Linq;
 
 namespace Yg.Battle.BattleUnits
 {
@@ -9,17 +10,11 @@ namespace Yg.Battle.BattleUnits
     {
         public event Action OnInitializationComplete;
 
-        public float MoveSpeed { get; private set; }
-        public float MaxHealth { get; private set; }
         public EAttackType AttackType { get; private set; }
         public EDamageType DamageType { get; private set; }
-        public float AttackRange { get; private set; }
-        public float AttackCooldownMin { get; private set; }
-        public float AttackCooldownMax { get; private set; }
-        public float AttackDamageMin { get; private set; }
-        public float AttackDamageMax { get; private set; }
-        public float KnockBackForce { get; private set; }
-        public List<PerkSO> PerkList { get; private set; }
+
+        public List<Stat> UnitStatList { get; private set; } = new();
+        public List<PerkSO> PerkSOList { get; private set; }
         public List<SpellSO> SpellSOList { get; private set; }
 
         public bool IsInitialized { get; private set; } = false;
@@ -37,18 +32,64 @@ namespace Yg.Battle.BattleUnits
 
         protected virtual void SetupStats(UnitDataSO unitDataSO)
         {
-            MoveSpeed = unitDataSO.MoveSpeed;
-            MaxHealth = unitDataSO.MaxHealth;
+            for (int i = 0; i < unitDataSO.UnitStatDataList.Count; i++)
+            {
+                Stat stat = new(
+                    unitDataSO.UnitStatDataList[i].StatType,
+                    unitDataSO.UnitStatDataList[i].MaxValue,
+                    unitDataSO.UnitStatDataList[i].IgnoreMaxValue);
+
+                UnitStatList.Add(stat);
+            }
+
             AttackType = unitDataSO.AttackType;
             DamageType = unitDataSO.DamageType;
-            AttackRange = unitDataSO.AttackRange;
-            AttackCooldownMin = unitDataSO.AttackCooldownMin;
-            AttackCooldownMax = unitDataSO.AttackCooldownMax;
-            AttackDamageMin = unitDataSO.AttackDamageMin;
-            AttackDamageMax = unitDataSO.AttackDamageMax;
-            KnockBackForce = unitDataSO.KnockBackForce;
-            PerkList = unitDataSO.PerkList;
-            SpellSOList = unitDataSO.SpellSOList;
+
+            PerkSOList = new List<PerkSO>(unitDataSO.PerkSOList);
+            SpellSOList = new List<SpellSO>(unitDataSO.SpellSOList);
+        }
+
+        public Stat GetStat(EStat statType)
+        {
+            return UnitStatList.Where(e => e.StatType == statType).FirstOrDefault();
+        }
+
+        public float GetMaxStatValue(EStat statType)
+        {
+            return UnitStatList.Where(e => e.StatType == statType).FirstOrDefault().MaxValue;
+        }
+
+        public float GetCurrentStatValue(EStat statType)
+        {
+            return UnitStatList.Where(e => e.StatType == statType).FirstOrDefault().CurrentValue;
+        }
+
+        public void IncreaseMaxStatValue(EStat statType, float amount, bool percentage)
+        {
+            if (amount < 0) return;
+
+            UnitStatList.Where(e => e.StatType == statType).FirstOrDefault().IncreaseMaxValue(amount, percentage);
+        }
+
+        public void DecreaseMaxStatValue(EStat statType, float amount, bool percentage)
+        {
+            if (amount < 0) return;
+
+            UnitStatList.Where(e => e.StatType == statType).FirstOrDefault().DecreaseMaxValue(amount, percentage);
+        }
+
+        public void IncreaseCurrentStatValue(EStat statType, float amount, bool percentage)
+        {
+            if (amount < 0) return;
+
+            UnitStatList.Where(e => e.StatType == statType).FirstOrDefault().IncreaseCurrentValue(amount, percentage);
+        }
+
+        public void DecreaseCurrentStatValue(EStat statType, float amount, bool percentage)
+        {
+            if (amount < 0) return;
+
+            UnitStatList.Where(e => e.StatType == statType).FirstOrDefault().DecreaseCurrentValue(amount, percentage);
         }
     }
 }

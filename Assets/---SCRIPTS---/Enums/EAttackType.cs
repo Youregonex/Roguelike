@@ -6,6 +6,7 @@ namespace Yg.Battle
         None,
         Melee,
         Ranged,
-        Magic
+        Spell,
+        StatusEffect
     }
 }

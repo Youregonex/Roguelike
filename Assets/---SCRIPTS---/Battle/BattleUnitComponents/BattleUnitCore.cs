@@ -27,6 +27,7 @@ namespace Yg.Battle.BattleUnits
         public EUnitFaction UnitFaction => _unitFaction;
         public IEnumerable<BattleUnitCore> TargetList => _targetList;
 
+
         public void Initialize(EUnitFaction unitFaction)
         {
             _unitFaction = unitFaction;
@@ -40,15 +41,23 @@ namespace Yg.Battle.BattleUnits
                 component.Tick();
         }
 
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
+        }
+
         public void DealDamage(DamageStruct damageStruct, BattleUnitCore target, bool applyPerks)
         {
-            if(applyPerks)
-                GetUnitComponent<BattleUnitPerkComponent>().ApplyPerks(EPerkApplicationEvent.OnDamageDealt, this, target, ref damageStruct);
+            if (target is null) return;
+
+            if (applyPerks && target.TryGetUnitComponent(out BattleUnitPerkComponent perkComponent))
+                perkComponent.ApplyPerks(EPerkApplicationEvent.OnDamageDealt, target, ref damageStruct);
 
             if (target.TryGetUnitComponent(out BattleUnitHealthComponent targetHealthComponent))
+            {
                 targetHealthComponent.TakeDamage(damageStruct);
-
-            OnDamageDealt?.Invoke(this, damageStruct.DamageAmount);
+                OnDamageDealt?.Invoke(this, damageStruct.DamageAmount);
+            }
         }
 
         public T GetUnitComponent<T>() where T : BattleUnitComponent
@@ -73,6 +82,8 @@ namespace Yg.Battle.BattleUnits
         public void Death()
         {
             OnDeath?.Invoke(this);
+            gameObject.SetActive(false);
+            Destroy(gameObject, 1f);
         }
 
         public void AssignTargets(List<BattleUnitCore> battleUnits)

@@ -16,7 +16,7 @@ namespace Yg.GameData.Perks
 
         protected override void Validate()
         {
-            PerkDescription = $"On attack deals additional <b><color=#466C96>{Damage}</color></b> <b><color=#466C96>{DamageType}</color></b> damage.";
+            Description = $"On attack deals additional <b><color=#466C96>{Damage}</color></b> <b><color=#466C96>{DamageType}</color></b> damage.";
         }
     }
 }

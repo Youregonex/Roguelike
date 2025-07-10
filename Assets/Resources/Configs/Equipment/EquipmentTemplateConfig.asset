@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29c7ca683d41e4ae7ba51449a54237f7, type: 3}
+  m_Name: EquipmentTemplateConfig
+  m_EditorClassIdentifier: 
+  <EquipmentTemplateList>k__BackingField:
+  - <Tier>k__BackingField: 1
+    <PerkPool>k__BackingField:
+    - {fileID: 11400000, guid: 865b99dcee6c4459a9d87bd962034d6c, type: 2}
+    - {fileID: 11400000, guid: dbadbd0dfe17e4f24802645b1e8ce67c, type: 2}
+    - {fileID: 11400000, guid: 602ddb0d28a0843cabaed37c1c33aa0e, type: 2}
+    - {fileID: 11400000, guid: 0cdda166bdd1a486490467843cf9b068, type: 2}
+    - {fileID: 11400000, guid: 31766689f3ac847da987c4a4acf24a47, type: 2}
+    - {fileID: 11400000, guid: 7c91c7799349f49b08b85d3c3ee18127, type: 2}
+    - {fileID: 11400000, guid: eea32a100b8204f7dabcbc186e530010, type: 2}
+    <SpellPool>k__BackingField: []
+  - <Tier>k__BackingField: 2
+    <PerkPool>k__BackingField:
+    - {fileID: 11400000, guid: 865b99dcee6c4459a9d87bd962034d6c, type: 2}
+    - {fileID: 11400000, guid: dbadbd0dfe17e4f24802645b1e8ce67c, type: 2}
+    - {fileID: 11400000, guid: 602ddb0d28a0843cabaed37c1c33aa0e, type: 2}
+    - {fileID: 11400000, guid: 0cdda166bdd1a486490467843cf9b068, type: 2}
+    - {fileID: 11400000, guid: 31766689f3ac847da987c4a4acf24a47, type: 2}
+    - {fileID: 11400000, guid: 7c91c7799349f49b08b85d3c3ee18127, type: 2}
+    - {fileID: 11400000, guid: eea32a100b8204f7dabcbc186e530010, type: 2}
+    <SpellPool>k__BackingField: []
+  - <Tier>k__BackingField: 3
+    <PerkPool>k__BackingField:
+    - {fileID: 11400000, guid: 865b99dcee6c4459a9d87bd962034d6c, type: 2}
+    - {fileID: 11400000, guid: dbadbd0dfe17e4f24802645b1e8ce67c, type: 2}
+    - {fileID: 11400000, guid: 602ddb0d28a0843cabaed37c1c33aa0e, type: 2}
+    - {fileID: 11400000, guid: 0cdda166bdd1a486490467843cf9b068, type: 2}
+    - {fileID: 11400000, guid: 31766689f3ac847da987c4a4acf24a47, type: 2}
+    - {fileID: 11400000, guid: 7c91c7799349f49b08b85d3c3ee18127, type: 2}
+    - {fileID: 11400000, guid: eea32a100b8204f7dabcbc186e530010, type: 2}
+    <SpellPool>k__BackingField: []
+  - <Tier>k__BackingField: 4
+    <PerkPool>k__BackingField:
+    - {fileID: 11400000, guid: 865b99dcee6c4459a9d87bd962034d6c, type: 2}
+    - {fileID: 11400000, guid: dbadbd0dfe17e4f24802645b1e8ce67c, type: 2}
+    - {fileID: 11400000, guid: 602ddb0d28a0843cabaed37c1c33aa0e, type: 2}
+    - {fileID: 11400000, guid: 0cdda166bdd1a486490467843cf9b068, type: 2}
+    - {fileID: 11400000, guid: 31766689f3ac847da987c4a4acf24a47, type: 2}
+    - {fileID: 11400000, guid: 7c91c7799349f49b08b85d3c3ee18127, type: 2}
+    - {fileID: 11400000, guid: eea32a100b8204f7dabcbc186e530010, type: 2}
+    <SpellPool>k__BackingField: []

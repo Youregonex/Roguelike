@@ -35,6 +35,18 @@ public static class Utilities
         return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
 
+    public static float GetSqrDistance(Vector2 A, Vector2 B)
+    {
+        return (A - B).sqrMagnitude;
+    }
+
+    public static bool IsWithinRange(Vector2 a, Vector2 b, float range)
+    {
+        float sqrDistance = (a - b).sqrMagnitude;
+        float sqrRange = range * range;
+        return sqrDistance <= sqrRange;
+    }
+
     public static Vector2 GetDirectionVectorNormalized(Vector2 self, Vector2 target, bool oppositeDirection = false)
     {
         Vector2 resultDirection = (target - self).normalized;

@@ -12,21 +12,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed56fc5ca8b1414787984523fe32f5b, type: 3}
   m_Name: Unit_Rider
   m_EditorClassIdentifier: 
-  <UnitName>k__BackingField: Rider
-  <UnitPrefab>k__BackingField: {fileID: 2944207676587258401, guid: 1ed8259b2731e496cae4f9f15543dfa5, type: 3}
+  <Name>k__BackingField: Rider
+  <Prefab>k__BackingField: {fileID: 2944207676587258401, guid: 1ed8259b2731e496cae4f9f15543dfa5, type: 3}
   <PrefabId>k__BackingField: 56ec7499-820b-4e0d-a98f-0bd7ffac9a98
-  <UnitIcon>k__BackingField: {fileID: -1063656196, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+  <Icon>k__BackingField: {fileID: -1063656196, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
   <DefaultSquadSize>k__BackingField: 5
-  <MoveSpeed>k__BackingField: 4
-  <MaxHealth>k__BackingField: 40
+  <UnitStatDataList>k__BackingField:
+  - <Name>k__BackingField: Move speed
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 0
+    <MaxValue>k__BackingField: 4
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Health
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 1
+    <MaxValue>k__BackingField: 70
+    <IgnoreMaxValue>k__BackingField: 0
+  - <Name>k__BackingField: Attack range
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 2
+    <MaxValue>k__BackingField: 1.1
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Attack speed
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 3
+    <MaxValue>k__BackingField: 0.7
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Attack damage
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 4
+    <MaxValue>k__BackingField: 21
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Knock back force
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 5
+    <MaxValue>k__BackingField: 10
+    <IgnoreMaxValue>k__BackingField: 1
+  - <Name>k__BackingField: Knock back resistance
+    <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
+    <StatType>k__BackingField: 6
+    <MaxValue>k__BackingField: 15
+    <IgnoreMaxValue>k__BackingField: 1
   <AttackType>k__BackingField: 1
   <DamageType>k__BackingField: 1
-  <AttackRange>k__BackingField: 1.2
-  <AttackCooldownMin>k__BackingField: 1.2
-  <AttackCooldownMax>k__BackingField: 1.5
-  <AttackDamageMin>k__BackingField: 5
-  <AttackDamageMax>k__BackingField: 11
-  <KnockBackForce>k__BackingField: 10
-  <PerkList>k__BackingField:
-  - {fileID: 11400000, guid: 31766689f3ac847da987c4a4acf24a47, type: 2}
+  <PerkSOList>k__BackingField:
+  - {fileID: 11400000, guid: eea32a100b8204f7dabcbc186e530010, type: 2}
   <SpellSOList>k__BackingField: []

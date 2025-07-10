@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Unit
   - 
   - 
   - 
@@ -40,4 +40,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 3105217401
+    locked: 0
+  - name: BattleSpawnAreas
+    uniqueID: 1768887709
+    locked: 0
+  - name: Units
+    uniqueID: 1854969839
+    locked: 0
+  - name: UnitVisuals
+    uniqueID: 714949591
+    locked: 0
+  - name: VFX
+    uniqueID: 1811223323
     locked: 0

@@ -5,6 +5,7 @@ namespace Yg.Battle.BattleUnits
     {
         OnDamageTaken,
         OnAttack,
-        OnDamageDealt
+        OnDamageDealt,
+        OnSpellCast
     }
 }

@@ -1,11 +1,10 @@
-using UnityEngine;
 
 namespace Yg.Battle.BattleUnits
 {
     public class BattleUnitKnockBackOnDamageTaken : BattleUnitComponent
     {
         private BattleUnitHealthComponent _battleUnitHealthComponent;
-        private Rigidbody2D _rigidbody;
+        private BattleUnitMovementComponent _battleUnitMovementComponent;
 
         public override void InitializeComponent(BattleUnitCore battleUnitCore)
         {
@@ -14,7 +13,7 @@ namespace Yg.Battle.BattleUnits
             _battleUnitHealthComponent = _battleUnitCore.GetUnitComponent<BattleUnitHealthComponent>();
             _battleUnitHealthComponent.OnDamageTaken += BattleUnitHealthComponent_OnDamageTaken;
 
-            _rigidbody = transform.root.GetComponent<Rigidbody2D>();
+            _battleUnitMovementComponent = _battleUnitCore.GetUnitComponent<BattleUnitMovementComponent>();
         }
 
         private void OnDestroy()
@@ -24,10 +23,13 @@ namespace Yg.Battle.BattleUnits
 
         private void BattleUnitHealthComponent_OnDamageTaken(DamageStruct damage)
         {
-            if (damage.Origin is null) return;
-            var knockBackDirection = Utilities.GetDirectionVectorNormalized(transform.position, damage.Origin.transform.position, true);
-            var knockBackForce = knockBackDirection * damage.KnockBackForce;
-            _rigidbody.AddForce(knockBackForce, ForceMode2D.Impulse);
+            var direction = Utilities.GetDirectionVectorNormalized(
+                transform.position,
+                damage.OriginPosition,
+                true);
+
+            var force = direction * damage.KnockBackForce;
+            _battleUnitMovementComponent.AddKnockback(force);
         }
     }
 }

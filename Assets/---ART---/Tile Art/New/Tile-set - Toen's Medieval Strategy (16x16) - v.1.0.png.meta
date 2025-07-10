@@ -753,7 +753,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Teemp
+      name: Character_Temp
       rect:
         serializedVersion: 2
         x: 81
@@ -858,7 +858,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Unit_2
+      name: Unit_FireSpearman
       rect:
         serializedVersion: 2
         x: 16
@@ -900,7 +900,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Unit_4
+      name: Unit_FireArcher
       rect:
         serializedVersion: 2
         x: 0
@@ -966,9 +966,9 @@ TextureImporter:
       name: ShieldIcon
       rect:
         serializedVersion: 2
-        x: 98
+        x: 100
         y: 417
-        width: 12
+        width: 10
         height: 13
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -1055,7 +1055,7 @@ TextureImporter:
         width: 15
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1063,6 +1063,174 @@ TextureImporter:
       bones: []
       spriteID: 085128b0dc8704a34ad3d636cdf9eb8e
       internalID: -1484822731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unit_FireWitch
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 239
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e18e700f65b0b43d7a1c21c1f1c73bab
+      internalID: -994796716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44f5b3d435f9d45479052ba56c21a250
+      internalID: -1796360646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fire_2
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 288
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 285547e21bede4f55b96c212102eff7e
+      internalID: 1860639059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Poison_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 701ceb1bb8cff4482be0ed7194bf93d6
+      internalID: 1059334003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Poison_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a5566d2a214042bbae7771120a716e8
+      internalID: -394520609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Horse_2
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 576
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe63d50e0410c4bb0beb9c2115ff8c62
+      internalID: 784326042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Unit_Knight of the storm
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 528
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 210b333d62f334d5ba8a7ffb17fd208f
+      internalID: 255785082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icon_Attack_Stat
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 433
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e6344224d3944f4c91d7fb9dae8eabf
+      internalID: 1241839472
       vertices: []
       indices: 
       edges: []
@@ -1089,7 +1257,9 @@ TextureImporter:
       Building_7: -415998946
       Building_8: 1637020163
       Castle: -1151295276
-      Character_Teemp: 2095661159
+      Character_Temp: 2095661159
+      Fire_1: -1796360646
+      Fire_2: 1860639059
       Forest: 901818144
       Forest_1: 91085699
       Forest_2: -844654829
@@ -1104,20 +1274,26 @@ TextureImporter:
       Highlight_Red: 1498605711
       Highlight_Yellow: -1552002800
       Horse_1: 12818986
+      Horse_2: 784326042
+      Icon_Attack_Stat: 1241839472
       Mountain_1: -370135690
       Mountain_2: 851347152
       Mountain_3: -1269248129
+      Poison_1: 1059334003
+      Poison_2: -394520609
       Resource_1: -1806648648
       Resource_2: -2037707567
       Resource_3: -1716700117
       Resource_4: -582364873
       ShieldIcon: 1100355448
       UnitHighlight: 2116807888
-      Unit_2: 1545182197
-      Unit_4: -33750763
       Unit_Archer: 407625093
+      Unit_FireArcher: -33750763
       Unit_FireMonk: 856926583
+      Unit_FireSpearman: 1545182197
+      Unit_FireWitch: -994796716
       Unit_Knight: 2005238886
+      Unit_Knight of the storm: 255785082
       Unit_Peasant: -1484822731
       Unit_Rider: -1063656196
       Unit_Spearman: 324477005
