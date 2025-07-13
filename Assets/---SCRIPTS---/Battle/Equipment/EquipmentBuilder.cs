@@ -119,7 +119,7 @@ namespace Yg.GameData.Equipment
             statTitle = _namingRules.StatTitles[mainStat][randomIndex];
 
             // Final name
-            return $"{prefix} {item} {suffix} {creationPhrase} {statTitle}";
+            return $"{prefix} {item} {creationPhrase} {statTitle}";
         }
 
         private void LoadNamingRules()

@@ -51,8 +51,11 @@ namespace Yg.Battle
 
         protected virtual void InitializeStatusEffectVFX()
         {
-            _vfxGameObject = _pooler.Dequeue(StatusEffectSO.VFX);
+            if (_statusEffectHolder.TryGetUnitComponent(out BattleUnitStatusEffectComponent battleUnitStatusEffectComponent) &&
+                battleUnitStatusEffectComponent.AffectedBy(StatusEffectSO.StatusEffectTag))
+                return;
 
+            _vfxGameObject = _pooler.Dequeue(StatusEffectSO.VFX);
             _vfxGameObject.transform.SetParent(_statusEffectHolder.transform);
             Vector2 slightYOffset = new(0f, -.1f);
             _vfxGameObject.transform.localPosition = Vector2.zero + slightYOffset;
@@ -60,7 +63,11 @@ namespace Yg.Battle
 
         protected virtual void RemoveStatusEffectVFX()
         {
-            if (_vfxGameObject is not null)
+            if (_statusEffectHolder.TryGetUnitComponent(out BattleUnitStatusEffectComponent battleUnitStatusEffectComponent) &&
+                battleUnitStatusEffectComponent.AffectedBy(StatusEffectSO.StatusEffectTag))
+                return;
+
+            if (_vfxGameObject != null)
                 _pooler.Enqueue(StatusEffectSO.VFX, _vfxGameObject, true);
         }
     }

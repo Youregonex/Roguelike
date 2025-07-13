@@ -18,8 +18,19 @@ namespace Yg.Character
         public UnitDataSO UnitData => _unitData;
         public int DefaultSlotSize => _defaultSlotSize;
 
-        public bool UnitEmpty => _unitData is null;
-        public bool CanFitNewEqupment => _equipmentDataList.Count < MAX_EQUIPMENT_SLOTS;
+        public bool UnitEmpty => _unitData == null;
+        public bool CanFitNewEqupment
+        {
+            get
+            {
+                for (int i = 0; i < MAX_EQUIPMENT_SLOTS; i++)
+                {
+                    if (_equipmentDataList[i] == null) return true;
+                }
+
+                return false;
+            }
+        }
 
         public int SlotSize
         {
@@ -31,21 +42,35 @@ namespace Yg.Character
             }
         }
 
-        public WarbandSlot() {}
+        public WarbandSlot()
+        {
+            for (int i = 0; i < MAX_EQUIPMENT_SLOTS; i++)
+                _equipmentDataList.Add(null);
+        }
 
         public WarbandSlot(UnitDataSO unitDataSO)
         {
             _unitData = unitDataSO;
         }
 
-        public void AddEquipmentData(EquipmentData equipmentData)
+        public void AddEquipmentDataToFirstEmptySlot(EquipmentData equipmentData)
         {
-            _equipmentDataList.Add(equipmentData);
+            for (int i = 0; i < MAX_EQUIPMENT_SLOTS; i++)
+                if (_equipmentDataList[i] == null)
+                {
+                    _equipmentDataList[i] = equipmentData;
+                    return;
+                }
         }
 
-        public void RemoveEquipmentData(EquipmentData equipmentData)
+        public void AddEquipmentDataToSlot(int index, EquipmentData equipmentData)
         {
-            _equipmentDataList.Remove(equipmentData);
+            _equipmentDataList[index] = equipmentData;
+        }
+
+        public void RemoveEquipmentDataFromSlot(int index)
+        {
+            _equipmentDataList[index] = null;
         }
 
         public void UpdateUnitData(UnitDataSO unitDataSO)

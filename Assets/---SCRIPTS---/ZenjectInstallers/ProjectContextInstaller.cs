@@ -1,15 +1,15 @@
 using Yg.GameData;
+using Yg.Systems;
 using Zenject;
 
-public class ProjectContextInstaller : MonoInstaller
+namespace Yg.ZenjectInstallers
 {
-    public override void InstallBindings()
+    public class ProjectContextInstaller : MonoInstaller
     {
-        BindPersistentData();
-    }
-
-    private void BindPersistentData()
-    {
-        Container.Bind<PersistentData>().AsSingle();
+        public override void InstallBindings()
+        {
+            Container.Bind<PersistentData>().AsSingle();
+            Container.Bind<ColorPicker>().AsSingle();
+        }
     }
 }

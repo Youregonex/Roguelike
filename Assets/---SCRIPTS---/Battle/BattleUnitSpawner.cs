@@ -8,6 +8,8 @@ using Yg.UI;
 using Zenject;
 using System;
 using Yg.Factories;
+using Yg.GameData.Equipment;
+using Yg.GameData.Perks;
 
 namespace Yg.Battle.GameSystems
 {
@@ -74,6 +76,7 @@ namespace Yg.Battle.GameSystems
             float randomPositionY;
             Bounds bounds;
 
+            BattleUnitCore spawnedUnit;
             for (int i = 0; i < warbandSlot.SlotSize; i++)
             {
                 bounds = squadPlacementArea.Collider.bounds;
@@ -82,17 +85,49 @@ namespace Yg.Battle.GameSystems
 
                 spawnPosition = new(randomPositionX, randomPositionY);
 
-                SpawnUnit(warbandSlot.UnitData, spawnPosition, unitFaction);
+                spawnedUnit = SpawnUnit(warbandSlot.UnitData, spawnPosition, unitFaction);
+                ApplyEquipmentEffects(spawnedUnit, warbandSlot.EquipmentDataList);
             }
         }
 
-        private void SpawnUnit(UnitDataSO unitDataSO, Vector2 spawnPosition, EUnitFaction unitFaction)
+        private BattleUnitCore SpawnUnit(UnitDataSO unitDataSO, Vector2 spawnPosition, EUnitFaction unitFaction)
         {
             BattleUnitCore battleUnit = _battleUnitFactory.CreateUnit(unitDataSO);
             battleUnit.transform.position = spawnPosition;
             battleUnit.Initialize(unitFaction);
 
             OnUnitSpawned?.Invoke(battleUnit);
+
+            return battleUnit;
+        }
+
+        private void ApplyEquipmentEffects(BattleUnitCore battleUnitCore, List<EquipmentData> equipmentList)
+        {
+            for (int i = 0; i < equipmentList.Count; i++)
+            {
+                if (equipmentList[i] == null) continue;
+
+                ApplyEquipmentStatModifiers(battleUnitCore, equipmentList[i].StatModifierList);
+                ApplyBonusPerks(battleUnitCore, equipmentList[i].PerkIdList);
+            }
+        }
+
+        private void ApplyEquipmentStatModifiers(BattleUnitCore battleUnitCore, List<StatModifier> statModifierList)
+        {
+            for (int i = 0; i < statModifierList.Count; i++)
+                statModifierList[i].ModifyStat(battleUnitCore);
+        }
+
+        private void ApplyBonusPerks(BattleUnitCore battleUnitCore, List<string> bonusPerkIdList)
+        {
+            PerkSO perkSO;
+
+            for (int i = 0; i < bonusPerkIdList.Count; i++)
+            {
+                perkSO = ResourceLoader.GetPerkSO(bonusPerkIdList[i]);
+                if (battleUnitCore.TryGetUnitComponent(out BattleUnitPerkComponent battleUnitPerkComponent))
+                    battleUnitPerkComponent.AddPerk(perkSO);
+            }
         }
     }
 }

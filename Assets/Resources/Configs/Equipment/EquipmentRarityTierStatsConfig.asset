@@ -21,6 +21,38 @@ MonoBehaviour:
     <StatValueChangeMax>k__BackingField: 0.05
     <PerksAmountMin>k__BackingField: 0
     <PerksAmountMax>k__BackingField: 0
+  - <EquipmentRarity>k__BackingField: 1
+    <Tier>k__BackingField: 1
+    <AmountOfStatsMin>k__BackingField: 1
+    <AmountOfStatsMax>k__BackingField: 2
+    <StatValueChangeMin>k__BackingField: 0.04
+    <StatValueChangeMax>k__BackingField: 0.06
+    <PerksAmountMin>k__BackingField: 0
+    <PerksAmountMax>k__BackingField: 1
+  - <EquipmentRarity>k__BackingField: 2
+    <Tier>k__BackingField: 1
+    <AmountOfStatsMin>k__BackingField: 2
+    <AmountOfStatsMax>k__BackingField: 2
+    <StatValueChangeMin>k__BackingField: 0.05
+    <StatValueChangeMax>k__BackingField: 0.08
+    <PerksAmountMin>k__BackingField: 1
+    <PerksAmountMax>k__BackingField: 2
+  - <EquipmentRarity>k__BackingField: 3
+    <Tier>k__BackingField: 1
+    <AmountOfStatsMin>k__BackingField: 2
+    <AmountOfStatsMax>k__BackingField: 3
+    <StatValueChangeMin>k__BackingField: 0.06
+    <StatValueChangeMax>k__BackingField: 0.09
+    <PerksAmountMin>k__BackingField: 2
+    <PerksAmountMax>k__BackingField: 2
+  - <EquipmentRarity>k__BackingField: 4
+    <Tier>k__BackingField: 1
+    <AmountOfStatsMin>k__BackingField: 3
+    <AmountOfStatsMax>k__BackingField: 4
+    <StatValueChangeMin>k__BackingField: 0.08
+    <StatValueChangeMax>k__BackingField: 0.11
+    <PerksAmountMin>k__BackingField: 2
+    <PerksAmountMax>k__BackingField: 3
   - <EquipmentRarity>k__BackingField: 0
     <Tier>k__BackingField: 2
     <AmountOfStatsMin>k__BackingField: 1
@@ -44,14 +76,6 @@ MonoBehaviour:
     <StatValueChangeMin>k__BackingField: 0.04
     <StatValueChangeMax>k__BackingField: 0.07
     <PerksAmountMin>k__BackingField: 1
-    <PerksAmountMax>k__BackingField: 1
-  - <EquipmentRarity>k__BackingField: 1
-    <Tier>k__BackingField: 1
-    <AmountOfStatsMin>k__BackingField: 1
-    <AmountOfStatsMax>k__BackingField: 2
-    <StatValueChangeMin>k__BackingField: 0.04
-    <StatValueChangeMax>k__BackingField: 0.06
-    <PerksAmountMin>k__BackingField: 0
     <PerksAmountMax>k__BackingField: 1
   - <EquipmentRarity>k__BackingField: 1
     <Tier>k__BackingField: 2
@@ -75,14 +99,6 @@ MonoBehaviour:
     <AmountOfStatsMax>k__BackingField: 3
     <StatValueChangeMin>k__BackingField: 0.06
     <StatValueChangeMax>k__BackingField: 0.09
-    <PerksAmountMin>k__BackingField: 1
-    <PerksAmountMax>k__BackingField: 2
-  - <EquipmentRarity>k__BackingField: 2
-    <Tier>k__BackingField: 1
-    <AmountOfStatsMin>k__BackingField: 2
-    <AmountOfStatsMax>k__BackingField: 2
-    <StatValueChangeMin>k__BackingField: 0.05
-    <StatValueChangeMax>k__BackingField: 0.08
     <PerksAmountMin>k__BackingField: 1
     <PerksAmountMax>k__BackingField: 2
   - <EquipmentRarity>k__BackingField: 2
@@ -110,14 +126,6 @@ MonoBehaviour:
     <PerksAmountMin>k__BackingField: 2
     <PerksAmountMax>k__BackingField: 3
   - <EquipmentRarity>k__BackingField: 3
-    <Tier>k__BackingField: 1
-    <AmountOfStatsMin>k__BackingField: 2
-    <AmountOfStatsMax>k__BackingField: 3
-    <StatValueChangeMin>k__BackingField: 0.06
-    <StatValueChangeMax>k__BackingField: 0.09
-    <PerksAmountMin>k__BackingField: 2
-    <PerksAmountMax>k__BackingField: 2
-  - <EquipmentRarity>k__BackingField: 3
     <Tier>k__BackingField: 2
     <AmountOfStatsMin>k__BackingField: 3
     <AmountOfStatsMax>k__BackingField: 3
@@ -140,14 +148,6 @@ MonoBehaviour:
     <StatValueChangeMin>k__BackingField: 0.12
     <StatValueChangeMax>k__BackingField: 0.14
     <PerksAmountMin>k__BackingField: 3
-    <PerksAmountMax>k__BackingField: 3
-  - <EquipmentRarity>k__BackingField: 4
-    <Tier>k__BackingField: 1
-    <AmountOfStatsMin>k__BackingField: 3
-    <AmountOfStatsMax>k__BackingField: 4
-    <StatValueChangeMin>k__BackingField: 0.08
-    <StatValueChangeMax>k__BackingField: 0.11
-    <PerksAmountMin>k__BackingField: 2
     <PerksAmountMax>k__BackingField: 3
   - <EquipmentRarity>k__BackingField: 4
     <Tier>k__BackingField: 2

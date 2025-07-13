@@ -5,12 +5,15 @@ using Yg.Character;
 using UnityEngine.EventSystems;
 using System;
 using System.Collections.Generic;
+using Zenject;
 
 namespace Yg.UI
 {
     public class WarbandSlotUI : TooltipHolderUI, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         public event Action<WarbandSlotUI> OnSelected;
+        public event Action<EquipmentUI> OnEquipmentSlotHovered;
+        public event Action<EquipmentUI> OnEquipmentSlotHoverEnd;
 
         [CustomHeader("Settings")]
         [SerializeField] private Image _unitImage;
@@ -23,17 +26,33 @@ namespace Yg.UI
         [SerializeField] private List<PerkUI> _perkUIList;
         [SerializeField] private List<SpellUI> _spellUIList;
 
+        //private DiContainer _container;
         private WarbandSlot _warbandSlot;
 
         public WarbandSlot WarbandSlot => _warbandSlot;
 
+        //[Inject]
+        //private void Construct(DiContainer container)
+        //{
+        //    _container = container;
+        //}
+        
         private void Awake()
         {
             _selectionBackground.gameObject.SetActive(false);
 
             DisablePerkUIs();
             DisableSpellUIs();
-            DisableEquipmentUIs();
+            InitializeEquipmentUIs();
+        }
+
+        private void OnDestroy()
+        {
+            for (int i = 0; i < _equipmentUIList.Count; i++)
+            {
+                _equipmentUIList[i].OnHovered -= WarbandSlotUI_OnHovered;
+                _equipmentUIList[i].OnHoverEnd -= WarbandSlotUI_OnHoverEnd;
+            }
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -51,6 +70,11 @@ namespace Yg.UI
         {
             _tooltipDrawer.HideUnitTooltip();
             _selectionBackground.gameObject.SetActive(false);
+        }
+
+        public int GetIndexOfEquipmentUI(EquipmentUI equipmentUI)
+        {
+            return _equipmentUIList.IndexOf(equipmentUI);
         }
 
         public void AssignWarbandSlot(WarbandSlot warbandSlot)
@@ -139,15 +163,9 @@ namespace Yg.UI
         {
             if (_warbandSlot.EquipmentDataList == null) return;
 
-            for (int i = 0; i < _equipmentUIList.Count; i++)
+            for (int i = 0; i < _warbandSlot.EquipmentDataList.Count; i++)
             {
-                if (i >= _warbandSlot.EquipmentDataList.Count)
-                {
-                    _equipmentUIList[i].gameObject.SetActive(false);
-                    continue;
-                }
-
-                _equipmentUIList[i].gameObject.SetActive(true);
+                //_equipmentUIList[i].gameObject.SetActive(true);
                 _equipmentUIList[i].SetData(_warbandSlot.EquipmentDataList[i]);
             }
         }
@@ -164,10 +182,24 @@ namespace Yg.UI
                 _spellUIList[i].gameObject.SetActive(false);
         }
 
-        private void DisableEquipmentUIs()
+        private void InitializeEquipmentUIs()
         {
             for (int i = 0; i < _equipmentUIList.Count; i++)
-                _equipmentUIList[i].gameObject.SetActive(false);
+            {
+                _equipmentUIList[i].Initialize(this);
+                _equipmentUIList[i].OnHovered += WarbandSlotUI_OnHovered;
+                _equipmentUIList[i].OnHoverEnd += WarbandSlotUI_OnHoverEnd;
+            }
+        }
+
+        private void WarbandSlotUI_OnHoverEnd(EquipmentUI equipmentUI)
+        {
+            OnEquipmentSlotHoverEnd?.Invoke(equipmentUI);
+        }
+
+        private void WarbandSlotUI_OnHovered(EquipmentUI equipmentUI)
+        {
+            OnEquipmentSlotHovered?.Invoke(equipmentUI);
         }
 
         protected override void ShowTooltip()

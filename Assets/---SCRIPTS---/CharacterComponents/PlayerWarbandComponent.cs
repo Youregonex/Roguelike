@@ -21,12 +21,35 @@ namespace Yg.Character
         private WarbandUI _warbandUI;
         private RecruitmentUI _recruitmentUI;
 
+        [SerializeField] private EquipmentUI _hoveredEquipmentUI;
+        [SerializeField] private EquipmentData _currentEquipmentData;
+        [SerializeField] private EquipmentUI _lastClickedEquipmentUI;
+
         [Inject]
         private void Construct(WarbandUI warbandUI, RecruitmentUI recruitmentUI, EquipmentBuilder equipmentBuilder)
         {
             _warbandUI = warbandUI;
+            _warbandUI.OnEquipmentUIHovered += WarbandUI_OnEquipmentUIHovered;
+            _warbandUI.OnEquipmentUIHoverEnd += WarbandUI_OnEquipmentUIHoverEnd;
+
             _recruitmentUI = recruitmentUI;
             _equipmentBuilder = equipmentBuilder;
+        }
+
+        private void OnDestroy()
+        {
+            _warbandUI.OnEquipmentUIHovered -= WarbandUI_OnEquipmentUIHovered;
+            _warbandUI.OnEquipmentUIHoverEnd -= WarbandUI_OnEquipmentUIHoverEnd;
+        }
+
+        private void WarbandUI_OnEquipmentUIHovered(EquipmentUI equipmentUI)
+        {
+            _hoveredEquipmentUI = equipmentUI;
+        }
+
+        private void WarbandUI_OnEquipmentUIHoverEnd(EquipmentUI EquipmentUI)
+        {
+            _hoveredEquipmentUI = null;
         }
 
         public override void InitializeComponent(CharacterCore characterCore)
@@ -57,6 +80,75 @@ namespace Yg.Character
                 int testTier = UnityEngine.Random.Range(1, 4 + 1);
                 AddEquipmentSlotToFirstEmptySlot(_equipmentBuilder.BuildEquipment(testTier));
             }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                MousePress();
+            }
+
+            if (Input.GetKeyUp(KeyCode.Mouse0))
+            {
+                MouseRelease();
+            }
+        }
+
+        private void MousePress()
+        {
+            if (_hoveredEquipmentUI == null || _hoveredEquipmentUI.EquipmentData == null) return;
+
+            _currentEquipmentData = _hoveredEquipmentUI.EquipmentData;
+            _warbandUI.EnableMouseObject(_currentEquipmentData.Icon);
+            _lastClickedEquipmentUI = _hoveredEquipmentUI;
+
+            WarbandSlot warbandSlot = _hoveredEquipmentUI.WarbandSlotUI.WarbandSlot;
+            int slotIndex = _hoveredEquipmentUI.WarbandSlotUI.GetIndexOfEquipmentUI(_hoveredEquipmentUI);
+
+            warbandSlot.RemoveEquipmentDataFromSlot(slotIndex);
+            _warbandUI.UpdateSlotsEquipmentData();
+        }
+
+        private void MouseRelease()
+        {
+            if (_currentEquipmentData == null || _currentEquipmentData.IsEmpty) return;
+            WarbandSlot warbandSlot;
+            int slotIndex;
+
+            if (_hoveredEquipmentUI == null)
+            {
+                warbandSlot = _lastClickedEquipmentUI.WarbandSlotUI.WarbandSlot;
+                slotIndex = _lastClickedEquipmentUI.WarbandSlotUI.GetIndexOfEquipmentUI(_lastClickedEquipmentUI);
+
+                warbandSlot.AddEquipmentDataToSlot(slotIndex, _currentEquipmentData);
+            }
+
+            if(_hoveredEquipmentUI != null && _hoveredEquipmentUI.EquipmentData == null)
+            {
+                warbandSlot = _hoveredEquipmentUI.WarbandSlotUI.WarbandSlot;
+                slotIndex = _hoveredEquipmentUI.WarbandSlotUI.GetIndexOfEquipmentUI(_hoveredEquipmentUI);
+
+                warbandSlot.AddEquipmentDataToSlot(slotIndex, _currentEquipmentData);
+            }
+
+            if (_hoveredEquipmentUI != null && _hoveredEquipmentUI.EquipmentData != null)
+            {
+                warbandSlot = _hoveredEquipmentUI.WarbandSlotUI.WarbandSlot;
+                slotIndex = _hoveredEquipmentUI.WarbandSlotUI.GetIndexOfEquipmentUI(_hoveredEquipmentUI);
+
+                EquipmentData hoveredEquipmentData = _hoveredEquipmentUI.EquipmentData;
+
+                warbandSlot.AddEquipmentDataToSlot(slotIndex, _currentEquipmentData);
+
+                WarbandSlot lastClickedWarbandSlot = _lastClickedEquipmentUI.WarbandSlotUI.WarbandSlot;
+                int lastClickedIndex = _lastClickedEquipmentUI.WarbandSlotUI.GetIndexOfEquipmentUI(_lastClickedEquipmentUI);
+
+                lastClickedWarbandSlot.AddEquipmentDataToSlot(lastClickedIndex, hoveredEquipmentData);
+            }
+
+            _currentEquipmentData = null;
+            _lastClickedEquipmentUI = null;
+
+            _warbandUI.DisableMouseObject();
+            _warbandUI.UpdateSlotsEquipmentData();
         }
 
         public void InitiateUnitSelction()
@@ -143,7 +235,7 @@ namespace Yg.Character
             {
                 if (!_warbandSlotList[i].CanFitNewEqupment) continue;
 
-                _warbandSlotList[i].AddEquipmentData(equipmentData);
+                _warbandSlotList[i].AddEquipmentDataToFirstEmptySlot(equipmentData);
                 _warbandUI.UpdateSlotsEquipmentData();
                 return;
             }
@@ -162,7 +254,7 @@ namespace Yg.Character
         private void InitializeWarbandUI()
         {
             for (int i = 0; i < _warbandSlotList.Count; i++)
-                _warbandUI.CreateWarbandSlotUI(_warbandSlotList[i]);
+                _warbandUI.CreateWarbandSlotUIs(_warbandSlotList[i]);
         }
     }
 }

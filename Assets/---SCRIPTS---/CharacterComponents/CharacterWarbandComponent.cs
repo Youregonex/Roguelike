@@ -21,7 +21,7 @@ namespace Yg.Character
         {
             base.InitializeComponent(characterCore);
 
-            if (_warbandSlotList.Count <= 0)
+            if (_warbandSlotList.Count == 0)
                 InitializeWarband();
         }
 
@@ -33,12 +33,9 @@ namespace Yg.Character
             {
                 WarbandSlot warbandSlot = new();
 
-                for (int j = 0; j < characterSaveData.WarbandSlotSaveDataList[i].EquipmentDataList.Count; j++)
-                {
-                    if (characterSaveData.WarbandSlotSaveDataList[i].EquipmentDataList[j].IsEmpty) continue;
-                    warbandSlot.AddEquipmentData(characterSaveData.WarbandSlotSaveDataList[i].EquipmentDataList[j]);
-                }
-
+                for (int j = 0; j < characterSaveData.WarbandSlotSaveDataList[i].EquipmentDataList.Count; j++)                
+                    warbandSlot.AddEquipmentDataToSlot(j, characterSaveData.WarbandSlotSaveDataList[i].EquipmentDataList[j]);
+                
                 if (!characterSaveData.WarbandSlotSaveDataList[i].Empty)
                 {
                     UnitDataSO unitDataSO = ResourceLoader.GetUnitDataSO(characterSaveData.WarbandSlotSaveDataList[i].PrefabId);
@@ -110,7 +107,7 @@ namespace Yg.Character
             {
                 if (!_warbandSlotList[i].CanFitNewEqupment) continue;
 
-                _warbandSlotList[i].AddEquipmentData(equipmentData);
+                _warbandSlotList[i].AddEquipmentDataToFirstEmptySlot(equipmentData);
                 return;
             }
 

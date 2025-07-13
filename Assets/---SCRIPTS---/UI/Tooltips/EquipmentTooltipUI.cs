@@ -19,7 +19,7 @@ namespace Yg.UI
         public void SetData(EquipmentData equipmentData)
         {
             _tooltipTitleText.text = equipmentData.Name;
-            _iconImage.sprite = ResourceLoader.GetIconWithPath(equipmentData.IconPath);
+            _iconImage.sprite = equipmentData.Icon;
             _rarityText.text = equipmentData.Rarity.ToString();
             _tierText.text = $"Tier: {equipmentData.Tier}";
 

@@ -16,7 +16,7 @@ MonoBehaviour:
   <Prefab>k__BackingField: {fileID: 2944207676587258401, guid: 165786a1c126b4a61a60ee047cb5c9e0, type: 3}
   <PrefabId>k__BackingField: 263d6570-0a79-47f6-a702-d8fa0dd1181e
   <Icon>k__BackingField: {fileID: 2005238886, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
-  <DefaultSquadSize>k__BackingField: 6
+  <DefaultSquadSize>k__BackingField: 1
   <UnitStatDataList>k__BackingField:
   - <Name>k__BackingField: Move speed
     <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
@@ -26,7 +26,7 @@ MonoBehaviour:
   - <Name>k__BackingField: Health
     <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
     <StatType>k__BackingField: 1
-    <MaxValue>k__BackingField: 75
+    <MaxValue>k__BackingField: 3645
     <IgnoreMaxValue>k__BackingField: 0
   - <Name>k__BackingField: Attack range
     <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
@@ -51,7 +51,7 @@ MonoBehaviour:
   - <Name>k__BackingField: Knock back resistance
     <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
     <StatType>k__BackingField: 6
-    <MaxValue>k__BackingField: 15
+    <MaxValue>k__BackingField: 230.9
     <IgnoreMaxValue>k__BackingField: 1
   <AttackType>k__BackingField: 1
   <DamageType>k__BackingField: 1

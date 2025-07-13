@@ -1783,6 +1783,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: EquipmentUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8648736790420467318, guid: 751450c6a3ec74c82b7b942e2d6164a2, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8875755
+      objectReference: {fileID: 0}
+    - target: {fileID: 8648736790420467318, guid: 751450c6a3ec74c82b7b942e2d6164a2, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5896226
+      objectReference: {fileID: 0}
+    - target: {fileID: 8648736790420467318, guid: 751450c6a3ec74c82b7b942e2d6164a2, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

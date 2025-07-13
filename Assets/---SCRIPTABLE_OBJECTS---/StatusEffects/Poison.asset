@@ -19,6 +19,7 @@ MonoBehaviour:
   <Duration>k__BackingField: 10
   <Tickable>k__BackingField: 1
   <VFX>k__BackingField: {fileID: 4213110547372183873, guid: cbd8792f06540403e8f7f975b1b69f33, type: 3}
+  <StatusEffectTag>k__BackingField: 2
   <Interval>k__BackingField: 2
   <DamageType>k__BackingField: 4
   <Damage>k__BackingField: 3

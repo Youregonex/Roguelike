@@ -12,6 +12,7 @@ namespace Yg.Battle
         [field: SerializeField] public float Duration { get; private set; }
         [field: SerializeField] public bool Tickable { get; private set; }
         [field: SerializeField] public StatusEffectVFXGameObject VFX { get; private set; }
+        [field: SerializeField] public EStatusEffectTag StatusEffectTag { get; private set; }
 
         public abstract StatusEffect BuildStatusEffect(BattleUnitCore applier, BattleUnitCore target, UltimatePooler pooler);
 

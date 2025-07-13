@@ -70,6 +70,8 @@ public static class ResourceLoader
         //CONFIG_TownPointOfInterest = null;
 
         //PREFAB_PlayerCharacter = null;
+
+        //_iconDictionary.Clear();
     }
 
     public static Sprite GetIconWithPath(string iconPath)

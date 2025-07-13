@@ -5,7 +5,6 @@ using Yg.Character;
 using UnityEngine.EventSystems;
 using System;
 
-
 namespace Yg.UI
 {
     public class SquadUI : MonoBehaviour, IPointerDownHandler
