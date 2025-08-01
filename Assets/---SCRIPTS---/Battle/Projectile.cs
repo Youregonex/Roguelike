@@ -33,7 +33,7 @@ namespace Yg.Battle
         public void Setup(DamageStruct damageStruct, Vector2 velocity)
         {
             _currentDamageStruct = damageStruct;
-            _rigidbody.velocity = velocity;
+            _rigidbody.linearVelocity = velocity;
 
             _destructionCoroutine = StartCoroutine(DestructionDelayCoroutine());
         }
@@ -57,7 +57,7 @@ namespace Yg.Battle
         private void DestroyProjectile()
         {
             _currentDamageStruct = default;
-            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.linearVelocity = Vector2.zero;
 
             if (_destructionCoroutine is not null)
             {

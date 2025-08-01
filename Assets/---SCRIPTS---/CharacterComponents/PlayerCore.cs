@@ -38,7 +38,7 @@ namespace Yg.Character
 
         public void EncounterBattle()
         {
-            int maxSlots = 6;
+            int maxSlots = 18;
             List<WarbandSlot> enemyWarband = new();
             List<UnitDataSO> enemyUnits = _unitSelectionGenerator.GenerateRandomUnitChoiceList(maxSlots);
 

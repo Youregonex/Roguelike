@@ -26,7 +26,7 @@ MonoBehaviour:
   - <Name>k__BackingField: Health
     <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}
     <StatType>k__BackingField: 1
-    <MaxValue>k__BackingField: 3645
+    <MaxValue>k__BackingField: 75
     <IgnoreMaxValue>k__BackingField: 0
   - <Name>k__BackingField: Attack range
     <Icon>k__BackingField: {fileID: -657469096, guid: 7e6c9ea34ae0c4b328c4e383b8644c4b, type: 3}

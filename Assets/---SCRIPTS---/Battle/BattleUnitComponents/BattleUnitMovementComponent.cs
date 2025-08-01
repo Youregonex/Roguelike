@@ -46,7 +46,7 @@ namespace Yg.Battle.BattleUnits
                 }
             }
 
-            _rigidBody.velocity = finalVelocity;
+            _rigidBody.linearVelocity = finalVelocity;
         }
 
         protected virtual void OnDestroy()

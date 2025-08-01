@@ -94,6 +94,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -173,8 +176,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf014e1ed9de743259f138f25a119bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _warbandSize: 6
+  _warbandSize: 18
   _warbandSlotList: []
+  _hoveredEquipmentUI: {fileID: 0}
+  _currentEquipmentData:
+    Name: 
+    Rarity: 0
+    Tier: 0
+    IconPath: 
+    StatModifierList: []
+    PerkIdList: []
+  _lastClickedEquipmentUI: {fileID: 0}
 --- !u!1 &4605360643885186016
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +236,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -528,6 +543,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
